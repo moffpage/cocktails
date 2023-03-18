@@ -5,7 +5,9 @@ plugins {
 
 android {
     namespace = "kz.grandera.vlifetesttaskapp.android"
+
     compileSdk = 33
+
     defaultConfig {
         applicationId = "kz.grandera.vlifetesttaskapp.android"
         minSdk = 21
@@ -47,9 +49,10 @@ android {
 dependencies {
     implementation(dependencyNotation = project(path = ":common"))
 
-    implementation(dependencyNotation = libs.bundles.mvikotlin.plugins)
     implementation(dependencyNotation = libs.bundles.compose)
 
+    implementation(dependencyNotation = libs.koin3.android)
+    implementation(dependencyNotation = libs.activity.compose)
     implementation(dependencyNotation = libs.decompose.core)
-    implementation(dependencyNotation = libs.compose.activity)
+    implementation(dependencyNotation = libs.accompanist.systemuicontroller)
 }
