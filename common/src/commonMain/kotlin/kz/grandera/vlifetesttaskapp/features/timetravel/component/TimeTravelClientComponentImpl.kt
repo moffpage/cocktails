@@ -24,6 +24,7 @@ internal class TimeTravelClientComponentImpl(
     componentContext: ComponentContext,
     private val platformContext: PlatformContext,
     private val serializer: TimeTravelExportSerializer,
+    private val onNavigateBack: () -> Unit
 ) : TimeTravelClientComponent,
     ComponentContext by componentContext
 {
@@ -31,6 +32,10 @@ internal class TimeTravelClientComponentImpl(
 
     private val _events: MutableSharedFlow<Event> = MutableSharedFlow(replay = 0)
     override val events: Flow<Event> = _events
+
+    override fun navigateBack() {
+        onNavigateBack()
+    }
 
     override fun exportEvents() {
         val exportedData = timeTravelController.export()

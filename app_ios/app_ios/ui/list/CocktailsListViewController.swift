@@ -63,6 +63,7 @@ class CocktailsListViewController: UIViewController {
         setupErrorView()
         setupLoadingViews()
         setupCollectionView()
+        addTapGestureListeners()
         component.model.subscribe { [unowned self] model in
             self.bindModel(model: model)
         }
@@ -95,9 +96,6 @@ class CocktailsListViewController: UIViewController {
     
     private func setupCollectionView() {
         view.addSubview(collectionView)
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tapGestureRecognizer.cancelsTouchesInView = false
-        collectionView.addGestureRecognizer(tapGestureRecognizer)
         collectionView.register(CocktailCell.self, forCellWithReuseIdentifier: "CocktailCell")
         collectionView.register(EmptyHeader.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -121,6 +119,25 @@ class CocktailsListViewController: UIViewController {
     @objc
     private func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    @objc
+    private func viewTimeTravel() {
+        component.viewTimeTravel()
+    }
+    
+    private func addTapGestureListeners() {
+        let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        singleTapGestureRecognizer.numberOfTapsRequired = 1
+        singleTapGestureRecognizer.cancelsTouchesInView = false
+        collectionView.addGestureRecognizer(singleTapGestureRecognizer)
+        
+        let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTimeTravel))
+        doubleTapGestureRecognizer.numberOfTapsRequired = 2
+        doubleTapGestureRecognizer.cancelsTouchesInView = false
+        collectionView.addGestureRecognizer(doubleTapGestureRecognizer)
+        
+        singleTapGestureRecognizer.require(toFail: doubleTapGestureRecognizer)
     }
 }
 

@@ -76,7 +76,8 @@ internal class CocktailsComponentImpl(
         TimeTravelClientComponentImpl(
             componentContext = componentContext,
             platformContext = platformContext,
-            serializer = timeTravelExportSerializer
+            serializer = timeTravelExportSerializer,
+            onNavigateBack = { navigation.pop() }
         )
 
     internal sealed interface Configuration : Parcelable {

@@ -45,6 +45,7 @@ kotlin {
             baseName = "common"
             transitiveExport = true
             export(dependency = libs.moko.resources.common)
+            export(dependency = libs.reaktive)
             export(dependency = libs.decompose.core)
             export(dependency = libs.mvikotlin.timetravel)
         }
@@ -54,6 +55,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(dependencyNotation = libs.napier)
+                api(dependencyNotation = libs.reaktive)
                 api(dependencyNotation = libs.decompose.core)
                 api(dependencyNotation = libs.moko.resources.common)
                 api(dependencyNotation = libs.mvikotlin.timetravel)

@@ -14,4 +14,5 @@ public interface TimeTravelClientComponent {
     public val events: Flow<Event>
     public fun exportEvents()
     public fun importEvents()
+    public fun navigateBack()
 }
