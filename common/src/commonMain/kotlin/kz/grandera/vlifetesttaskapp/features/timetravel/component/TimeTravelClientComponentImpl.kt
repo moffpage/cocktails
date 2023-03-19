@@ -9,11 +9,12 @@ import com.arkivanov.mvikotlin.timetravel.export.TimeTravelExportSerializer
 import com.arkivanov.mvikotlin.timetravel.export.TimeTravelExportSerializer.Result
 import com.arkivanov.mvikotlin.timetravel.controller.timeTravelController
 
+import io.ktor.util.encodeBase64
+import io.ktor.util.decodeBase64Bytes
+
 import dev.icerock.moko.resources.StringResource
 
 import kz.grandera.vlifetesttaskapp.utils.shareText
-import kz.grandera.vlifetesttaskapp.utils.encodeBase64
-import kz.grandera.vlifetesttaskapp.utils.decodeBase64
 import kz.grandera.vlifetesttaskapp.utils.coroutineScope
 import kz.grandera.vlifetesttaskapp.utils.PlatformContext
 import kz.grandera.vlifetesttaskapp.utils.getTextFromClipboard
@@ -57,7 +58,7 @@ internal class TimeTravelClientComponentImpl(
         if (importedData == null) {
             showError(errorText = Strings.timeTravelClipboardEmpty)
         } else {
-            val decodedData = importedData.decodeBase64()
+            val decodedData = importedData.decodeBase64Bytes()
             when (val deserializationResult = serializer.deserialize(data = decodedData)) {
                 is Result.Error -> { showError(errorText = Strings.timeTravelDeserializeError) }
                 is Result.Success -> {
