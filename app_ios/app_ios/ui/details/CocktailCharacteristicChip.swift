@@ -21,7 +21,6 @@ class CocktailCharacteristicChip: UIView {
     
     private let textView = {
         let textView = UILabel()
-        textView.backgroundColor = .clear
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
