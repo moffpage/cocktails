@@ -23,10 +23,12 @@ androidx-activity = "1.6.1"
 
 [libraries]
 
+klock = "com.soywiz.korlibs.klock:klock:3.4.0"
 napier = "io.github.aakira:napier:2.6.1"
 reaktive = "com.badoo.reaktive:reaktive:1.2.3"
 
-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
+android-core = "androidx.core:core-ktx:1.9.0"
+android-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 
 gradle-android = "com.android.tools.build:gradle:7.4.2"
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -47,7 +49,6 @@ ktor-contentnegotiation = { module = "io.ktor:ktor-client-content-negotiation", 
 
 kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 
-kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }

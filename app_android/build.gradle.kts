@@ -52,7 +52,7 @@ dependencies {
     implementation(dependencyNotation = libs.bundles.compose)
 
     implementation(dependencyNotation = libs.koin3.android)
-    implementation(dependencyNotation = libs.activity.compose)
+    implementation(dependencyNotation = libs.android.activity.compose)
     implementation(dependencyNotation = libs.decompose.core)
     implementation(dependencyNotation = libs.accompanist.systemuicontroller)
 }

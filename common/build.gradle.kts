@@ -44,8 +44,8 @@ kotlin {
         it.binaries.framework {
             baseName = "common"
             transitiveExport = true
-            export(dependency = libs.moko.resources.common)
             export(dependency = libs.reaktive)
+            export(dependency = libs.moko.resources.common)
             export(dependency = libs.decompose.core)
             export(dependency = libs.mvikotlin.timetravel)
         }
@@ -56,10 +56,11 @@ kotlin {
             dependencies {
                 api(dependencyNotation = libs.napier)
                 api(dependencyNotation = libs.reaktive)
-                api(dependencyNotation = libs.decompose.core)
                 api(dependencyNotation = libs.moko.resources.common)
+                api(dependencyNotation = libs.decompose.core)
                 api(dependencyNotation = libs.mvikotlin.timetravel)
 
+                implementation(dependencyNotation = libs.klock)
                 implementation(dependencyNotation = libs.ktor.core)
                 implementation(dependencyNotation = libs.ktor.logging)
                 implementation(dependencyNotation = libs.ktor.serialization.json)
@@ -75,10 +76,11 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(dependencyNotation = libs.coil.compose)
-                implementation(dependencyNotation = libs.lottie.compose)
                 implementation(dependencyNotation = libs.ktor.engine.okhttp)
                 implementation(dependencyNotation = libs.moko.resources.compose)
-                implementation(dependencyNotation = libs.kotlinx.datetime)
+                implementation(dependencyNotation = libs.lottie.compose)
+                implementation(dependencyNotation = libs.android.core)
+                implementation(dependencyNotation = libs.android.activity.compose)
                 implementation(dependencyNotation = libs.decompose.extensions.compose.jetpack)
 
                 implementation(dependencyNotation = libs.bundles.compose)
