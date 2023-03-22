@@ -14,15 +14,18 @@ import io.ktor.util.decodeBase64Bytes
 
 import dev.icerock.moko.resources.StringResource
 
-import kz.grandera.vlifetesttaskapp.utils.shareText
+import kz.grandera.vlifetesttaskapp.utils.Uri
+import kz.grandera.vlifetesttaskapp.utils.FileManager
+import kz.grandera.vlifetesttaskapp.utils.shareTextFile
 import kz.grandera.vlifetesttaskapp.utils.coroutineScope
 import kz.grandera.vlifetesttaskapp.utils.PlatformContext
-import kz.grandera.vlifetesttaskapp.utils.getTextFromClipboard
+import kz.grandera.vlifetesttaskapp.utils.currentTimeFormatted
 import kz.grandera.vlifetesttaskapp.features.timetravel.component.TimeTravelClientComponent.Event
 import kz.grandera.vlifetesttaskapp.resources.Strings
 
 internal class TimeTravelClientComponentImpl(
     componentContext: ComponentContext,
+    private val fileManager: FileManager,
     private val platformContext: PlatformContext,
     private val serializer: TimeTravelExportSerializer,
     private val onNavigateBack: () -> Unit
@@ -43,9 +46,15 @@ internal class TimeTravelClientComponentImpl(
         when (val serializationResult = serializer.serialize(export = exportedData)) {
             is Result.Error -> { showError(errorText = Strings.timeTravelSerializeError) }
             is Result.Success -> {
+                val currentTimeString = currentTimeFormatted()
                 val encodedData = serializationResult.data.encodeBase64()
-                platformContext.shareText(
-                    data = encodedData,
+                val fileName = "time-travel_export_$currentTimeString.txt"
+                val fileUri = fileManager.createWriteText(
+                    text = encodedData,
+                    fileName = fileName,
+                )
+                platformContext.shareTextFile(
+                    fileUri = fileUri,
                     title = Strings.timeTravelExportChooserTitle,
                     subject = Strings.timeTravelExportSubject
                 )
@@ -53,9 +62,9 @@ internal class TimeTravelClientComponentImpl(
         }
     }
 
-    override fun importEvents() {
-        val importedData = platformContext.getTextFromClipboard()
-        if (importedData == null) {
+    override fun importEvents(uri: Uri) {
+        val importedData = fileManager.readText(fileUri = uri)
+        if (importedData.isBlank()) {
             showError(errorText = Strings.timeTravelClipboardEmpty)
         } else {
             val decodedData = importedData.decodeBase64Bytes()

@@ -2,36 +2,34 @@ package kz.grandera.vlifetesttaskapp.utils
 
 import android.content.Intent
 import android.content.Context
-import android.content.ClipboardManager
 
 import dev.icerock.moko.resources.StringResource
 
-public actual fun PlatformContext.shareText(
-    data: String,
+public actual fun PlatformContext.shareTextFile(
+    fileUri: Uri,
     title: StringResource,
     subject: StringResource
 ) {
     val intent = Intent(Intent.ACTION_SEND)
         .apply {
-            type = "text/plain"
+            type = "text/*"
+            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+            putExtra(Intent.EXTRA_STREAM, fileUri)
             putExtra(Intent.EXTRA_SUBJECT, subject.resourceId)
-            putExtra(Intent.EXTRA_TEXT, data)
         }
+
+    val chooser = Intent.createChooser(
+        intent,
+        getText(title.resourceId)
+    )
+
     startActivity(
-        Intent.createChooser(
-            intent,
-            getText(title.resourceId)
+        chooser.withGrantedReadPermission(
+            forUri = fileUri,
+            context = this
         )
     )
 }
-
-public actual fun PlatformContext.getTextFromClipboard(): String? =
-    (getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
-        .primaryClip
-        ?.takeIf { it.itemCount > 0 }
-        ?.getItemAt(0)
-        ?.text
-        ?.toString()
 
 public actual typealias PlatformContext = Context
 

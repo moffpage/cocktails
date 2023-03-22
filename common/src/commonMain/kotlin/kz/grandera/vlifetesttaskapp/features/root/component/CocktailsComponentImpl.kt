@@ -14,6 +14,7 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.mvikotlin.timetravel.export.TimeTravelExportSerializer
 
+import kz.grandera.vlifetesttaskapp.utils.FileManager
 import kz.grandera.vlifetesttaskapp.utils.PlatformContext
 import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent.Child
 import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponentImpl.Configuration
@@ -26,6 +27,7 @@ import kz.grandera.vlifetesttaskapp.features.timetravel.component.TimeTravelClie
 
 internal class CocktailsComponentImpl(
     componentContext: ComponentContext,
+    private val fileManager: FileManager,
     private val platformContext: PlatformContext
 ) : CocktailsComponent,
     KoinComponent,
@@ -75,6 +77,7 @@ internal class CocktailsComponentImpl(
     internal fun timeTravelClientComponent(componentContext: ComponentContext): TimeTravelClientComponent =
         TimeTravelClientComponentImpl(
             componentContext = componentContext,
+            fileManager = fileManager,
             platformContext = platformContext,
             serializer = timeTravelExportSerializer,
             onNavigateBack = { navigation.pop() }

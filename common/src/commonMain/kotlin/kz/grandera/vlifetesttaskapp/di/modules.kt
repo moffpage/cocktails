@@ -22,6 +22,7 @@ import kz.grandera.vlifetesttaskapp.api.cocktails.CocktailsApiClient
 import kz.grandera.vlifetesttaskapp.async.ioDispatcher
 import kz.grandera.vlifetesttaskapp.async.mainDispatcher
 import kz.grandera.vlifetesttaskapp.utils.isDebug
+import kz.grandera.vlifetesttaskapp.utils.FileManager
 import kz.grandera.vlifetesttaskapp.utils.PlatformContext
 import kz.grandera.vlifetesttaskapp.utils.timeTravelExportSerializer
 import kz.grandera.vlifetesttaskapp.features.root.component.cocktailsComponent
@@ -70,10 +71,12 @@ public val cocktailsModules: List<Module> = mutableListOf<Module>().apply {
         module {
             factory<CocktailsComponent> {
                     (
+                        fileManager: FileManager,
                         platformContext: PlatformContext,
                         componentContext: ComponentContext
                     ) ->
                 cocktailsComponent(
+                    fileManager = fileManager,
                     platformContext = platformContext,
                     componentContext = componentContext
                 )

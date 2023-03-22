@@ -15,6 +15,8 @@ import androidx.compose.material.SnackbarHostState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.compose.rememberLauncherForActivityResult
 
 import com.arkivanov.mvikotlin.timetravel.widget.TimeTravelView
 
@@ -32,6 +34,14 @@ internal fun TimeTravelClientContent(component: TimeTravelClientComponent) {
             scope = scope,
             snackbarHostState = snackbarHostState
         )
+    }
+
+    val openFilesIntentResult = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        if (uri != null) {
+            component.importEvents(uri = uri)
+        }
     }
 
     val context = LocalContext.current
@@ -60,7 +70,9 @@ internal fun TimeTravelClientContent(component: TimeTravelClientComponent) {
                             ViewGroup.LayoutParams.MATCH_PARENT
                         )
                         setOnExportEventsListener { component.exportEvents() }
-                        setOnImportEventsListener { component.importEvents() }
+                        setOnImportEventsListener {
+                            openFilesIntentResult.launch(arrayOf("text/*"))
+                        }
                     }
             }
         )
