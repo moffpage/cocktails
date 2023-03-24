@@ -47,11 +47,12 @@ class CocktailsHeaderView: UICollectionReusableView {
         return searchBar
     }()
     
-    private let segmentedControl = {
+    private lazy var segmentedControl = {
+        let textStyle = themeProvider.theme.typography.h4
         let control = CustomSegmentControl(
             items: [
-                Strings.shared.nonAlcoholic.desc().localized(),
-                Strings.shared.alcoholic.desc().localized(),
+                Strings.shared.nonAlcoholic.desc().localized().image(textStyle: textStyle),
+                Strings.shared.alcoholic.desc().localized().image(textStyle: textStyle),
             ]
         )
 

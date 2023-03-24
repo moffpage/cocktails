@@ -53,7 +53,6 @@ extension CustomSegmentControl: Themeable {
     func apply(theme: any Theme) {
         backgroundColor = theme.colors.surface
         layer.borderColor = theme.colors.surface.cgColor
-        setTextStyle(style: theme.typography.h4)
         setTitleTextAttributes([.foregroundColor: theme.colors.onSurface], for: .normal)
         setTitleTextAttributes([.foregroundColor: theme.colors.onPrimary], for: .selected)
     }
