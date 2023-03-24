@@ -70,6 +70,7 @@ class CustomTextField: UITextField {
 extension CustomTextField: Themeable {
     func apply(theme: any Theme) {
         clip(to: theme.shapes.medium)
+        setTextStyle(style: theme.typography.h4)
         tintColor = theme.colors.primary
         textColor = theme.colors.onBackground
         backgroundColor = theme.colors.surface

@@ -45,6 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
         
         let cocktailsComponent = FactoryKt.cocktailsComponent(
+            fileManager: FileKt.fileManager(),
             platformContext: DarwinContext(),
             componentContext: componentContext
         )
