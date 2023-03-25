@@ -6,12 +6,13 @@
 //  Copyright © 2023 orgName. All rights reserved.
 //
 
+import common
 import UIKit
 import Lottie
 
 class LoadingView: UIView {
     private let animationView = {
-        let animationView = LottieAnimationView(name: "cocktail_animation")
+        let animationView = LottieAnimationView(name: Animations.shared.cocktail.fileName)
         animationView.loopMode = .loop
         animationView.contentMode = .scaleAspectFit
         return animationView
