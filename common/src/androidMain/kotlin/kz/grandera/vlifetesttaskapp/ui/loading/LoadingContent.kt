@@ -15,8 +15,8 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 
-import kz.grandera.vlifetesttaskapp.R
 import kz.grandera.vlifetesttaskapp.utils.disableInput
+import kz.grandera.vlifetesttaskapp.resources.Animations
 
 @Composable
 internal fun LoadingContent(
@@ -27,7 +27,7 @@ internal fun LoadingContent(
 ) {
     val composition by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(
-            resId = R.raw.cocktail_animation
+            resId = Animations.cocktail.rawResId
         )
     )
 
