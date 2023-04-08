@@ -1,8 +1,5 @@
 package kz.grandera.vlifetesttaskapp.features.root.component
 
-import org.koin.core.component.inject
-import org.koin.core.component.KoinComponent
-
 import com.arkivanov.essenty.parcelable.Parcelize
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.decompose.ComponentContext
@@ -12,10 +9,7 @@ import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
-import com.arkivanov.mvikotlin.timetravel.export.TimeTravelExportSerializer
 
-import kz.grandera.vlifetesttaskapp.utils.FileManager
-import kz.grandera.vlifetesttaskapp.utils.PlatformContext
 import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent.Child
 import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponentImpl.Configuration
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent
@@ -25,16 +19,10 @@ import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsCo
 import kz.grandera.vlifetesttaskapp.features.timetravel.component.TimeTravelClientComponent
 import kz.grandera.vlifetesttaskapp.features.timetravel.component.TimeTravelClientComponentImpl
 
-internal class CocktailsComponentImpl(
-    componentContext: ComponentContext,
-    private val fileManager: FileManager,
-    private val platformContext: PlatformContext
-) : CocktailsComponent,
-    KoinComponent,
+internal class CocktailsComponentImpl(componentContext: ComponentContext) :
+    CocktailsComponent,
     ComponentContext by componentContext
 {
-    private val timeTravelExportSerializer by inject<TimeTravelExportSerializer>()
-
     private val navigation = StackNavigation<Configuration>()
     private val childStack = childStack(
         source = navigation,
@@ -77,9 +65,6 @@ internal class CocktailsComponentImpl(
     internal fun timeTravelClientComponent(componentContext: ComponentContext): TimeTravelClientComponent =
         TimeTravelClientComponentImpl(
             componentContext = componentContext,
-            fileManager = fileManager,
-            platformContext = platformContext,
-            serializer = timeTravelExportSerializer,
             onNavigateBack = { navigation.pop() }
         )
 

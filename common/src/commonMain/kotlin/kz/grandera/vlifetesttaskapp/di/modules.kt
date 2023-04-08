@@ -4,7 +4,6 @@ import kotlin.coroutines.CoroutineContext
 
 import org.koin.dsl.module
 import org.koin.core.module.Module
-import org.koin.core.context.startKoin
 import org.koin.core.qualifier.named
 
 import io.ktor.client.HttpClient
@@ -21,18 +20,11 @@ import kz.grandera.vlifetesttaskapp.api.cocktails.CocktailsApi
 import kz.grandera.vlifetesttaskapp.api.cocktails.CocktailsApiClient
 import kz.grandera.vlifetesttaskapp.async.ioDispatcher
 import kz.grandera.vlifetesttaskapp.async.mainDispatcher
-import kz.grandera.vlifetesttaskapp.utils.isDebug
 import kz.grandera.vlifetesttaskapp.utils.FileManager
-import kz.grandera.vlifetesttaskapp.utils.PlatformContext
+import kz.grandera.vlifetesttaskapp.utils.isDebug
 import kz.grandera.vlifetesttaskapp.utils.timeTravelExportSerializer
 import kz.grandera.vlifetesttaskapp.features.root.component.cocktailsComponent
 import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent
-
-public fun initializeKoin() {
-    startKoin {
-        modules(cocktailsModules)
-    }
-}
 
 internal val coreModule: Module = module {
     single<StoreFactory> {
@@ -44,6 +36,7 @@ internal val coreModule: Module = module {
             DefaultStoreFactory()
         }
     }
+    single { FileManager(context = get()) }
 }
 
 internal val asyncModule: Module = module {
@@ -61,26 +54,10 @@ internal val timeTravelModule: Module = module {
 }
 
 public val cocktailsModules: List<Module> = mutableListOf<Module>().apply {
-    add(coreModule)
-    add(asyncModule)
-    add(networkModule)
+    add(element = coreModule)
+    add(element = asyncModule)
+    add(element = networkModule)
     if (isDebug) {
-        add(timeTravelModule)
+        add(element = timeTravelModule)
     }
-    add(
-        module {
-            factory<CocktailsComponent> {
-                    (
-                        fileManager: FileManager,
-                        platformContext: PlatformContext,
-                        componentContext: ComponentContext
-                    ) ->
-                cocktailsComponent(
-                    fileManager = fileManager,
-                    platformContext = platformContext,
-                    componentContext = componentContext
-                )
-            }
-        }
-    )
 }

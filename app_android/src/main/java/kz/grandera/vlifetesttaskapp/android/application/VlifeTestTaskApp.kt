@@ -30,8 +30,8 @@ internal class VlifeTestTaskApp : Application() {
 
         startKoin {
             androidLogger(level = logLevel)
-            androidContext(this@VlifeTestTaskApp)
-            modules(cocktailsModules)
+            androidContext(androidContext = this@VlifeTestTaskApp)
+            modules(modules = cocktailsModules)
         }
 
         timeTravelServer.start()

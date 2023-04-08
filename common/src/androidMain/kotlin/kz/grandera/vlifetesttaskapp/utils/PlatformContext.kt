@@ -21,7 +21,9 @@ public actual fun PlatformContext.shareTextFile(
     val chooser = Intent.createChooser(
         intent,
         getText(title.resourceId)
-    )
+    ).apply {
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
 
     startActivity(
         chooser.withGrantedReadPermission(
