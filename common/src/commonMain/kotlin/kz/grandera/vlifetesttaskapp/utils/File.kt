@@ -1,6 +1,5 @@
 package kz.grandera.vlifetesttaskapp.utils
 
-@Suppress("NO_ACTUAL_FOR_EXPECT")
 public expect abstract class Uri
 
 public expect class FileManager public constructor(context: PlatformContext) {
