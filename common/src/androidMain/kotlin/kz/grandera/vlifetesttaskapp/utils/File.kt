@@ -11,24 +11,23 @@ import androidx.core.content.FileProvider
 
 internal actual typealias Uri = android.net.Uri
 
-public fun fileManager(context: Context): FileManager =
-    FileManagerImpl(context = context)
-
-internal class FileManagerImpl(private val context: Context) : FileManager {
-    override fun readText(fileUri: Uri): String {
-        val inputStream = context.contentResolver.openInputStream(fileUri)
-        val inputStreamReader = InputStreamReader(inputStream)
-        val bufferedReader = BufferedReader(inputStreamReader)
-
+public actual class FileManager actual constructor(private val context: Context) {
+    public actual fun readText(fileUri: Uri): String {
         var resultString = ""
+        val inputStream = context.contentResolver.openInputStream(fileUri)
 
-        bufferedReader.lineSequence()
-            .forEach { line -> resultString += line }
+        if (inputStream != null) {
+            val inputStreamReader = InputStreamReader(inputStream)
+            val bufferedReader = BufferedReader(inputStreamReader)
+
+            bufferedReader.lineSequence()
+                .forEach { line -> resultString += line }
+        }
 
         return resultString
     }
 
-    override fun createWriteText(fileName: String, text: String): Uri {
+    public actual fun createWriteText(fileName: String, text: String): Uri {
         val fileOutput = context.openFileOutput(fileName, Context.MODE_PRIVATE)
         val outputWriter = OutputStreamWriter(fileOutput)
 

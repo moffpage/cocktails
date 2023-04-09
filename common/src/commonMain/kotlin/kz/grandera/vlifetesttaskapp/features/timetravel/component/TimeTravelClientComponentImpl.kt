@@ -12,6 +12,9 @@ import com.arkivanov.mvikotlin.timetravel.controller.timeTravelController
 import io.ktor.util.encodeBase64
 import io.ktor.util.decodeBase64Bytes
 
+import org.koin.core.component.inject
+import org.koin.core.component.KoinComponent
+
 import dev.icerock.moko.resources.StringResource
 
 import kz.grandera.vlifetesttaskapp.utils.Uri
@@ -25,13 +28,15 @@ import kz.grandera.vlifetesttaskapp.resources.Strings
 
 internal class TimeTravelClientComponentImpl(
     componentContext: ComponentContext,
-    private val fileManager: FileManager,
-    private val platformContext: PlatformContext,
-    private val serializer: TimeTravelExportSerializer,
     private val onNavigateBack: () -> Unit
 ) : TimeTravelClientComponent,
+    KoinComponent,
     ComponentContext by componentContext
 {
+    private val serializer by inject<TimeTravelExportSerializer>()
+    private val fileManager by inject<FileManager>()
+    private val platformContext by inject<PlatformContext>()
+
     private val scope = coroutineScope()
 
     private val _events: MutableSharedFlow<Event> = MutableSharedFlow(replay = 0)

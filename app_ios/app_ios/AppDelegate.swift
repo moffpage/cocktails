@@ -9,11 +9,8 @@
 import common
 import UIKit
 
-private class DarwinContext: PlatformContext { }
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
     internal var window: UIWindow?
     
     private let timeTravelServer = TimeTravelServer(
@@ -27,8 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
-        ModulesKt.initializeKoin()
-        LoggingKt.enableLogging()
+        KoinKt.initializeKoin()
+        KoinKt.enableLogging()
         ThemeConfigurator.configureTheme(
             shapes: ShapesFactoryKt.ShapesFactory,
             typography: TypographyFactoryKt.TypographyFactory
@@ -45,8 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
         
         let cocktailsComponent = FactoryKt.cocktailsComponent(
-            fileManager: FileKt.fileManager(),
-            platformContext: DarwinContext(),
             componentContext: componentContext
         )
         let cocktailsViewController = CocktailsViewController(

@@ -10,17 +10,14 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 
-import org.koin.android.ext.android.inject
-import org.koin.core.parameter.parametersOf
-
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 import com.arkivanov.decompose.defaultComponentContext
 
 import kz.grandera.vlifetesttaskapp.ui.root.CocktailsContent
-import kz.grandera.vlifetesttaskapp.utils.fileManager
 import kz.grandera.vlifetesttaskapp.android.theming.VlifeTestTaskAppTheme
 import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent
+import kz.grandera.vlifetesttaskapp.features.root.component.cocktailsComponent
 
 class VlifeTestTaskActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,14 +25,9 @@ class VlifeTestTaskActivity : ComponentActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        val fileManager = fileManager(context = this)
-        val component by inject<CocktailsComponent> {
-            parametersOf(
-                fileManager,
-                this@VlifeTestTaskActivity,
-                defaultComponentContext()
-            )
-        }
+        val component: CocktailsComponent = cocktailsComponent(
+            componentContext = defaultComponentContext()
+        )
 
         setContent {
             val applyDarkTheme = isSystemInDarkTheme()
