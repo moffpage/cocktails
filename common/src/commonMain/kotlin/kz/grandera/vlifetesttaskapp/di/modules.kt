@@ -8,7 +8,6 @@ import org.koin.core.qualifier.named
 
 import io.ktor.client.HttpClient
 
-import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
@@ -23,8 +22,6 @@ import kz.grandera.vlifetesttaskapp.async.mainDispatcher
 import kz.grandera.vlifetesttaskapp.utils.FileManager
 import kz.grandera.vlifetesttaskapp.utils.isDebug
 import kz.grandera.vlifetesttaskapp.utils.timeTravelExportSerializer
-import kz.grandera.vlifetesttaskapp.features.root.component.cocktailsComponent
-import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent
 
 internal val coreModule: Module = module {
     single<StoreFactory> {
