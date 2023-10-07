@@ -24,7 +24,7 @@ internal interface CocktailsListStore : Store<Intent, State, Nothing> {
     ) : JvmSerializable
 
     sealed interface Intent : JvmSerializable {
-        object Shuffle : Intent
+        data object Shuffle : Intent
         data class Search(val query: String) : Intent
         data class Filter(val isAlcoholic: Boolean) : Intent
     }

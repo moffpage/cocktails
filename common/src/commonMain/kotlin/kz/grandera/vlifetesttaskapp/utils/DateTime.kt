@@ -1,7 +1,7 @@
 package kz.grandera.vlifetesttaskapp.utils
 
-import com.soywiz.klock.DateFormat
-import com.soywiz.klock.DateTimeTz
+import korlibs.time.DateFormat
+import korlibs.time.DateTimeTz
 
 internal fun currentTimeFormatted(): String {
     val now = DateTimeTz.nowLocal()

@@ -21,7 +21,7 @@ private sealed interface Action : JvmSerializable {
 }
 
 private sealed interface Message : JvmSerializable {
-    object ErrorOccurred : Message
+    data object ErrorOccurred : Message
     data class CocktailDetailsLoaded(
         val name: String,
         val category: String,

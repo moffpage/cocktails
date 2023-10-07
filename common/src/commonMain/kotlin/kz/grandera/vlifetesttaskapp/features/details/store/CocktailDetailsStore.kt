@@ -19,6 +19,6 @@ internal interface CocktailDetailsStore : Store<Intent, State, Nothing> {
     ) : JvmSerializable
 
     sealed interface Intent : JvmSerializable {
-        object Refresh : Intent
+        data object Refresh : Intent
     }
 }
