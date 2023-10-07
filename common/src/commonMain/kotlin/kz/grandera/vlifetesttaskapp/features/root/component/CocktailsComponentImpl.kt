@@ -70,13 +70,13 @@ internal class CocktailsComponentImpl(componentContext: ComponentContext) :
 
     internal sealed interface Configuration : Parcelable {
         @Parcelize
-        object List : Configuration
+        data object List : Configuration
 
         @Parcelize
         data class Details(val id: Long) : Configuration
 
         @Parcelize
-        object TimeTravelClient : Configuration
+        data object TimeTravelClient : Configuration
     }
 }
 

@@ -57,7 +57,7 @@ internal class CocktailDetailsComponentImpl(
 
 private fun State.toModel(): Model = Model(
     isError = isError,
-    category = DrinkCategory.values()
+    category = DrinkCategory.entries
         .firstOrNull { category -> category.name in this.category },
     imageUrl = imageUrl,
     glassType = glassType,

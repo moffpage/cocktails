@@ -1,4 +1,4 @@
-package kz.grandera.vlifetesttaskapp.ui.details
+package kz.grandera.vlifetesttaskapp.ui.common
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp

@@ -20,7 +20,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 
 import com.arkivanov.mvikotlin.timetravel.widget.TimeTravelView
 
-import kz.grandera.vlifetesttaskapp.ui.details.Snackbar
+import kz.grandera.vlifetesttaskapp.ui.common.Snackbar
 import kz.grandera.vlifetesttaskapp.utils.SnackbarController
 import kz.grandera.vlifetesttaskapp.features.timetravel.component.TimeTravelClientComponent
 import kz.grandera.vlifetesttaskapp.features.timetravel.component.TimeTravelClientComponent.Event

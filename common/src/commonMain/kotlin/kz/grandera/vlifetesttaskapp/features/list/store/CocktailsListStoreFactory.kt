@@ -21,11 +21,11 @@ import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore.Inten
 import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore.Cocktail
 
 private sealed interface Action : JvmSerializable {
-    object LoadCocktails : Action
+    data object LoadCocktails : Action
 }
 
 private sealed interface Message : JvmSerializable {
-    object ErrorOccurred : Message
+    data object ErrorOccurred : Message
     data class LoadingChanged(val isLoading: Boolean) : Message
     data class CocktailsLoaded(val cocktails: List<Cocktail>) : Message
     data class CocktailsChanged(val cocktails: List<Cocktail>) : Message
