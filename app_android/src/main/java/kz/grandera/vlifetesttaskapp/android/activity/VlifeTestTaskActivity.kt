@@ -1,16 +1,14 @@
 package kz.grandera.vlifetesttaskapp.android.activity
 
 import android.os.Bundle
+import android.graphics.Color
 
-import androidx.core.view.WindowCompat
-import androidx.compose.ui.graphics.Color
-import androidx.compose.runtime.SideEffect
 import androidx.compose.material.Surface
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.compose.setContent
-
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 import com.arkivanov.decompose.defaultComponentContext
 
@@ -23,30 +21,32 @@ class VlifeTestTaskActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
         val component: CocktailsComponent = cocktailsComponent(
             componentContext = defaultComponentContext()
         )
 
+        enableEdgeToEdge(
+            statusBarStyle = systemBarsStyle,
+            navigationBarStyle = systemBarsStyle
+        )
+
         setContent {
-            val applyDarkTheme = isSystemInDarkTheme()
-            val systemUiController = rememberSystemUiController()
-
-            VlifeTestTaskAppTheme(applyDarkTheme = applyDarkTheme) {
-                val systemBarsColor = Color.Transparent
-
+            VlifeTestTaskAppTheme(
+                applyDarkTheme = isSystemInDarkTheme()
+            ) {
                 Surface {
-                    CocktailsContent(component = component)
-                }
-
-                SideEffect {
-                    systemUiController.setSystemBarsColor(
-                        color = systemBarsColor,
-                        darkIcons = !applyDarkTheme
+                    CocktailsContent(
+                        component = component
                     )
                 }
             }
         }
+    }
+
+    private companion object {
+        val systemBarsStyle = SystemBarStyle.auto(
+            lightScrim = Color.TRANSPARENT,
+            darkScrim = Color.TRANSPARENT
+        )
     }
 }
