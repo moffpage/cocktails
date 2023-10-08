@@ -67,5 +67,4 @@ dependencies {
     implementation(dependencyNotation = libs.mvikotlin.core)
     implementation(dependencyNotation = libs.mvikotlin.main)
     implementation(dependencyNotation = libs.mvikotlin.logging)
-    implementation(dependencyNotation = libs.mvikotlin.timetravel)
 }

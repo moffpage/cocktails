@@ -67,7 +67,6 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(dependencyNotation = libs.ktor.engine.okhttp)
-                implementation(dependencyNotation = libs.android.core)
             }
         }
 

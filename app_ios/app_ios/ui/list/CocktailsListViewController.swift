@@ -121,23 +121,9 @@ class CocktailsListViewController: UIViewController {
         view.endEditing(true)
     }
     
-    @objc
-    private func viewTimeTravel() {
-        component.viewTimeTravel()
-    }
-    
     private func addTapGestureListeners() {
         let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        singleTapGestureRecognizer.numberOfTapsRequired = 1
-        singleTapGestureRecognizer.cancelsTouchesInView = false
         collectionView.addGestureRecognizer(singleTapGestureRecognizer)
-        
-        let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTimeTravel))
-        doubleTapGestureRecognizer.numberOfTapsRequired = 2
-        doubleTapGestureRecognizer.cancelsTouchesInView = false
-        collectionView.addGestureRecognizer(doubleTapGestureRecognizer)
-        
-        singleTapGestureRecognizer.require(toFail: doubleTapGestureRecognizer)
     }
 }
 

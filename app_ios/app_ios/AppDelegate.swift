@@ -13,14 +13,6 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     internal var window: UIWindow?
     
-    private let timeTravelServer = TimeTravelServer(
-        controller: TimeTravelControllerProviderKt.timeTravelController,
-        port: BuildKt.timeTravelPort,
-        onError: { throwable in
-            print("TIMETRAVEL ERROR: \(throwable.description())")
-        }
-    )
-    
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
@@ -30,8 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             shapes: ShapesFactoryKt.ShapesFactory,
             typography: TypographyFactoryKt.TypographyFactory
         )
-        
-        timeTravelServer.start()
         
         let lifecycle = LifecycleRegistryKt.LifecycleRegistry()
         let componentContext = DefaultComponentContext(

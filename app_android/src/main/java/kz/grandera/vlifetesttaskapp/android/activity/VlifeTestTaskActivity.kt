@@ -13,20 +13,17 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 
 import com.arkivanov.decompose.defaultComponentContext
+import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent
+import kz.grandera.vlifetesttaskapp.features.root.component.cocktailsComponentFactory
 
-import kz.grandera.vlifetesttaskapp.shake.ShakeActionHandler
-import kz.grandera.vlifetesttaskapp.ui.root.VlifeTestTaskAppContent
 import kz.grandera.vlifetesttaskapp.ui.theming.VlifeTestTaskAppTheme
-import kz.grandera.vlifetesttaskapp.features.root.component.VlifeTestTaskAppComponent
-import kz.grandera.vlifetesttaskapp.features.root.component.vlifeTestTaskAppComponent
+import kz.grandera.vlifetesttaskapp.ui.root.CocktailsContent
 
 class VlifeTestTaskActivity : ComponentActivity() {
-    private lateinit var component: VlifeTestTaskAppComponent
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        this.component = vlifeTestTaskAppComponent(
+        val component: CocktailsComponent = cocktailsComponentFactory(
             componentContext = defaultComponentContext()
         )
 
@@ -44,23 +41,10 @@ class VlifeTestTaskActivity : ComponentActivity() {
                         ExperimentalMaterialApi::class,
                         ExperimentalComposeUiApi::class
                     )
-                    VlifeTestTaskAppContent(
-                        component = component
-                    )
+                    (CocktailsContent(component = component))
                 }
             }
         }
-
-        bindShakeAction()
-    }
-
-    private fun bindShakeAction() {
-        ShakeActionHandler(
-            context = applicationContext,
-            detector = {
-                component.showTimeTravelLookOver()
-            }
-        )
     }
 
     private companion object {
