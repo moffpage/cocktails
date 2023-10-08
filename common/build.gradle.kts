@@ -60,7 +60,6 @@ kotlin {
                 api(dependencyNotation = libs.decompose.core)
 
                 implementation(dependencyNotation = project(path = ":core"))
-                implementation(dependencyNotation = project(path = ":time_travel_client"))
 
                 implementation(dependencyNotation = libs.ktor.core)
                 implementation(dependencyNotation = libs.koin3.core)
@@ -73,8 +72,6 @@ kotlin {
         val androidMain by getting {
             dependsOn(commonMain)
             dependencies {
-                api(dependencyNotation = libs.seismic)
-
                 implementation(dependencyNotation = project(path = ":ui_components"))
 
                 implementation(dependencyNotation = libs.coil.compose)

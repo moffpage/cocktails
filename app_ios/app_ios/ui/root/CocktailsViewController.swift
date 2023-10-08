@@ -44,11 +44,6 @@ class CocktailsViewController: UINavigationController {
                 )
                 cocktailDetailsViewController.modalPresentationStyle = .fullScreen
                 self.present(cocktailDetailsViewController, animated: true)
-            case let child as CocktailsComponentChildTimeTravelLookOver:
-                let timeTravelClientViewController = TimeTravelClientViewController(
-                    component: child.component
-                )
-                self.present(timeTravelClientViewController, animated: true)
             default: break
             }
         }
