@@ -6,7 +6,6 @@ import androidx.compose.ui.unit.TextUnit
 
 import kz.grandera.vlifetesttaskapp.ui.theming.text.font.toComposeFontFamily
 import kz.grandera.vlifetesttaskapp.ui.theming.text.font.toComposeFontWeight
-
 import kz.grandera.vlifetesttaskapp.theming.text.TextStyle
 
 internal fun TextStyle.toComposeTextStyle(): ComposeTextStyle =

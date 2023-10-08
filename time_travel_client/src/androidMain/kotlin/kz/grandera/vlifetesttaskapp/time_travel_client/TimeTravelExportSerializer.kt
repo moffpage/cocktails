@@ -1,0 +1,6 @@
+package kz.grandera.vlifetesttaskapp.time_travel_client
+
+import com.arkivanov.mvikotlin.timetravel.export.TimeTravelExportSerializer
+import com.arkivanov.mvikotlin.timetravel.export.DefaultTimeTravelExportSerializer
+
+internal actual val timeTravelExportSerializer: TimeTravelExportSerializer = DefaultTimeTravelExportSerializer

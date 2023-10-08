@@ -6,10 +6,10 @@ buildscript {
     }
 
     dependencies {
+        classpath(dependencyNotation = libs.moko.resources.generator)
         classpath(dependencyNotation = libs.gradle.kotlin)
         classpath(dependencyNotation = libs.gradle.android)
-        classpath(dependencyNotation = libs.kotlin.serialization)
-        classpath(dependencyNotation = libs.moko.resources.generator)
+        classpath(dependencyNotation = libs.gradle.kotlinx.serialization)
     }
 }
 
