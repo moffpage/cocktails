@@ -10,11 +10,11 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "kz.grandera.vlifetesttaskapp.android"
         minSdk = 21
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        applicationId = "kz.grandera.vlifetesttaskapp.android"
     }
 
     buildFeatures {
@@ -37,6 +37,10 @@ android {
         }
         release {
             isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -51,11 +55,17 @@ android {
 }
 
 dependencies {
+    implementation(dependencyNotation = project(path = ":core"))
     implementation(dependencyNotation = project(path = ":common"))
+    implementation(dependencyNotation = project(path = ":ui_components"))
 
-    implementation(dependencyNotation = libs.bundles.compose)
 
     implementation(dependencyNotation = libs.koin3.android)
     implementation(dependencyNotation = libs.android.activity.compose)
+    implementation(dependencyNotation = libs.bundles.compose)
     implementation(dependencyNotation = libs.decompose.core)
+    implementation(dependencyNotation = libs.mvikotlin.core)
+    implementation(dependencyNotation = libs.mvikotlin.main)
+    implementation(dependencyNotation = libs.mvikotlin.logging)
+    implementation(dependencyNotation = libs.mvikotlin.timetravel)
 }

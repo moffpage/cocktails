@@ -24,11 +24,10 @@ public val lightColors: Colors = with(lightColorScheme) {
 }
 
 public val darkColors: Colors = with(darkColorScheme) {
-    lightColors
-        .copy(
-            surface = surface.toComposeColor(),
+    lightColors.copy(
+        surface = surface.toComposeColor(),
 
-            background = background.toComposeColor(),
-            onBackground = onBackground.toComposeColor(),
-        )
+        background = background.toComposeColor(),
+        onBackground = onBackground.toComposeColor(),
+    )
 }

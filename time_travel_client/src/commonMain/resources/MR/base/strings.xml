@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="time_travel_export_subject">MVIKotlin time travel events</string>
+    <string name="time_travel_clipboard_empty">Clipboard does not contain any text</string>
+    <string name="time_travel_serialize_error">Error serializing time travel events</string>
+    <string name="time_travel_deserialize_error">Error deserializing time travel events</string>
+    <string name="time_travel_export_chooser_title">MVIKotlin time travel</string>
+</resources>

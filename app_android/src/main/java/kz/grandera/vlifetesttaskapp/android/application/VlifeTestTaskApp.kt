@@ -12,9 +12,10 @@ import org.koin.android.ext.koin.androidContext
 
 import com.arkivanov.mvikotlin.timetravel.server.TimeTravelServer
 
-import kz.grandera.vlifetesttaskapp.di.cocktailsModules
-import kz.grandera.vlifetesttaskapp.utils.isDebug
-import kz.grandera.vlifetesttaskapp.utils.timeTravelPort
+import kz.grandera.vlifetesttaskapp.di.module.cocktailsModules
+import kz.grandera.vlifetesttaskapp.core.build_config.isDebug
+import kz.grandera.vlifetesttaskapp.core.build_config.timeTravelPort
+import kz.grandera.vlifetesttaskapp.android.module.storeFactoryModule
 
 internal class VlifeTestTaskApp : Application() {
     private val timeTravelServer = TimeTravelServer(port = timeTravelPort)
@@ -31,7 +32,7 @@ internal class VlifeTestTaskApp : Application() {
         startKoin {
             androidLogger(level = logLevel)
             androidContext(androidContext = this@VlifeTestTaskApp)
-            modules(modules = cocktailsModules)
+            modules(modules = cocktailsModules + storeFactoryModule)
         }
 
         timeTravelServer.start()

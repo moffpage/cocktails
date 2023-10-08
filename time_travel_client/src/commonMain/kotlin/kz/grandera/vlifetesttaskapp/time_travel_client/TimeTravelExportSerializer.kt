@@ -1,0 +1,3 @@
+package kz.grandera.vlifetesttaskapp.time_travel_client
+
+internal expect val timeTravelExportSerializer: com.arkivanov.mvikotlin.timetravel.export.TimeTravelExportSerializer
