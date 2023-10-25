@@ -2,16 +2,16 @@ package kz.grandera.vlifetesttaskapp.ui.root
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
 import androidx.compose.material.ExperimentalMaterialApi
 
-import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
+import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.plus
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.scale
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
+import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.predictiveBackAnimation
 
 import kz.grandera.vlifetesttaskapp.ui.list.CocktailsListContent
 import kz.grandera.vlifetesttaskapp.ui.details.CocktailDetailsContent
@@ -21,15 +21,19 @@ import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent.C
 @Composable
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
+@ExperimentalDecomposeApi
 public fun CocktailsContent(
     modifier: Modifier = Modifier,
     component: CocktailsComponent
 ) {
-    val childStack by component.model.subscribeAsState()
     Children(
-        stack = childStack,
+        stack = component.model,
         modifier = modifier,
-        animation = stackAnimation(animator = fade() + scale())
+        animation = predictiveBackAnimation(
+            backHandler = component.backHandler,
+            animation = stackAnimation(animator = fade() + scale()),
+            onBack = { component.onBackInvoked() }
+        )
     ) { child ->
         when (val childInstance = child.instance) {
             is Child.CocktailsList -> CocktailsListContent(
