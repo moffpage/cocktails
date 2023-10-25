@@ -2,6 +2,7 @@ package kz.grandera.vlifetesttaskapp.features.root.component
 
 import com.arkivanov.essenty.parcelable.Parcelize
 import com.arkivanov.essenty.parcelable.Parcelable
+import com.arkivanov.essenty.backhandler.BackHandlerOwner
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.router.stack.pop
@@ -19,7 +20,8 @@ import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsCo
 
 internal class CocktailsComponentImpl(componentContext: ComponentContext) :
     CocktailsComponent,
-    ComponentContext by componentContext
+    ComponentContext by componentContext,
+    BackHandlerOwner
 {
     private val navigation = StackNavigation<Configuration>()
     private val childStack = childStack(
@@ -35,6 +37,10 @@ internal class CocktailsComponentImpl(componentContext: ComponentContext) :
     )
 
     override val model: Value<ChildStack<*, Child>> = childStack
+
+    override fun onBackInvoked() {
+        navigation.pop()
+    }
 
     internal fun listComponent(componentContext: ComponentContext): CocktailsListComponent =
         CocktailsListComponentImpl(

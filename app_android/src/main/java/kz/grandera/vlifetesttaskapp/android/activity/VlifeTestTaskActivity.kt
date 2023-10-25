@@ -12,12 +12,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 
+import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.defaultComponentContext
+
+import kz.grandera.vlifetesttaskapp.ui.root.CocktailsContent
+import kz.grandera.vlifetesttaskapp.ui.theming.VlifeTestTaskAppTheme
 import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent
 import kz.grandera.vlifetesttaskapp.features.root.component.cocktailsComponentFactory
-
-import kz.grandera.vlifetesttaskapp.ui.theming.VlifeTestTaskAppTheme
-import kz.grandera.vlifetesttaskapp.ui.root.CocktailsContent
 
 class VlifeTestTaskActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,9 +40,10 @@ class VlifeTestTaskActivity : ComponentActivity() {
                 Surface {
                     @OptIn(
                         ExperimentalMaterialApi::class,
-                        ExperimentalComposeUiApi::class
+                        ExperimentalComposeUiApi::class,
+                        ExperimentalDecomposeApi::class
                     )
-                    (CocktailsContent(component = component))
+                    CocktailsContent(component = component)
                 }
             }
         }
