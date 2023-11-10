@@ -56,7 +56,7 @@ kotlin {
                 implementation(dependencyNotation = libs.ktor.contentnegotiation)
                 implementation(dependencyNotation = libs.moko.resources.common)
                 implementation(dependencyNotation = libs.klock)
-                implementation(dependencyNotation = libs.koin3.core)
+                implementation(dependencyNotation = libs.koin.core)
                 implementation(dependencyNotation = libs.essenty.lifecycle)
                 implementation(dependencyNotation = libs.decompose.core)
                 implementation(dependencyNotation = libs.mvikotlin.rx)
