@@ -62,7 +62,7 @@ kotlin {
                 implementation(dependencyNotation = project(path = ":core"))
 
                 implementation(dependencyNotation = libs.ktor.core)
-                implementation(dependencyNotation = libs.koin3.core)
+                implementation(dependencyNotation = libs.koin.core)
                 implementation(dependencyNotation = libs.kotlinx.coroutines)
                 implementation(dependencyNotation = libs.kotlinx.serialization)
                 implementation(dependencyNotation = libs.bundles.mvikotlin.common)

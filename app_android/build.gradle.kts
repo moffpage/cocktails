@@ -60,7 +60,7 @@ dependencies {
     implementation(dependencyNotation = project(path = ":ui_components"))
 
 
-    implementation(dependencyNotation = libs.koin3.android)
+    implementation(dependencyNotation = libs.koin.android)
     implementation(dependencyNotation = libs.android.activity.compose)
     implementation(dependencyNotation = libs.bundles.compose)
     implementation(dependencyNotation = libs.decompose.core)
