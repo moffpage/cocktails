@@ -11,7 +11,7 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.plus
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.scale
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.predictiveBackAnimation
+import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.predictiveback.predictiveBackAnimation
 
 import kz.grandera.vlifetesttaskapp.ui.list.CocktailsListContent
 import kz.grandera.vlifetesttaskapp.ui.details.CocktailDetailsContent
