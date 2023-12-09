@@ -1,12 +1,13 @@
 package kz.grandera.vlifetesttaskapp.features.root.component
 
-import com.arkivanov.essenty.parcelable.Parcelize
-import com.arkivanov.essenty.parcelable.Parcelable
+import kotlinx.serialization.Serializable
+
 import com.arkivanov.essenty.backhandler.BackHandlerOwner
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.router.stack.pop
-import com.arkivanov.decompose.router.stack.push
+import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -26,6 +27,7 @@ internal class CocktailsComponentImpl(componentContext: ComponentContext) :
     private val navigation = StackNavigation<Configuration>()
     private val childStack = childStack(
         source = navigation,
+        serializer = Configuration.serializer(),
         childFactory = { configuration, componentContext ->
             child(
                 configuration = configuration,
@@ -45,10 +47,11 @@ internal class CocktailsComponentImpl(componentContext: ComponentContext) :
     internal fun listComponent(componentContext: ComponentContext): CocktailsListComponent =
         CocktailsListComponentImpl(
             componentContext = componentContext,
-            onShowCocktail = { cocktailId ->
-                navigation.push(
+            onShowCocktail = { id ->
+                @OptIn(ExperimentalDecomposeApi::class)
+                navigation.pushNew(
                     configuration = Configuration.Details(
-                        id = cocktailId
+                        id = id
                     )
                 )
             }
@@ -61,11 +64,12 @@ internal class CocktailsComponentImpl(componentContext: ComponentContext) :
             onNavigateBack = { navigation.pop() }
         )
 
-    internal sealed interface Configuration : Parcelable {
-        @Parcelize
+    @Serializable
+    internal sealed interface Configuration {
+        @Serializable
         data object List : Configuration
 
-        @Parcelize
+        @Serializable
         data class Details(val id: Long) : Configuration
     }
 }

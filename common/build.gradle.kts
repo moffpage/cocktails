@@ -4,7 +4,7 @@ plugins {
     kotlin(module = "multiplatform")
 
     id("com.android.library")
-    id("kotlin-parcelize")
+
     id("dev.icerock.mobile.multiplatform-resources")
 
     kotlin(module = "plugin.serialization")
