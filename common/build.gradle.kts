@@ -64,7 +64,6 @@ kotlin {
                 implementation(dependencyNotation = libs.ktor.core)
                 implementation(dependencyNotation = libs.koin.core)
                 implementation(dependencyNotation = libs.kotlinx.coroutines)
-                implementation(dependencyNotation = libs.kotlinx.serialization)
                 implementation(dependencyNotation = libs.bundles.mvikotlin.common)
             }
         }
