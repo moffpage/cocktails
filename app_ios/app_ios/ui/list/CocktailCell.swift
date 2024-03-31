@@ -1,12 +1,5 @@
-//
-//  CocktailCell.swift
-//  Vlife Task
-//
-//  Created by Artur Mavlyuchenko on 10.03.2023.
-//  Copyright © 2023 orgName. All rights reserved.
-//
 
-import common
+import shared
 import UIKit
 import Kingfisher
 
@@ -27,10 +20,22 @@ class CocktailCell: UICollectionViewCell {
         return label
     }()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupImageView()
         setupTitleLabel()
+        themeProvider.register(observer: self)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+        imageView.kf.cancelDownloadTask()
+        titleLabel.text = nil
     }
     
     func bind(cocktail: CocktailsListComponentCocktailModel) {

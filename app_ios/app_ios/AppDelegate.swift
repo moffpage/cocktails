@@ -1,12 +1,5 @@
-//
-//  AppDelegate.swift
-//  app_ios
-//
-//  Created by Artur Mavlyuchenko on 27.02.2023.
-//  Copyright © 2023 orgName. All rights reserved.
-//
 
-import common
+import shared
 import UIKit
 
 @UIApplicationMain
@@ -16,14 +9,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
-        KoinKt.initializeKoin()
-        KoinKt.enableLogging()
+        InitializationKt.initializeKoin()
+        InitializationKt.enableLogging()
         ThemeConfigurator.configureTheme(
             shapes: ShapesFactoryKt.ShapesFactory,
             typography: TypographyFactoryKt.TypographyFactory
         )
         
-        let lifecycle = LifecycleRegistryKt.LifecycleRegistry()
+        let lifecycle = ApplicationLifecycle()
         let componentContext = DefaultComponentContext(
             lifecycle: lifecycle,
             stateKeeper: nil,
@@ -31,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             backHandler: nil
         )
         
-        let cocktailsComponent = FactoryKt.cocktailsComponent(
+        let cocktailsComponent = FactoryKt.cocktailsComponentFactory(
             componentContext: componentContext
         )
         let cocktailsViewController = CocktailsViewController(

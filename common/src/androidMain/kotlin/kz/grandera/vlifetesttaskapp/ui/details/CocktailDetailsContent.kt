@@ -44,7 +44,7 @@ import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
 import kz.grandera.vlifetesttaskapp.R
 import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent
 import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent.DrinkCategory
-import kz.grandera.vlifetesttaskapp.resources.Strings
+import kz.grandera.vlifetesttaskapp.resources.CoreStrings
 import kz.grandera.vlifetesttaskapp.ui_components.R as UiCompR
 import kz.grandera.vlifetesttaskapp.ui_components.error.ErrorContent
 import kz.grandera.vlifetesttaskapp.ui_components.modifier.verticalFadingEdge
@@ -111,9 +111,9 @@ internal fun CocktailDetailsContent(
                         )
                         Chip(
                             text = if (model.isAlcoholic) {
-                                stringResource(id = Strings.alcoholic.resourceId)
+                                stringResource(id = CoreStrings.alcoholic.resourceId)
                             } else {
-                                stringResource(id = Strings.nonAlcoholic.resourceId)
+                                stringResource(id = CoreStrings.nonAlcoholic.resourceId)
                             },
                             iconResourceId = null
                         )
@@ -122,7 +122,7 @@ internal fun CocktailDetailsContent(
                         modifier = Modifier
                             .padding(top = 36.dp)
                             .padding(horizontal = 8.dp),
-                        text = stringResource(id = Strings.instructions.resourceId),
+                        text = stringResource(id = CoreStrings.instructions.resourceId),
                         style = MaterialTheme.typography.h2
                             .copy(color = MaterialTheme.colors.primary)
                     )

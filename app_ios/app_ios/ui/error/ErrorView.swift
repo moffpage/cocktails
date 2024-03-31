@@ -1,12 +1,5 @@
-//
-//  ErrorView.swift
-//  Vlife Task
-//
-//  Created by Artur Mavlyuchenko on 11.03.2023.
-//  Copyright © 2023 orgName. All rights reserved.
-//
 
-import common
+import shared
 import UIKit
 
 class ErrorView: UIView {
@@ -21,7 +14,7 @@ class ErrorView: UIView {
     
     private let errorLabel = {
         let label = UILabel()
-        label.text = Strings.shared.errorOccurred.desc().localized()
+        label.text = UiComponentsStrings.shared.errorOccurred.desc().localized()
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -29,7 +22,7 @@ class ErrorView: UIView {
     
     private let retryButton = {
         let button = UIButton()
-        button.setTitle(Strings.shared.retry.desc().localized(), for: .normal)
+        button.setTitle(UiComponentsStrings.shared.retry.desc().localized(), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()

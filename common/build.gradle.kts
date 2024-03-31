@@ -12,7 +12,7 @@ plugins {
 
 android {
     namespace = "kz.grandera.vlifetesttaskapp"
-    compileSdk = 21
+    compileSdk = 34
 
     buildFeatures {
         compose = true
@@ -33,6 +33,10 @@ android {
 kotlin {
     explicitApiWarning()
 
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -40,39 +44,26 @@ kotlin {
             }
         }
     }
-    
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "common"
-            transitiveExport = true
-            export(dependency = libs.moko.resources.common)
-        }
-    }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(dependencyNotation = libs.moko.resources.common)
-                api(dependencyNotation = libs.decompose.core)
-
                 implementation(dependencyNotation = project(path = ":core"))
+                implementation(dependencyNotation = project(path = ":ui_components"))
 
-                implementation(dependencyNotation = libs.ktor.core)
                 implementation(dependencyNotation = libs.koin.core)
+                implementation(dependencyNotation = libs.ktor.core)
+                implementation(dependencyNotation = libs.moko.resources.common)
                 implementation(dependencyNotation = libs.kotlinx.coroutines)
+                implementation(dependencyNotation = libs.mvikotlin.logging)
                 implementation(dependencyNotation = libs.bundles.mvikotlin.common)
+                implementation(dependencyNotation = libs.decompose.core)
             }
         }
 
         val androidMain by getting {
             dependsOn(commonMain)
             dependencies {
-                implementation(dependencyNotation = project(path = ":ui_components"))
-
                 implementation(dependencyNotation = libs.coil.compose)
                 implementation(dependencyNotation = libs.moko.resources.compose)
                 implementation(dependencyNotation = libs.lottie.compose)
@@ -80,22 +71,11 @@ kotlin {
                 implementation(dependencyNotation = libs.decompose.extensions.compose.jetpack)
             }
         }
-
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-        }
     }
 }
 
 multiplatformResources {
-    multiplatformResourcesPackage = "kz.grandera.vlifetesttaskapp"
-    multiplatformResourcesClassName = "SharedRes"
+    multiplatformResourcesPackage = "kz.grandera.vlifetesttaskapp.common"
+    multiplatformResourcesClassName = "CommonRes"
     multiplatformResourcesVisibility = MRVisibility.Internal
 }

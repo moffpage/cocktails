@@ -1,21 +1,14 @@
-//
-//  UIColor.swift
-//  Vlife Task
-//
-//  Created by Artur Mavlyuchenko on 18.03.2023.
-//  Copyright © 2023 orgName. All rights reserved.
-//
 
-import common
+import shared
 import UIKit
 
-extension common.Color_ {
+extension shared.Color {
     func toUIColor() -> UIColor {
         return UIColor(hex: UInt32(hexValue))
     }
 }
 
-extension common.ColorScheme {
+extension shared.ColorScheme {
     func toColorPalette() -> ColorPalette {
         return ColorPalette(
             primary: self.primary.toUIColor(),

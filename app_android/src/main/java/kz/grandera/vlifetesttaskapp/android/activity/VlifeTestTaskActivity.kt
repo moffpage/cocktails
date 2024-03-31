@@ -16,7 +16,7 @@ import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.defaultComponentContext
 
 import kz.grandera.vlifetesttaskapp.ui.root.CocktailsContent
-import kz.grandera.vlifetesttaskapp.ui.theming.VlifeTestTaskAppTheme
+import kz.grandera.vlifetesttaskapp.ui_components.theming.VlifeTestTaskAppTheme
 import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent
 import kz.grandera.vlifetesttaskapp.features.root.component.cocktailsComponentFactory
 

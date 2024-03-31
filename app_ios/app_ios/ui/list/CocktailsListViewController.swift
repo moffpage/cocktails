@@ -1,12 +1,5 @@
-//
-//  CocktailsListViewController.swift
-//  app_ios
-//
-//  Created by Artur Mavlyuchenko on 27.02.2023.
-//  Copyright © 2023 orgName. All rights reserved.
-//
 
-import common
+import shared
 import UIKit
 
 class CocktailsListViewController: UIViewController {
@@ -34,13 +27,18 @@ class CocktailsListViewController: UIViewController {
     
     private let refreshControl = UIRefreshControl()
     
-    private let collectionView = {
+    private lazy var collectionView = {
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.sectionHeadersPinToVisibleBounds = false
         let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: collectionViewLayout
         )
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.registerClassForCell(CocktailCell.self)
+        collectionView.registerClassForHeaderView(EmptyHeader.self)
+        collectionView.registerClassForHeaderView(CocktailsHeaderView.self)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
@@ -64,21 +62,18 @@ class CocktailsListViewController: UIViewController {
         setupLoadingViews()
         setupCollectionView()
         addTapGestureListeners()
-        component.model.subscribe { [unowned self] model in
+        component.model.observe { [unowned self] model in
             self.bindModel(model: model)
         }
     }
     
     private func bindModel(model: CocktailsListComponentModel) {
-        self.cocktails = model.cocktails
-        
-        if !model.isRefreshing { refreshControl.endRefreshing() }
-        
+        cocktails = model.cocktails
+        errorView.isHidden = !model.isError
         headerView?.selectedSegmentIndex = model.listsAlcoholicCocktails ? 1 : 0
         loadingView.isAnimating = model.isLoading
-        
-        errorView.isHidden = !model.isError
         collectionView.isHidden = model.isError || (model.isLoading && cocktails.isEmpty)
+        refreshControl.setRefreshing(model.isRefreshing)
     }
     
     private func setupErrorView() {
@@ -96,15 +91,6 @@ class CocktailsListViewController: UIViewController {
     
     private func setupCollectionView() {
         view.addSubview(collectionView)
-        collectionView.register(CocktailCell.self, forCellWithReuseIdentifier: "CocktailCell")
-        collectionView.register(EmptyHeader.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: "EmptyHeader")
-        collectionView.register(CocktailsHeaderView.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: "CocktailsHeaderView")
-        collectionView.delegate = self
-        collectionView.dataSource = self
         collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
@@ -123,6 +109,7 @@ class CocktailsListViewController: UIViewController {
     
     private func addTapGestureListeners() {
         let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        singleTapGestureRecognizer.cancelsTouchesInView = false
         collectionView.addGestureRecognizer(singleTapGestureRecognizer)
     }
 }
@@ -173,11 +160,7 @@ extension CocktailsListViewController: UICollectionViewDelegateFlowLayout {
     ) -> UICollectionReusableView {
         if (kind == UICollectionView.elementKindSectionHeader) {
             if (indexPath.section == 0) {
-                let headerView = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: "CocktailsHeaderView",
-                    for: indexPath
-                ) as! CocktailsHeaderView
+                let headerView: CocktailsHeaderView = collectionView.dequeueHeaderView(for: indexPath)
                 headerView.onSearchQueryCleared = { [unowned self] in
                     self.component.clearSearch()
                 }
@@ -193,11 +176,7 @@ extension CocktailsListViewController: UICollectionViewDelegateFlowLayout {
                 self.headerView = headerView
                 return headerView
             } else {
-                let headerView = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: "EmptyHeader",
-                    for: indexPath
-                ) as! EmptyHeader
+                let headerView: EmptyHeader = collectionView.dequeueHeaderView(for: indexPath)
                 return headerView
             }
         } else {
@@ -232,12 +211,8 @@ extension CocktailsListViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cocktail = cocktails[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: "CocktailCell",
-            for: indexPath
-        ) as! CocktailCell
+        let cell: CocktailCell = collectionView.dequeueReusableCell(for: indexPath)
         cell.bind(cocktail: cocktail)
-        cell.themeProvider.register(observer: cell)
         return cell
     }
     

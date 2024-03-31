@@ -2,14 +2,13 @@ plugins {
     kotlin(module = "multiplatform")
 
     id("com.android.library")
-    id("kotlin-parcelize")
 
     kotlin(module = "plugin.serialization")
 }
 
 android {
     namespace = "kz.grandera.vlifetesttaskapp.core"
-    compileSdk = 21
+    compileSdk = 34
 
     buildFeatures {
         buildConfig = true
@@ -24,6 +23,10 @@ android {
 kotlin {
     explicitApiWarning()
 
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -32,30 +35,16 @@ kotlin {
         }
     }
 
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "common"
-            transitiveExport = true
-            export(dependency = libs.reaktive)
-        }
-    }
-
     sourceSets {
         val commonMain by getting {
             dependencies {
                 api(dependencyNotation = libs.napier)
-                api(dependencyNotation = libs.reaktive)
+                implementation(dependencyNotation = libs.reaktive)
 
                 implementation(dependencyNotation = libs.ktor.core)
                 implementation(dependencyNotation = libs.ktor.logging)
                 implementation(dependencyNotation = libs.ktor.serialization.json)
                 implementation(dependencyNotation = libs.ktor.contentnegotiation)
-                implementation(dependencyNotation = libs.moko.resources.common)
-                implementation(dependencyNotation = libs.klock)
                 implementation(dependencyNotation = libs.koin.core)
                 implementation(dependencyNotation = libs.essenty.lifecycle)
                 implementation(dependencyNotation = libs.decompose.core)

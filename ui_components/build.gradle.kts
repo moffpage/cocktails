@@ -1,8 +1,11 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
+import dev.icerock.gradle.MRVisibility
+
 plugins {
+    kotlin(module = "multiplatform")
+
     id("com.android.library")
 
-    kotlin(module = "android")
+    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 android {
@@ -27,12 +30,43 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    sourceSets.getByName("main").res.srcDir(File(buildDir, "generated/moko/androidMain/res"))
+}
+
+kotlin {
+    explicitApiWarning()
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    androidTarget {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = JavaVersion.VERSION_1_8.toString()
+            }
+        }
+    }
+
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(dependencyNotation = libs.moko.resources.common)
+            }
+        }
+
+        val androidMain by getting {
+            dependsOn(commonMain)
+            dependencies {
+                implementation(dependencyNotation = libs.lottie.compose)
+                implementation(dependencyNotation = libs.bundles.compose)
+            }
+        }
     }
 }
 
-dependencies {
-    implementation(dependencyNotation = libs.lottie.compose)
-    implementation(dependencyNotation = libs.bundles.compose)
+multiplatformResources {
+    multiplatformResourcesPackage = "kz.grandera.vlifetesttaskapp.ui_components"
+    multiplatformResourcesClassName = "UiComponentsRes"
+    multiplatformResourcesVisibility = MRVisibility.Internal
 }

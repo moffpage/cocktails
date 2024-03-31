@@ -1,12 +1,5 @@
-//
-//  LoadingView.swift
-//  Vlife Task
-//
-//  Created by Artur Mavlyuchenko on 11.03.2023.
-//  Copyright © 2023 orgName. All rights reserved.
-//
 
-import common
+import shared
 import UIKit
 import Lottie
 
@@ -30,22 +23,21 @@ class LoadingView: UIView {
         }
     }
     
-    init() {
-        super.init(frame: UIScreen.main.bounds)
-        themeProvider.register(observer: self)
+    convenience init() {
+        self.init(frame: UIScreen.main.bounds)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         themeProvider.register(observer: self)
+        addLottieAnimationView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    private func addLottieAnimationView() {
         addSubview(animationView)
         animationView.center = center
     }

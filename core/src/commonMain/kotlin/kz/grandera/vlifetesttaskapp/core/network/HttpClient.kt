@@ -8,9 +8,7 @@ import kotlinx.serialization.json.Json
 
 import io.github.aakira.napier.Napier
 
-import io.ktor.http.ContentType
 import io.ktor.client.HttpClient
-import io.ktor.client.request.accept
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
@@ -54,7 +52,6 @@ internal fun httpClient(enableLogging: Boolean): HttpClient = HttpClient(
 
     install(plugin = DefaultRequest) {
         url(urlString = BASE_URL)
-        accept(contentType = ContentType.Application.Json)
     }
 
     install(plugin = ContentNegotiation.Plugin) {

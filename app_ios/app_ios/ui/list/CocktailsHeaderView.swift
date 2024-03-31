@@ -1,12 +1,5 @@
-//
-//  CocktailsHeaderView.swift
-//  Vlife Task
-//
-//  Created by Artur Mavlyuchenko on 10.03.2023.
-//  Copyright © 2023 orgName. All rights reserved.
-//
 
-import common
+import shared
 import UIKit
 
 class CocktailsHeaderView: UICollectionReusableView {    
@@ -23,13 +16,13 @@ class CocktailsHeaderView: UICollectionReusableView {
     
     private let titleLabel = {
         let label = UILabel()
-        label.text = Strings.shared.cocktails.desc().localized()
+        label.text = CoreStrings.shared.cocktails.desc().localized()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private let searchBar = {
-        let searchBar = CustomTextField()
+        let searchBar = TextField()
 
         let searchIcon = UIImage(imageLiteralResourceName: "magnifyingglass")
         let searchIconView = UIImageView(image: searchIcon)
@@ -49,13 +42,12 @@ class CocktailsHeaderView: UICollectionReusableView {
     
     private lazy var segmentedControl = {
         let textStyle = themeProvider.theme.typography.h4
-        let control = CustomSegmentControl(
+        let control = SegmentControl(
             items: [
-                Strings.shared.nonAlcoholic.desc().localized().image(textStyle: textStyle),
-                Strings.shared.alcoholic.desc().localized().image(textStyle: textStyle),
+                CoreStrings.shared.nonAlcoholic.desc().localized().image(textStyle: textStyle),
+                CoreStrings.shared.alcoholic.desc().localized().image(textStyle: textStyle),
             ]
         )
-
         control.translatesAutoresizingMaskIntoConstraints = false
         control.layer.borderWidth = 2
         return control
@@ -89,7 +81,7 @@ class CocktailsHeaderView: UICollectionReusableView {
         addSubview(searchBar)
         let clearAction = UITapGestureRecognizer(target: self, action: #selector(searchQueryCleared))
         searchBar.attributedPlaceholder = NSAttributedString(
-            string: Strings.shared.search.desc().localized(),
+            string: UiComponentsStrings.shared.search.desc().localized(),
             attributes: [NSAttributedString.Key.foregroundColor: themeProvider.theme.colors.onSurface]
         )
         searchBar.rightView?.addGestureRecognizer(clearAction)
@@ -129,7 +121,7 @@ class CocktailsHeaderView: UICollectionReusableView {
     
     @objc
     private func searchQueryCleared() {
-        if (searchBar.text?.isEmpty == true) { return }
+        if searchBar.text?.isEmpty == true { return }
         onSearchQueryCleared?()
         searchBar.rightViewMode = .never
         searchBar.text = ""
