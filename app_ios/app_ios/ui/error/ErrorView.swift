@@ -1,34 +1,32 @@
 
 import shared
 import UIKit
+import SnapKit
 
 class ErrorView: UIView {
     
     var onRetry: (() -> Void)?
     
-    private let errorIconView = {
-        let iconView = UIImageView(image: UIImage(imageLiteralResourceName: "error"))
-        iconView.translatesAutoresizingMaskIntoConstraints = false
-        return iconView
-    }()
+    private let errorIconView = UIImageView(image: UIImage(imageLiteralResourceName: "error"))
     
     private let errorLabel = {
         let label = UILabel()
         label.text = UiComponentsStrings.shared.errorOccurred.desc().localized()
         label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private let retryButton = {
         let button = UIButton()
         button.setTitle(UiComponentsStrings.shared.retry.desc().localized(), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        addErrorIcon()
+        addErrorText()
+        addRetryButton()
         themeProvider.register(observer: self)
     }
     
@@ -36,36 +34,33 @@ class ErrorView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        addErrorIcon()
-        addErrorText()
-        addRetryButton()
-    }
-    
     private func addErrorIcon() {
         addSubview(errorIconView)
-        errorIconView.widthAnchor.constraint(equalToConstant: 48).isActive = true
-        errorIconView.heightAnchor.constraint(equalToConstant: 48).isActive = true
-        errorIconView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        errorIconView.topAnchor.constraint(equalTo: topAnchor, constant: 32).isActive = true
+        errorIconView.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(32)
+            make.size.equalTo(48)
+            make.centerX.equalToSuperview()
+        }
     }
     
     private func addErrorText() {
         addSubview(errorLabel)
-        errorLabel.topAnchor.constraint(equalTo: errorIconView.bottomAnchor, constant: 16).isActive = true
-        errorLabel.widthAnchor.constraint(equalToConstant: 280).isActive = true
-        errorLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        errorLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        errorLabel.snp.makeConstraints { make in
+            make.top.equalTo(errorIconView.snp.bottom).offset(16)
+            make.width.equalTo(280)
+            make.centerX.equalToSuperview()
+        }
     }
     
     private func addRetryButton() {
         addSubview(retryButton)
         retryButton.addTarget(self, action: #selector(retryAction), for: .touchUpInside)
-        retryButton.topAnchor.constraint(equalTo: errorLabel.bottomAnchor, constant: 16).isActive = true
-        retryButton.widthAnchor.constraint(equalToConstant: 168).isActive = true
-        retryButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        retryButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        retryButton.snp.makeConstraints { make in
+            make.top.equalTo(errorLabel.snp.bottom).offset(16)
+            make.width.equalTo(168)
+            make.height.equalTo(32)
+            make.centerX.equalToSuperview()
+        }
     }
     
     @objc

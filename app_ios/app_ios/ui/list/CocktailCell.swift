@@ -7,7 +7,6 @@ class CocktailCell: UICollectionViewCell {
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
@@ -16,7 +15,6 @@ class CocktailCell: UICollectionViewCell {
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -44,19 +42,18 @@ class CocktailCell: UICollectionViewCell {
     }
     
     private func setupTitleLabel() {
-        contentView.addSubview(titleLabel)
-        titleLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor).isActive = true
-        titleLabel.centerYAnchor.constraint(equalTo: imageView.centerYAnchor).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: imageView.trailingAnchor).isActive = true
+        imageView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
     }
     
     private func setupImageView() {
         contentView.addSubview(imageView)
-        imageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        imageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 }
 

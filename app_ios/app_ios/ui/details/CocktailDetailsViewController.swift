@@ -1,15 +1,17 @@
 
 import shared
 import UIKit
+import SnapKit
 
 class CocktailDetailsViewController: UIViewController {
-    private let closeIconView = {
+    private let backIconView = {
         let closeImageView = UIImageView(
             frame: CGRect(
-                x: 8,
-                y: 8,
-                width: 24,
-                height: 24
+                origin: CGPoint(x: 8, y: 8),
+                size: CGSize(
+                    width: 24,
+                    height: 24
+                )
             )
         )
         closeImageView.image = UIImage(imageLiteralResourceName: "back")
@@ -17,23 +19,16 @@ class CocktailDetailsViewController: UIViewController {
         
         let surfaceView = UIView()
         surfaceView.clip(to: RoundedCornerShape(cornerRadius: 20.0))
-        surfaceView.translatesAutoresizingMaskIntoConstraints = false
         surfaceView.addSubview(closeImageView)
         
         return surfaceView
     }()
     
-    private let cocktailImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
+    private let cocktailImageView = UIImageView()
     
     private let cocktailTitleView = {
         let label = UILabel()
         label.textAlignment = .center
-        label.backgroundColor = .clear
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -41,14 +36,12 @@ class CocktailDetailsViewController: UIViewController {
         let label = UILabel()
         label.text = CoreStrings.shared.instructions.desc().localized()
         label.backgroundColor = .clear
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private let instructionsTextView = {
         let textView = UITextView()
         textView.backgroundColor = .clear
-        textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
     
@@ -56,7 +49,6 @@ class CocktailDetailsViewController: UIViewController {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 16
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
@@ -81,9 +73,7 @@ class CocktailDetailsViewController: UIViewController {
     
     @objc
     private func navigateBack() {
-        dismiss(animated: true) {
-            self.component.navigateBack()
-        }
+        self.component.navigateBack()
     }
     
     private func bindView(with model: CocktailDetailsComponentModel) {
@@ -116,13 +106,11 @@ class CocktailDetailsViewController: UIViewController {
     
     private func bindImageView(cocktailImageUrl: String) {
         view.addSubview(cocktailImageView)
-        cocktailImageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        cocktailImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        cocktailImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        cocktailImageView.heightAnchor.constraint(
-            equalTo: cocktailImageView.widthAnchor,
-            multiplier: 1
-        ).isActive = true
+        cocktailImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalTo(cocktailImageView.snp.width)
+        }
         cocktailImageView.kf.setImage(with: URL(string: cocktailImageUrl))
         addGradient()
     }
@@ -130,31 +118,21 @@ class CocktailDetailsViewController: UIViewController {
     private func bindTitleView(cocktailName: String) {
         cocktailImageView.addSubview(cocktailTitleView)
         cocktailTitleView.text = cocktailName
-        cocktailTitleView.bottomAnchor.constraint(
-            equalTo: cocktailImageView.bottomAnchor,
-            constant: -16
-        ).isActive = true
-        cocktailTitleView.heightAnchor.constraint(equalToConstant: 34).isActive = true
-        cocktailTitleView.leadingAnchor.constraint(equalTo: cocktailImageView.leadingAnchor).isActive = true
-        cocktailTitleView.trailingAnchor.constraint(equalTo: cocktailImageView.trailingAnchor).isActive = true
+        cocktailTitleView.snp.makeConstraints { make in
+            make.bottom.equalTo(cocktailImageView.snp.bottom).inset(16)
+            make.horizontalEdges.equalToSuperview()
+        }
     }
     
     private func bindInstructions(text: String) {
         addInstructionsLabel()
         view.addSubview(instructionsTextView)
         instructionsTextView.text = text
-        instructionsTextView.topAnchor.constraint(
-            equalTo: instructionsLabel.bottomAnchor
-        ).isActive = true
-        instructionsTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        instructionsTextView.leadingAnchor.constraint(
-            equalTo: view.leadingAnchor,
-            constant: 8
-        ).isActive = true
-        instructionsTextView.trailingAnchor.constraint(
-            equalTo: view.trailingAnchor,
-            constant: -8
-        ).isActive = true
+        instructionsTextView.snp.makeConstraints { make in
+            make.top.equalTo(instructionsLabel.snp.bottom)
+            make.bottom.equalToSuperview()
+            make.horizontalEdges.equalToSuperview().inset(8)
+        }
     }
     
     private func bindCharacteristics(text: String, iconName: String?) {
@@ -179,41 +157,36 @@ class CocktailDetailsViewController: UIViewController {
     }
     
     private func addDismissButton() {
-        view.addSubview(closeIconView)
+        view.addSubview(backIconView)
         let tapGestureRecognizer = UITapGestureRecognizer(
             target: self,
             action: #selector(navigateBack)
         )
-        closeIconView.addGestureRecognizer(tapGestureRecognizer)
-        closeIconView.topAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.topAnchor,
-            constant: 8
-        ).isActive = true
-        closeIconView.leadingAnchor.constraint(
-            equalTo: view.leadingAnchor,
-            constant: 16
-        ).isActive = true
-        closeIconView.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        closeIconView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        backIconView.addGestureRecognizer(tapGestureRecognizer)
+        backIconView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(8)
+            make.size.equalTo(40)
+            make.leading.equalToSuperview().inset(16)
+        }
     }
     
     private func addInstructionsLabel() {
         view.addSubview(instructionsLabel)
-        instructionsLabel.topAnchor.constraint(equalTo: characteristicsView.bottomAnchor, constant: 36).isActive = true
-        instructionsLabel.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        instructionsLabel.leadingAnchor.constraint(
-            equalTo: view.leadingAnchor,
-            constant: 8
-        ).isActive = true
-        instructionsLabel.widthAnchor.constraint(equalToConstant: 140).isActive = true
+        instructionsLabel.snp.makeConstraints { make in
+            make.top.equalTo(characteristicsView.snp.bottom).offset(36)
+            make.width.equalTo(140)
+            make.height.equalTo(24)
+            make.leading.equalToSuperview().inset(16)
+        }
     }
     
     private func addCharacteristicsView() {
         view.addSubview(characteristicsView)
-        characteristicsView.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor).isActive = true
-        characteristicsView.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        characteristicsView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        characteristicsView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        characteristicsView.snp.makeConstraints { make in
+            make.width.lessThanOrEqualToSuperview()
+            make.height.equalTo(40)
+            make.center.equalToSuperview()
+        }
     }
 }
 
@@ -239,7 +212,7 @@ private extension CocktailDetailsComponentDrinkCategory {
 extension CocktailDetailsViewController: Themeable {
     func apply(theme: any Theme) {
         view.backgroundColor = theme.colors.background
-        closeIconView.backgroundColor = theme.colors.primary.withAlphaComponent(0.3)
+        backIconView.backgroundColor = theme.colors.primary.withAlphaComponent(0.3)
         cocktailTitleView.textColor = theme.colors.onBackground
         instructionsLabel.textColor = theme.colors.primary
         instructionsTextView.textColor = theme.colors.onBackground
