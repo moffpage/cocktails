@@ -7,8 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
+		CE1D2F2429AC8AE300DC6B90 /* CocktailsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1D2F2329AC8AE300DC6B90 /* CocktailsListViewController.swift */; };
+		CE1D2F2629AC8BD200DC6B90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1D2F2529AC8BD200DC6B90 /* AppDelegate.swift */; };
+		CE1D2F2829AC8CCC00DC6B90 /* CocktailDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1D2F2729AC8CCC00DC6B90 /* CocktailDetailsViewController.swift */; };
+		CE1D2F2A29AC8D1D00DC6B90 /* CocktailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1D2F2929AC8D1D00DC6B90 /* CocktailsViewController.swift */; };
 		CE2CB76129C176A700592488 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CE2CB76029C176A700592488 /* Lottie */; };
+		CE8582642BB8388A00613DA6 /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8582632BB8388A00613DA6 /* UICollectionView+Extensions.swift */; };
+		CE8582662BB89F1800613DA6 /* UIRefreshControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8582652BB89F1800613DA6 /* UIRefreshControl+Extensions.swift */; };
+		CE981B4329BB752000261645 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B4229BB752000261645 /* ColorPalette.swift */; };
+		CE981B4529BB757C00261645 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B4429BB757C00261645 /* Theme.swift */; };
+		CE981B4729BB764F00261645 /* Themeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B4629BB764F00261645 /* Themeable.swift */; };
+		CE981B4929BB766200261645 /* ThemeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B4829BB766200261645 /* ThemeProvider.swift */; };
+		CE981B4B29BB769400261645 /* ThemeConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B4A29BB769400261645 /* ThemeConfigurator.swift */; };
+		CE981B4D29BB76AB00261645 /* ThemeProviderCompat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B4C29BB76AB00261645 /* ThemeProviderCompat.swift */; };
+		CE981B5029BB770400261645 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B4F29BB770400261645 /* UIColor.swift */; };
+		CE981B5229BB7B7900261645 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B5129BB7B7900261645 /* TextField.swift */; };
+		CE981B5429BB7C4A00261645 /* CocktailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B5329BB7C4A00261645 /* CocktailCell.swift */; };
 		CE981B5729BB7CC300261645 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = CE981B5629BB7CC300261645 /* Kingfisher */; };
+		CE981B5A29BB7D5C00261645 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B5929BB7D5C00261645 /* SegmentedControl.swift */; };
+		CE981B5C29BB832500261645 /* CocktailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B5B29BB832500261645 /* CocktailsHeaderView.swift */; };
+		CE981B5E29BB892F00261645 /* CocktailCharacteristicChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B5D29BB892F00261645 /* CocktailCharacteristicChip.swift */; };
+		CE981B6029BB8C1B00261645 /* ThemeWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B5F29BB8C1B00261645 /* ThemeWindow.swift */; };
+		CE981B6229BC750400261645 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B6129BC750400261645 /* LoadingView.swift */; };
+		CE981B6429BC7D4400261645 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B6329BC7D4400261645 /* ErrorView.swift */; };
+		CED55A0A29C4156700822AE8 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED55A0929C4156700822AE8 /* UIView.swift */; };
+		CED55A0C29C4297700822AE8 /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED55A0B29C4297700822AE8 /* Mode.swift */; };
+		CED55A0E29C4299A00822AE8 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED55A0D29C4299A00822AE8 /* AppTheme.swift */; };
+		CED55A1B29C4654700822AE8 /* UIKit+TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED55A1A29C4654700822AE8 /* UIKit+TextStyle.swift */; };
+		CED55A2529C5C3CB00822AE8 /* Color+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED55A2429C5C3CB00822AE8 /* Color+ColorScheme.swift */; };
+		CED55A3029C6D32400822AE8 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED55A2F29C6D32400822AE8 /* UIStackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,6 +52,39 @@
 		};
 /* End PBXCopyFilesBuildPhase section */
 
+/* Begin PBXFileReference section */
+		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7555FF7B242A565900829871 /* Vlife Task.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vlife Task.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE1D2F2329AC8AE300DC6B90 /* CocktailsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailsListViewController.swift; sourceTree = "<group>"; };
+		CE1D2F2529AC8BD200DC6B90 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CE1D2F2729AC8CCC00DC6B90 /* CocktailDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailDetailsViewController.swift; sourceTree = "<group>"; };
+		CE1D2F2929AC8D1D00DC6B90 /* CocktailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailsViewController.swift; sourceTree = "<group>"; };
+		CE8582632BB8388A00613DA6 /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
+		CE8582652BB89F1800613DA6 /* UIRefreshControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Extensions.swift"; sourceTree = "<group>"; };
+		CE981B4229BB752000261645 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
+		CE981B4429BB757C00261645 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		CE981B4629BB764F00261645 /* Themeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themeable.swift; sourceTree = "<group>"; };
+		CE981B4829BB766200261645 /* ThemeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeProvider.swift; sourceTree = "<group>"; };
+		CE981B4A29BB769400261645 /* ThemeConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeConfigurator.swift; sourceTree = "<group>"; };
+		CE981B4C29BB76AB00261645 /* ThemeProviderCompat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeProviderCompat.swift; sourceTree = "<group>"; };
+		CE981B4F29BB770400261645 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		CE981B5129BB7B7900261645 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		CE981B5329BB7C4A00261645 /* CocktailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailCell.swift; sourceTree = "<group>"; };
+		CE981B5929BB7D5C00261645 /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
+		CE981B5B29BB832500261645 /* CocktailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailsHeaderView.swift; sourceTree = "<group>"; };
+		CE981B5D29BB892F00261645 /* CocktailCharacteristicChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailCharacteristicChip.swift; sourceTree = "<group>"; };
+		CE981B5F29BB8C1B00261645 /* ThemeWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeWindow.swift; sourceTree = "<group>"; };
+		CE981B6129BC750400261645 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		CE981B6329BC7D4400261645 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		CED55A0929C4156700822AE8 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		CED55A0B29C4297700822AE8 /* Mode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
+		CED55A0D29C4299A00822AE8 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		CED55A1A29C4654700822AE8 /* UIKit+TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+TextStyle.swift"; sourceTree = "<group>"; };
+		CED55A2429C5C3CB00822AE8 /* Color+ColorScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+ColorScheme.swift"; sourceTree = "<group>"; };
+		CED55A2F29C6D32400822AE8 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		7555FF78242A565900829871 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -35,6 +96,173 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7555FF72242A565900829871 = {
+			isa = PBXGroup;
+			children = (
+				7555FF7D242A565900829871 /* app_ios */,
+				7555FF7C242A565900829871 /* Products */,
+				7555FFB0242A642200829871 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		7555FF7C242A565900829871 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7555FF7B242A565900829871 /* Vlife Task.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7555FF7D242A565900829871 /* app_ios */ = {
+			isa = PBXGroup;
+			children = (
+				CED55A2829C5F56900822AE8 /* ui */,
+				CE2CB76729C185EF00592488 /* utils */,
+				058557BA273AAA24004C7B11 /* Assets.xcassets */,
+				7555FF8C242A565B00829871 /* Info.plist */,
+				CE1D2F2529AC8BD200DC6B90 /* AppDelegate.swift */,
+			);
+			path = app_ios;
+			sourceTree = "<group>";
+		};
+		7555FFB0242A642200829871 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CE1D2F2B29AC8D7E00DC6B90 /* list */ = {
+			isa = PBXGroup;
+			children = (
+				CE1D2F2329AC8AE300DC6B90 /* CocktailsListViewController.swift */,
+				CE981B5329BB7C4A00261645 /* CocktailCell.swift */,
+				CE981B5B29BB832500261645 /* CocktailsHeaderView.swift */,
+			);
+			path = list;
+			sourceTree = "<group>";
+		};
+		CE1D2F2C29AC8D8E00DC6B90 /* details */ = {
+			isa = PBXGroup;
+			children = (
+				CE1D2F2729AC8CCC00DC6B90 /* CocktailDetailsViewController.swift */,
+				CE981B5D29BB892F00261645 /* CocktailCharacteristicChip.swift */,
+			);
+			path = details;
+			sourceTree = "<group>";
+		};
+		CE1D2F2D29AC8D9E00DC6B90 /* root */ = {
+			isa = PBXGroup;
+			children = (
+				CE1D2F2929AC8D1D00DC6B90 /* CocktailsViewController.swift */,
+			);
+			path = root;
+			sourceTree = "<group>";
+		};
+		CE2CB76529C185D700592488 /* loading */ = {
+			isa = PBXGroup;
+			children = (
+				CE981B6129BC750400261645 /* LoadingView.swift */,
+			);
+			path = loading;
+			sourceTree = "<group>";
+		};
+		CE2CB76629C185E200592488 /* error */ = {
+			isa = PBXGroup;
+			children = (
+				CE981B6329BC7D4400261645 /* ErrorView.swift */,
+			);
+			path = error;
+			sourceTree = "<group>";
+		};
+		CE2CB76729C185EF00592488 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				CE981B4F29BB770400261645 /* UIColor.swift */,
+				CE981B5F29BB8C1B00261645 /* ThemeWindow.swift */,
+				CED55A0929C4156700822AE8 /* UIView.swift */,
+				CED55A1A29C4654700822AE8 /* UIKit+TextStyle.swift */,
+				CED55A2F29C6D32400822AE8 /* UIStackView.swift */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
+		CE981B4129BB751600261645 /* theming */ = {
+			isa = PBXGroup;
+			children = (
+				CED55A2629C5DA0100822AE8 /* mode */,
+				CED55A1029C429DB00822AE8 /* configurator */,
+				CED55A0F29C429BD00822AE8 /* provider */,
+				CED55A0429C361B600822AE8 /* colors */,
+				CE981B4429BB757C00261645 /* Theme.swift */,
+				CE981B4629BB764F00261645 /* Themeable.swift */,
+			);
+			path = theming;
+			sourceTree = "<group>";
+		};
+		CE981B4E29BB76F500261645 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				CE981B5129BB7B7900261645 /* TextField.swift */,
+				CE981B5929BB7D5C00261645 /* SegmentedControl.swift */,
+				CE8582632BB8388A00613DA6 /* UICollectionView+Extensions.swift */,
+				CE8582652BB89F1800613DA6 /* UIRefreshControl+Extensions.swift */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		CED55A0429C361B600822AE8 /* colors */ = {
+			isa = PBXGroup;
+			children = (
+				CE981B4229BB752000261645 /* ColorPalette.swift */,
+				CED55A2429C5C3CB00822AE8 /* Color+ColorScheme.swift */,
+			);
+			path = colors;
+			sourceTree = "<group>";
+		};
+		CED55A0F29C429BD00822AE8 /* provider */ = {
+			isa = PBXGroup;
+			children = (
+				CE981B4829BB766200261645 /* ThemeProvider.swift */,
+				CE981B4C29BB76AB00261645 /* ThemeProviderCompat.swift */,
+			);
+			path = provider;
+			sourceTree = "<group>";
+		};
+		CED55A1029C429DB00822AE8 /* configurator */ = {
+			isa = PBXGroup;
+			children = (
+				CE981B4A29BB769400261645 /* ThemeConfigurator.swift */,
+			);
+			path = configurator;
+			sourceTree = "<group>";
+		};
+		CED55A2629C5DA0100822AE8 /* mode */ = {
+			isa = PBXGroup;
+			children = (
+				CED55A0B29C4297700822AE8 /* Mode.swift */,
+				CED55A0D29C4299A00822AE8 /* AppTheme.swift */,
+			);
+			path = mode;
+			sourceTree = "<group>";
+		};
+		CED55A2829C5F56900822AE8 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				CE2CB76629C185E200592488 /* error */,
+				CE2CB76529C185D700592488 /* loading */,
+				CE981B4E29BB76F500261645 /* common */,
+				CE981B4129BB751600261645 /* theming */,
+				CE1D2F2D29AC8D9E00DC6B90 /* root */,
+				CE1D2F2C29AC8D8E00DC6B90 /* details */,
+				CE1D2F2B29AC8D7E00DC6B90 /* list */,
+			);
+			path = ui;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
 		7555FF7A242A565900829871 /* Vlife Task */ = {
@@ -57,6 +285,7 @@
 				CE2CB76029C176A700592488 /* Lottie */,
 			);
 			productName = app_ios;
+			productReference = 7555FF7B242A565900829871 /* Vlife Task.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -83,10 +312,12 @@
 				en,
 				Base,
 			);
+			mainGroup = 7555FF72242A565900829871;
 			packageReferences = (
 				CE981B5529BB7CC300261645 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				CE2CB75F29C176A700592488 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
+			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -100,6 +331,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,7 +353,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :common:embedAndSignAppleFrameworkForXcode\n";
+			shellScript = "cd \"$SRCROOT/..\"\n: \"${EXPANDED_CODE_SIGN_IDENTITY:=-}\"\n./gradlew :shared:embedAndSignAppleFrameworkForXcode\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -130,6 +362,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE981B5429BB7C4A00261645 /* CocktailCell.swift in Sources */,
+				CE981B5C29BB832500261645 /* CocktailsHeaderView.swift in Sources */,
+				CE981B6429BC7D4400261645 /* ErrorView.swift in Sources */,
+				CE981B4729BB764F00261645 /* Themeable.swift in Sources */,
+				CE1D2F2A29AC8D1D00DC6B90 /* CocktailsViewController.swift in Sources */,
+				CE981B5E29BB892F00261645 /* CocktailCharacteristicChip.swift in Sources */,
+				CE981B4D29BB76AB00261645 /* ThemeProviderCompat.swift in Sources */,
+				CE1D2F2829AC8CCC00DC6B90 /* CocktailDetailsViewController.swift in Sources */,
+				CE981B4329BB752000261645 /* ColorPalette.swift in Sources */,
+				CED55A3029C6D32400822AE8 /* UIStackView.swift in Sources */,
+				CE8582642BB8388A00613DA6 /* UICollectionView+Extensions.swift in Sources */,
+				CE981B4929BB766200261645 /* ThemeProvider.swift in Sources */,
+				CED55A0A29C4156700822AE8 /* UIView.swift in Sources */,
+				CE981B5A29BB7D5C00261645 /* SegmentedControl.swift in Sources */,
+				CE981B6029BB8C1B00261645 /* ThemeWindow.swift in Sources */,
+				CED55A2529C5C3CB00822AE8 /* Color+ColorScheme.swift in Sources */,
+				CE981B4529BB757C00261645 /* Theme.swift in Sources */,
+				CE981B5029BB770400261645 /* UIColor.swift in Sources */,
+				CED55A0E29C4299A00822AE8 /* AppTheme.swift in Sources */,
+				CE981B5229BB7B7900261645 /* TextField.swift in Sources */,
+				CE1D2F2629AC8BD200DC6B90 /* AppDelegate.swift in Sources */,
+				CE981B4B29BB769400261645 /* ThemeConfigurator.swift in Sources */,
+				CED55A1B29C4654700822AE8 /* UIKit+TextStyle.swift in Sources */,
+				CE1D2F2429AC8AE300DC6B90 /* CocktailsListViewController.swift in Sources */,
+				CED55A0C29C4297700822AE8 /* Mode.swift in Sources */,
+				CE981B6229BC750400261645 /* LoadingView.swift in Sources */,
+				CE8582662BB89F1800613DA6 /* UIRefreshControl+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,12 +517,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = MT5WZ5T6NY;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../common/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)",
+					"$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)",
 				);
 				INFOPLIST_FILE = app_ios/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Vlife Task";
@@ -273,10 +533,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
-					common,
+					shared,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kz.grandera.vlifetesttaskapp.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -295,12 +556,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = MT5WZ5T6NY;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../common/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)",
+					"$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)",
 				);
 				INFOPLIST_FILE = app_ios/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Vlife Task";
@@ -310,10 +572,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
-					common,
+					shared,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kz.grandera.vlifetesttaskapp.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";

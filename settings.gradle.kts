@@ -16,6 +16,6 @@ dependencyResolutionManagement {
 rootProject.name = "Vlife_Task"
 include(":app_android")
 include(":common")
-include(":time_travel_client")
 include(":ui_components")
 include(":core")
+include(":shared")

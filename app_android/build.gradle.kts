@@ -55,10 +55,7 @@ android {
 }
 
 dependencies {
-    implementation(dependencyNotation = project(path = ":core"))
-    implementation(dependencyNotation = project(path = ":common"))
-    implementation(dependencyNotation = project(path = ":ui_components"))
-
+    implementation(dependencyNotation = project(path = ":shared"))
 
     implementation(dependencyNotation = libs.koin.android)
     implementation(dependencyNotation = libs.android.activity.compose)
@@ -66,5 +63,4 @@ dependencies {
     implementation(dependencyNotation = libs.decompose.core)
     implementation(dependencyNotation = libs.mvikotlin.core)
     implementation(dependencyNotation = libs.mvikotlin.main)
-    implementation(dependencyNotation = libs.mvikotlin.logging)
 }

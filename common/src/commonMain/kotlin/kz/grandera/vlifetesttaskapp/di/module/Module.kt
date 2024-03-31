@@ -9,4 +9,5 @@ public val cocktailsModules: List<Module> = mutableListOf<Module>().apply {
     add(element = asyncModule)
     add(element = httpClientModule)
     add(element = networkModule)
-}
+    add(element = storeFactoryModule)
+}.toList()

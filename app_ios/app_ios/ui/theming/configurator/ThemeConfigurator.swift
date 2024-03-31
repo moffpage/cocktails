@@ -1,12 +1,5 @@
-//
-//  ThemeConfigurator.swift
-//  Vlife Task
-//
-//  Created by Artur Mavlyuchenko on 10.03.2023.
-//  Copyright © 2023 orgName. All rights reserved.
-//
 
-import common
+import shared
 import UIKit
 
 struct ThemeConfigurator {

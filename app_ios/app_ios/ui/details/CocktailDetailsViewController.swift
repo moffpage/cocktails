@@ -1,12 +1,5 @@
-//
-//  CocktailDetailsViewController.swift
-//  app_ios
-//
-//  Created by Artur Mavlyuchenko on 27.02.2023.
-//  Copyright © 2023 orgName. All rights reserved.
-//
 
-import common
+import shared
 import UIKit
 
 class CocktailDetailsViewController: UIViewController {
@@ -46,7 +39,7 @@ class CocktailDetailsViewController: UIViewController {
     
     private let instructionsLabel = {
         let label = UILabel()
-        label.text = Strings.shared.instructions.desc().localized()
+        label.text = CoreStrings.shared.instructions.desc().localized()
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -81,7 +74,7 @@ class CocktailDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         themeProvider.register(observer: self)
-        component.model.subscribe { [unowned self] model in
+        component.model.observe { [unowned self] model in
             self.bindView(with: model)
         }
     }
@@ -102,9 +95,9 @@ class CocktailDetailsViewController: UIViewController {
         
         let alcoholicSign: String
         if model.isAlcoholic {
-            alcoholicSign = Strings.shared.alcoholic.desc().localized()
+            alcoholicSign = CoreStrings.shared.alcoholic.desc().localized()
         } else {
-            alcoholicSign = Strings.shared.nonAlcoholic.desc().localized()
+            alcoholicSign = CoreStrings.shared.nonAlcoholic.desc().localized()
         }
         
         if let category = model.category {

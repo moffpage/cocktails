@@ -6,13 +6,11 @@ import io.github.aakira.napier.Napier
 import io.github.aakira.napier.DebugAntilog
 
 import org.koin.core.logger.Level
-import org.koin.core.context.startKoin
 import org.koin.android.ext.koin.androidLogger
 import org.koin.android.ext.koin.androidContext
 
-import kz.grandera.vlifetesttaskapp.di.module.cocktailsModules
 import kz.grandera.vlifetesttaskapp.core.build_config.isDebug
-import kz.grandera.vlifetesttaskapp.android.module.storeFactoryModule
+import kz.grandera.vlifetesttaskapp.di.initializeKoin
 
 internal class VlifeTestTaskApp : Application() {
     override fun onCreate() {
@@ -22,12 +20,9 @@ internal class VlifeTestTaskApp : Application() {
             Napier.base(antilog = DebugAntilog())
         }
 
-        val logLevel = if (isDebug) Level.DEBUG else Level.NONE
-
-        startKoin {
-            androidLogger(level = logLevel)
+        initializeKoin {
+            androidLogger(level = if (isDebug) Level.DEBUG else Level.NONE)
             androidContext(androidContext = this@VlifeTestTaskApp)
-            modules(modules = cocktailsModules + storeFactoryModule)
         }
     }
 }

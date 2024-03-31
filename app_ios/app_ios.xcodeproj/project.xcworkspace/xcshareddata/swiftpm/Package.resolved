@@ -1,12 +1,13 @@
 {
+  "originHash" : "cc0695ed0fc548f4ac8d241eeb09f11e9295a9610921e523fbf22fe0e28acf5c",
   "pins" : [
     {
       "identity" : "kingfisher",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onevcat/Kingfisher.git",
       "state" : {
-        "revision" : "b6f62758f21a8c03cd64f4009c037cfa580a256e",
-        "version" : "7.9.1"
+        "revision" : "5b92f029fab2cce44386d28588098b5be0824ef5",
+        "version" : "7.11.0"
       }
     },
     {
@@ -14,10 +15,10 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/airbnb/lottie-spm.git",
       "state" : {
-        "revision" : "3e7eb8281ff9ac67e64a3a58a80c0aa9fa388b04",
-        "version" : "4.3.3"
+        "revision" : "3bd43e12d6fb54654366a61f7cfaca787318b8ce",
+        "version" : "4.4.1"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

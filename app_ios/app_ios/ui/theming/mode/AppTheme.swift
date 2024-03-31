@@ -1,12 +1,5 @@
-//
-//  AppTheme.swift
-//  Vlife Task
-//
-//  Created by Artur Mavlyuchenko on 17.03.2023.
-//  Copyright © 2023 orgName. All rights reserved.
-//
 
-import common
+import shared
 
 struct AppTheme: Theme {
     static func light(shapes: Shapes, typography: Typography) -> any Theme {

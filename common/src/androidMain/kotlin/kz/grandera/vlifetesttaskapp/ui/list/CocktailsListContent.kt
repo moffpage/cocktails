@@ -52,7 +52,7 @@ import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
 
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent.CocktailModel
-import kz.grandera.vlifetesttaskapp.resources.Strings
+import kz.grandera.vlifetesttaskapp.resources.CoreStrings
 import kz.grandera.vlifetesttaskapp.ui_components.error.ErrorContent
 import kz.grandera.vlifetesttaskapp.ui_components.loading.LoadingContent
 import kz.grandera.vlifetesttaskapp.ui_components.textfield.SearchBar
@@ -116,7 +116,7 @@ internal fun CocktailsListContent(
                             modifier = Modifier
                                 .padding(bottom = 20.dp)
                                 .statusBarsPadding(),
-                            text = stringResource(id = Strings.cocktails.resourceId),
+                            text = stringResource(id = CoreStrings.cocktails.resourceId),
                             style = MaterialTheme.typography.h1
                                 .copy(color = MaterialTheme.colors.onBackground)
                         )
@@ -156,8 +156,8 @@ internal fun CocktailsListContent(
                             TwoSegmentsControl(
                                 modifier = Modifier.padding(vertical = 8.dp),
                                 selected = !model.listsAlcoholicCocktails,
-                                firstSegmentTitle = stringResource(id = Strings.nonAlcoholic.resourceId),
-                                secondSegmentTitle = stringResource(id = Strings.alcoholic.resourceId),
+                                firstSegmentTitle = stringResource(id = CoreStrings.nonAlcoholic.resourceId),
+                                secondSegmentTitle = stringResource(id = CoreStrings.alcoholic.resourceId),
                                 onFirstSegmentClick = { component.displayNonAlcoholicCocktails() },
                                 onSecondSegmentClick = { component.displayAlcoholicCocktails() },
                             )
