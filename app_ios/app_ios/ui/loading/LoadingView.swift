@@ -1,11 +1,14 @@
 
 import shared
 import UIKit
+import SnapKit
 import Lottie
 
-class LoadingView: UIView {
-    private let animationView = {
-        let animationView = LottieAnimationView(name: Animations.shared.cocktail.fileName)
+final class LoadingView: UIView {
+    private let animationView: LottieAnimationView = {
+        let animationView = LottieAnimationView(
+            filePath: Animations.shared.cocktail.path
+        )
         animationView.loopMode = .loop
         animationView.contentMode = .scaleAspectFit
         return animationView
@@ -23,12 +26,14 @@ class LoadingView: UIView {
         }
     }
     
-    convenience init() {
-        self.init(frame: UIScreen.main.bounds)
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        themeProvider.register(observer: self)
+        addLottieAnimationView()
+    }
+    
+    init() {
+        super.init(frame: UIScreen.main.bounds)
         themeProvider.register(observer: self)
         addLottieAnimationView()
     }
@@ -39,7 +44,9 @@ class LoadingView: UIView {
     
     private func addLottieAnimationView() {
         addSubview(animationView)
-        animationView.center = center
+        animationView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 }
 

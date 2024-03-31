@@ -3,7 +3,7 @@ import shared
 import UIKit
 import SnapKit
 
-class CocktailsHeaderView: UICollectionReusableView {    
+final class CocktailsHeaderView: UICollectionReusableView {    
     var selectedSegmentIndex: Int = 0 {
         didSet {
             segmentedControl.selectedSegmentIndex = selectedSegmentIndex
@@ -15,14 +15,13 @@ class CocktailsHeaderView: UICollectionReusableView {
     var onFirstSegmentClicked: (() -> Void)?
     var onSecondSegmentClicked: (() -> Void)?
     
-    private let titleLabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = CoreStrings.shared.cocktails.desc().localized()
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let searchBar = {
+    private let searchBar: TextField = {
         let searchBar = TextField()
 
         let searchIcon = UIImage(imageLiteralResourceName: "magnifyingglass")
@@ -37,11 +36,10 @@ class CocktailsHeaderView: UICollectionReusableView {
         searchBar.leftView = searchIconView
         searchBar.rightView = clearIconView
         searchBar.leftViewMode = .always
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
         return searchBar
     }()
     
-    private lazy var segmentedControl = {
+    private lazy var segmentedControl: SegmentControl = {
         let textStyle = themeProvider.theme.typography.h4
         let control = SegmentControl(
             items: [
@@ -49,7 +47,6 @@ class CocktailsHeaderView: UICollectionReusableView {
                 CoreStrings.shared.alcoholic.desc().localized().image(textStyle: textStyle),
             ]
         )
-        control.translatesAutoresizingMaskIntoConstraints = false
         control.layer.borderWidth = 2
         return control
     }()

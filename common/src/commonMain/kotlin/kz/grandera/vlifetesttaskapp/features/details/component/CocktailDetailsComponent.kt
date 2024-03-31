@@ -1,5 +1,7 @@
 package kz.grandera.vlifetesttaskapp.features.details.component
 
+import kotlin.native.ObjCName
+
 import com.arkivanov.decompose.value.Value
 
 public interface CocktailDetailsComponent {
@@ -13,6 +15,7 @@ public interface CocktailDetailsComponent {
         public val preparationInstruction: String,
     )
 
+    @ObjCName(swiftName = "DrinkCategory")
     public enum class DrinkCategory {
         Beer,
         Soft,

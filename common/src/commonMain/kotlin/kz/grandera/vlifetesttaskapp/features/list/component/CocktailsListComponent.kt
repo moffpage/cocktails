@@ -1,5 +1,7 @@
 package kz.grandera.vlifetesttaskapp.features.list.component
 
+import kotlin.native.ObjCName
+
 import com.arkivanov.decompose.value.Value
 
 public interface CocktailsListComponent {
@@ -12,6 +14,7 @@ public interface CocktailsListComponent {
         public val listsAlcoholicCocktails: Boolean,
     )
 
+    @ObjCName(swiftName = "CocktailModel")
     public data class CocktailModel(
         public val id: Long,
         public val name: String,

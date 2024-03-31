@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.ImeAction
@@ -60,7 +59,6 @@ import kz.grandera.vlifetesttaskapp.ui_components.textfield.SearchBar
 @Composable
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @ExperimentalMaterialApi
-@ExperimentalComposeUiApi
 internal fun CocktailsListContent(
     modifier: Modifier = Modifier,
     component: CocktailsListComponent

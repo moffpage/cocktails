@@ -7,7 +7,7 @@ import kotlin.time.Duration
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.okhttp.OkHttp
 
-public actual fun httpEngine(
+internal actual fun httpEngine(
     readTimeout: Duration,
     connectTimeout: Duration,
 ): HttpClientEngine = OkHttp.create {

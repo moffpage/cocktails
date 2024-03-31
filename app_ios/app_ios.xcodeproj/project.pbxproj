@@ -17,6 +17,9 @@
 		CE8582662BB89F1800613DA6 /* UIRefreshControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8582652BB89F1800613DA6 /* UIRefreshControl+Extensions.swift */; };
 		CE85826A2BB91EAB00613DA6 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE8582692BB91EAB00613DA6 /* SnapKit */; };
 		CE85826C2BB91EAB00613DA6 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = CE85826B2BB91EAB00613DA6 /* SnapKit-Dynamic */; };
+		CE85826E2BB952CF00613DA6 /* ViewHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85826D2BB952CF00613DA6 /* ViewHolder.swift */; };
+		CE8582702BB9530100613DA6 /* CocktailDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85826F2BB9530100613DA6 /* CocktailDetailsView.swift */; };
+		CE8582722BB959CC00613DA6 /* CocktailsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8582712BB959CC00613DA6 /* CocktailsListView.swift */; };
 		CE981B4329BB752000261645 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B4229BB752000261645 /* ColorPalette.swift */; };
 		CE981B4529BB757C00261645 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B4429BB757C00261645 /* Theme.swift */; };
 		CE981B4729BB764F00261645 /* Themeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE981B4629BB764F00261645 /* Themeable.swift */; };
@@ -38,7 +41,6 @@
 		CED55A0E29C4299A00822AE8 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED55A0D29C4299A00822AE8 /* AppTheme.swift */; };
 		CED55A1B29C4654700822AE8 /* UIKit+TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED55A1A29C4654700822AE8 /* UIKit+TextStyle.swift */; };
 		CED55A2529C5C3CB00822AE8 /* Color+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED55A2429C5C3CB00822AE8 /* Color+ColorScheme.swift */; };
-		CED55A3029C6D32400822AE8 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED55A2F29C6D32400822AE8 /* UIStackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -64,6 +66,9 @@
 		CE1D2F2929AC8D1D00DC6B90 /* CocktailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailsViewController.swift; sourceTree = "<group>"; };
 		CE8582632BB8388A00613DA6 /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
 		CE8582652BB89F1800613DA6 /* UIRefreshControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Extensions.swift"; sourceTree = "<group>"; };
+		CE85826D2BB952CF00613DA6 /* ViewHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHolder.swift; sourceTree = "<group>"; };
+		CE85826F2BB9530100613DA6 /* CocktailDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailDetailsView.swift; sourceTree = "<group>"; };
+		CE8582712BB959CC00613DA6 /* CocktailsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailsListView.swift; sourceTree = "<group>"; };
 		CE981B4229BB752000261645 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
 		CE981B4429BB757C00261645 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		CE981B4629BB764F00261645 /* Themeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themeable.swift; sourceTree = "<group>"; };
@@ -84,7 +89,6 @@
 		CED55A0D29C4299A00822AE8 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		CED55A1A29C4654700822AE8 /* UIKit+TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+TextStyle.swift"; sourceTree = "<group>"; };
 		CED55A2429C5C3CB00822AE8 /* Color+ColorScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+ColorScheme.swift"; sourceTree = "<group>"; };
-		CED55A2F29C6D32400822AE8 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +148,7 @@
 				CE1D2F2329AC8AE300DC6B90 /* CocktailsListViewController.swift */,
 				CE981B5329BB7C4A00261645 /* CocktailCell.swift */,
 				CE981B5B29BB832500261645 /* CocktailsHeaderView.swift */,
+				CE8582712BB959CC00613DA6 /* CocktailsListView.swift */,
 			);
 			path = list;
 			sourceTree = "<group>";
@@ -153,6 +158,7 @@
 			children = (
 				CE1D2F2729AC8CCC00DC6B90 /* CocktailDetailsViewController.swift */,
 				CE981B5D29BB892F00261645 /* CocktailCharacteristicChip.swift */,
+				CE85826F2BB9530100613DA6 /* CocktailDetailsView.swift */,
 			);
 			path = details;
 			sourceTree = "<group>";
@@ -188,7 +194,6 @@
 				CE981B5F29BB8C1B00261645 /* ThemeWindow.swift */,
 				CED55A0929C4156700822AE8 /* UIView.swift */,
 				CED55A1A29C4654700822AE8 /* UIKit+TextStyle.swift */,
-				CED55A2F29C6D32400822AE8 /* UIStackView.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -213,6 +218,7 @@
 				CE981B5929BB7D5C00261645 /* SegmentedControl.swift */,
 				CE8582632BB8388A00613DA6 /* UICollectionView+Extensions.swift */,
 				CE8582652BB89F1800613DA6 /* UIRefreshControl+Extensions.swift */,
+				CE85826D2BB952CF00613DA6 /* ViewHolder.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -377,8 +383,9 @@
 				CE981B5E29BB892F00261645 /* CocktailCharacteristicChip.swift in Sources */,
 				CE981B4D29BB76AB00261645 /* ThemeProviderCompat.swift in Sources */,
 				CE1D2F2829AC8CCC00DC6B90 /* CocktailDetailsViewController.swift in Sources */,
+				CE85826E2BB952CF00613DA6 /* ViewHolder.swift in Sources */,
 				CE981B4329BB752000261645 /* ColorPalette.swift in Sources */,
-				CED55A3029C6D32400822AE8 /* UIStackView.swift in Sources */,
+				CE8582722BB959CC00613DA6 /* CocktailsListView.swift in Sources */,
 				CE8582642BB8388A00613DA6 /* UICollectionView+Extensions.swift in Sources */,
 				CE981B4929BB766200261645 /* ThemeProvider.swift in Sources */,
 				CED55A0A29C4156700822AE8 /* UIView.swift in Sources */,
@@ -386,6 +393,7 @@
 				CE981B6029BB8C1B00261645 /* ThemeWindow.swift in Sources */,
 				CED55A2529C5C3CB00822AE8 /* Color+ColorScheme.swift in Sources */,
 				CE981B4529BB757C00261645 /* Theme.swift in Sources */,
+				CE8582702BB9530100613DA6 /* CocktailDetailsView.swift in Sources */,
 				CE981B5029BB770400261645 /* UIColor.swift in Sources */,
 				CED55A0E29C4299A00822AE8 /* AppTheme.swift in Sources */,
 				CE981B5229BB7B7900261645 /* TextField.swift in Sources */,

@@ -1,7 +1,6 @@
 package kz.grandera.vlifetesttaskapp.ui.root
 
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.runtime.Composable
 import androidx.compose.material.ExperimentalMaterialApi
 
@@ -20,7 +19,6 @@ import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent.C
 
 @Composable
 @ExperimentalMaterialApi
-@ExperimentalComposeUiApi
 @ExperimentalDecomposeApi
 public fun CocktailsContent(
     modifier: Modifier = Modifier,

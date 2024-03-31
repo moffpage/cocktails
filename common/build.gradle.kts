@@ -46,6 +46,11 @@ kotlin {
     }
 
     sourceSets {
+        all {
+            languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
+            languageSettings.optIn("kotlin.experimental.ExperimentalObjCRefinement")
+        }
+
         val commonMain by getting {
             dependencies {
                 implementation(dependencyNotation = project(path = ":core"))
@@ -55,8 +60,8 @@ kotlin {
                 implementation(dependencyNotation = libs.ktor.core)
                 implementation(dependencyNotation = libs.moko.resources.common)
                 implementation(dependencyNotation = libs.kotlinx.coroutines)
-                implementation(dependencyNotation = libs.mvikotlin.logging)
                 implementation(dependencyNotation = libs.bundles.mvikotlin.common)
+                implementation(dependencyNotation = libs.mvikotlin.logging)
                 implementation(dependencyNotation = libs.decompose.core)
             }
         }

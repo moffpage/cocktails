@@ -3,7 +3,7 @@ import shared
 import UIKit
 import SnapKit
 
-class CocktailCharacteristicChip: UIView {
+final class CocktailCharacteristicChip: UIView {
     private let iconName: String?
     
     private let iconView = UIImageView()

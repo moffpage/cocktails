@@ -1,7 +1,7 @@
 
 import UIKit
 
-class ThemeWindow: UIWindow {
+final class ThemeWindow: UIWindow {
     override init(frame: CGRect) {
         super.init(frame: frame)
         themeProvider.register(observer: self)
