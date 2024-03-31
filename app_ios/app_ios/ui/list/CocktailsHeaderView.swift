@@ -1,6 +1,7 @@
 
 import shared
 import UIKit
+import SnapKit
 
 class CocktailsHeaderView: UICollectionReusableView {    
     var selectedSegmentIndex: Int = 0 {
@@ -55,6 +56,9 @@ class CocktailsHeaderView: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        addTitle()
+        addSearch()
+        addFilterSegments()
         themeProvider.register(observer: self)
     }
     
@@ -62,19 +66,13 @@ class CocktailsHeaderView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        addTitle()
-        addSearch()
-        addFilterSegments()
-    }
-    
     private func addTitle() {
         addSubview(titleLabel)
-        titleLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        titleLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.height.equalTo(40)
+            make.horizontalEdges.equalToSuperview()
+        }
     }
     
     private func addSearch() {
@@ -86,36 +84,30 @@ class CocktailsHeaderView: UICollectionReusableView {
         )
         searchBar.rightView?.addGestureRecognizer(clearAction)
         searchBar.addTarget(self, action: #selector(searchQueryDidChange(textField:)), for: .editingChanged)
-        searchBar.topAnchor.constraint(
-            equalTo: titleLabel.bottomAnchor,
-            constant: 20
-        ).isActive = true
-        searchBar.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        searchBar.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        searchBar.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        searchBar.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(20)
+            make.height.equalTo(36)
+            make.horizontalEdges.equalToSuperview()
+        }
     }
     
     private func addFilterSegments() {
         addSubview(segmentedControl)
         segmentedControl.addTarget(self, action: #selector(segmentTapped(_:)), for: .valueChanged)
         segmentedControl.selectedSegmentIndex = selectedSegmentIndex
-        segmentedControl.topAnchor.constraint(
-            equalTo: searchBar.bottomAnchor,
-            constant: 16
-        ).isActive = true
-        segmentedControl.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        segmentedControl.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        segmentedControl.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        segmentedControl.snp.makeConstraints { make in
+            make.top.equalTo(searchBar.snp.bottom).offset(16)
+            make.height.equalTo(36)
+            make.horizontalEdges.equalToSuperview()
+        }
     }
     
     @objc
     private func segmentTapped(_ control: UISegmentedControl) {
-        switch (segmentedControl.selectedSegmentIndex) {
-        case 0:
+        if segmentedControl.selectedSegmentIndex == 0 {
             onFirstSegmentClicked?()
-        case 1:
+        } else if segmentedControl.selectedSegmentIndex == 1 {
             onSecondSegmentClicked?()
-        default: break
         }
     }
     
@@ -136,8 +128,6 @@ class CocktailsHeaderView: UICollectionReusableView {
 
 extension CocktailsHeaderView: Themeable {
     func apply(theme: any Theme) {
-        searchBar.apply(theme: theme)
-        segmentedControl.apply(theme: theme)
         titleLabel.textColor = theme.colors.onBackground
         titleLabel.setTextStyle(style: theme.typography.h1)
     }

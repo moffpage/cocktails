@@ -1,34 +1,20 @@
 
 import shared
 import UIKit
+import SnapKit
 
 class CocktailCharacteristicChip: UIView {
-    private let text: String
     private let iconName: String?
     
-    private let iconView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    private let textView = {
-        let textView = UILabel()
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        return textView
-    }()
+    private let iconView = UIImageView()
+    private let textView = UILabel()
     
     init(text: String, iconName: String?) {
-        self.text = text
         self.iconName = iconName
         super.init(frame: .zero)
-        themeProvider.register(observer: self)
-    }
-    
-    override init(frame: CGRect) {
-        self.text = ""
-        self.iconName = nil
-        super.init(frame: frame)
+        addCategoryIcon()
+        addText()
+        textView.text = text
         themeProvider.register(observer: self)
     }
     
@@ -39,28 +25,27 @@ class CocktailCharacteristicChip: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         clipOval()
-        addCategoryIcon()
-        addText()
-        textView.text = text
     }
     
     private func addCategoryIcon() {
         if let iconName = iconName {
             addSubview(iconView)
             iconView.image = UIImage(imageLiteralResourceName: iconName)
-            iconView.widthAnchor.constraint(equalToConstant: 24).isActive = true
-            iconView.heightAnchor.constraint(equalToConstant: 24).isActive = true
-            iconView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-            iconView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
+            iconView.snp.makeConstraints { make in
+                make.size.equalTo(24)
+                make.centerY.equalToSuperview()
+                make.leading.equalToSuperview().inset(16)
+            }
         }
     }
     
     private func addText() {
         addSubview(textView)
-        textView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        textView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        textView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: iconName == nil ? 16 : 48).isActive = true
-        textView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16).isActive = true
+        textView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(iconName == nil ? 16 : 48)
+            make.trailing.equalToSuperview().inset(16)
+            make.verticalEdges.equalToSuperview()
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 
 import shared
 import UIKit
+import SnapKit
 
 class CocktailsListViewController: UIViewController {
     var cocktails: [CocktailsListComponentCocktailModel] = [] {
@@ -36,11 +37,16 @@ class CocktailsListViewController: UIViewController {
         )
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.contentInset = UIEdgeInsets(
+            top: 0,
+            left: 8,
+            bottom: 0,
+            right: -8
+        )
         collectionView.registerClassForCell(CocktailCell.self)
         collectionView.registerClassForHeaderView(EmptyHeader.self)
         collectionView.registerClassForHeaderView(CocktailsHeaderView.self)
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
     
@@ -91,10 +97,9 @@ class CocktailsListViewController: UIViewController {
     
     private func setupCollectionView() {
         view.addSubview(collectionView)
-        collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     @objc
