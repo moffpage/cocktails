@@ -4,7 +4,7 @@ import kotlin.time.Duration
 
 import io.ktor.client.engine.HttpClientEngine
 
-public expect fun httpEngine(
+internal expect fun httpEngine(
     readTimeout: Duration,
     connectTimeout: Duration,
 ): HttpClientEngine

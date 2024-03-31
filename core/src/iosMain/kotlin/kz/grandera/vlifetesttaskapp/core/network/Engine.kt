@@ -5,7 +5,7 @@ import kotlin.time.Duration
 import io.ktor.client.engine.darwin.Darwin
 import io.ktor.client.engine.HttpClientEngine
 
-public actual fun httpEngine(
+internal actual fun httpEngine(
     readTimeout: Duration,
     connectTimeout: Duration,
 ): HttpClientEngine = Darwin.create {

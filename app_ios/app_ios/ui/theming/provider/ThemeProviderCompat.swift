@@ -1,7 +1,7 @@
 
 import Foundation
 
-class ThemeProviderCompat: ThemeProvider {
+final class ThemeProviderCompat: ThemeProvider {
     private var observers: NSHashTable<AnyObject> = NSHashTable.weakObjects()
     
     static let shared = ThemeProviderCompat()

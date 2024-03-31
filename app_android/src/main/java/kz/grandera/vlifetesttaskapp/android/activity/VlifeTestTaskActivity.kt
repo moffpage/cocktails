@@ -3,7 +3,6 @@ package kz.grandera.vlifetesttaskapp.android.activity
 import android.os.Bundle
 import android.graphics.Color
 
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.material.Surface
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -17,14 +16,13 @@ import com.arkivanov.decompose.defaultComponentContext
 
 import kz.grandera.vlifetesttaskapp.ui.root.CocktailsContent
 import kz.grandera.vlifetesttaskapp.ui_components.theming.VlifeTestTaskAppTheme
-import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent
 import kz.grandera.vlifetesttaskapp.features.root.component.cocktailsComponentFactory
 
 class VlifeTestTaskActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val component: CocktailsComponent = cocktailsComponentFactory(
+        val component = cocktailsComponentFactory(
             componentContext = defaultComponentContext()
         )
 
@@ -40,7 +38,6 @@ class VlifeTestTaskActivity : ComponentActivity() {
                 Surface {
                     @OptIn(
                         ExperimentalMaterialApi::class,
-                        ExperimentalComposeUiApi::class,
                         ExperimentalDecomposeApi::class
                     )
                     CocktailsContent(component = component)

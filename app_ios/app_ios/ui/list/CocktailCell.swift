@@ -1,9 +1,10 @@
 
 import shared
 import UIKit
+import SnapKit
 import Kingfisher
 
-class CocktailCell: UICollectionViewCell {
+final class CocktailCell: UICollectionViewCell {
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit

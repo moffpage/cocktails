@@ -11,6 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         InitializationKt.initializeKoin()
         InitializationKt.enableLogging()
+        
         ThemeConfigurator.configureTheme(
             shapes: ShapesFactoryKt.ShapesFactory,
             typography: TypographyFactoryKt.TypographyFactory
@@ -23,15 +24,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             instanceKeeper: nil,
             backHandler: nil
         )
-        
         let cocktailsComponent = FactoryKt.cocktailsComponentFactory(
             componentContext: componentContext
         )
         let cocktailsViewController = CocktailsViewController(
             component: cocktailsComponent
         )
-        
         let window = ThemeWindow(frame: UIScreen.main.bounds)
+        
         window.rootViewController = cocktailsViewController
         
         self.window = window

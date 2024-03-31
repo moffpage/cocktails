@@ -62,7 +62,7 @@ internal fun CocktailsListStore(
         name = "CocktailsListStore",
         initialState = State(
             isError = false,
-            isLoading = true,
+            isLoading = false,
             isRefreshing = false,
             searchQuery = "",
             cocktails = emptyList(),

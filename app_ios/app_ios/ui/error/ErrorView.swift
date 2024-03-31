@@ -3,20 +3,20 @@ import shared
 import UIKit
 import SnapKit
 
-class ErrorView: UIView {
+final class ErrorView: UIView {
     
     var onRetry: (() -> Void)?
     
     private let errorIconView = UIImageView(image: UIImage(imageLiteralResourceName: "error"))
     
-    private let errorLabel = {
+    private let errorLabel: UILabel = {
         let label = UILabel()
         label.text = UiComponentsStrings.shared.errorOccurred.desc().localized()
         label.textAlignment = .center
         return label
     }()
     
-    private let retryButton = {
+    private let retryButton: UIButton = {
         let button = UIButton()
         button.setTitle(UiComponentsStrings.shared.retry.desc().localized(), for: .normal)
         return button

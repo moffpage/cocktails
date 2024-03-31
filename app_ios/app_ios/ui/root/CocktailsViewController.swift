@@ -2,7 +2,7 @@
 import shared
 import UIKit
 
-class CocktailsViewController: UINavigationController {
+final class CocktailsViewController: UINavigationController {
     private let component: CocktailsComponent
     
     init(component: CocktailsComponent) {

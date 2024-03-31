@@ -3,52 +3,14 @@ import shared
 import UIKit
 import SnapKit
 
-class CocktailsListViewController: UIViewController {
+final class CocktailsListViewController: UIViewController, ViewHolder {
+    typealias RootViewType = CocktailsListView
+    
     var cocktails: [CocktailsListComponentCocktailModel] = [] {
         didSet {
-            UIView.performWithoutAnimation {
-                collectionView.reloadSections(IndexSet(integer: 1))
-            }
+            self.rootView.reloadList(at: 1)
         }
     }
-    
-    private var headerView: CocktailsHeaderView?
-    
-    private let errorView = ErrorView(
-        frame: CGRect(
-            origin: .zero,
-            size: CGSize(
-                width: 345,
-                height: 200
-            )
-        )
-    )
-    
-    private let loadingView = LoadingView()
-    
-    private let refreshControl = UIRefreshControl()
-    
-    private lazy var collectionView = {
-        let collectionViewLayout = UICollectionViewFlowLayout()
-        collectionViewLayout.sectionHeadersPinToVisibleBounds = false
-        let collectionView = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: collectionViewLayout
-        )
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.contentInset = UIEdgeInsets(
-            top: 0,
-            left: 8,
-            bottom: 0,
-            right: -8
-        )
-        collectionView.registerClassForCell(CocktailCell.self)
-        collectionView.registerClassForHeaderView(EmptyHeader.self)
-        collectionView.registerClassForHeaderView(CocktailsHeaderView.self)
-        collectionView.showsVerticalScrollIndicator = false
-        return collectionView
-    }()
     
     private let component: CocktailsListComponent
     
@@ -61,68 +23,29 @@ class CocktailsListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func loadView() {
+        view = CocktailsListView(
+            onRefresh: { [unowned self] in
+                self.component.reload()
+            },
+            onRefetch: { [unowned self] in
+                self.component.refetchCocktails()
+            }
+        )
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        themeProvider.register(observer: self)
-        setupErrorView()
-        setupLoadingViews()
-        setupCollectionView()
-        addTapGestureListeners()
+        bindView()
         component.model.observe { [unowned self] model in
-            self.bindModel(model: model)
+            self.cocktails = model.cocktails
+            self.rootView.bind(model: model)
         }
     }
     
-    private func bindModel(model: CocktailsListComponentModel) {
-        cocktails = model.cocktails
-        errorView.isHidden = !model.isError
-        headerView?.selectedSegmentIndex = model.listsAlcoholicCocktails ? 1 : 0
-        loadingView.isAnimating = model.isLoading
-        collectionView.isHidden = model.isError || (model.isLoading && cocktails.isEmpty)
-        refreshControl.setRefreshing(model.isRefreshing)
-    }
-    
-    private func setupErrorView() {
-        view.addSubview(errorView)
-        errorView.center = view.center
-        errorView.onRetry = { [unowned self] in self.component.reload() }
-    }
-    
-    private func setupLoadingViews() {
-        view.addSubview(loadingView)
-        loadingView.layer.zPosition = 1
-        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        collectionView.refreshControl = refreshControl
-    }
-    
-    private func setupCollectionView() {
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
-    
-    @objc
-    private func refresh() {
-        component.reload()
-    }
-    
-    @objc
-    private func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    
-    private func addTapGestureListeners() {
-        let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        singleTapGestureRecognizer.cancelsTouchesInView = false
-        collectionView.addGestureRecognizer(singleTapGestureRecognizer)
-    }
-}
-
-extension CocktailsListViewController: Themeable {
-    func apply(theme: any Theme) {
-        view.backgroundColor = theme.colors.background
-        collectionView.backgroundColor = theme.colors.background
+    private func bindView() {
+        rootView.collectionView.delegate = self
+        rootView.collectionView.dataSource = self
     }
 }
 
@@ -178,11 +101,9 @@ extension CocktailsListViewController: UICollectionViewDelegateFlowLayout {
                 headerView.onSecondSegmentClicked = { [unowned self] in
                     self.component.displayAlcoholicCocktails()
                 }
-                self.headerView = headerView
                 return headerView
             } else {
-                let headerView: EmptyHeader = collectionView.dequeueHeaderView(for: indexPath)
-                return headerView
+                return UICollectionReusableView()
             }
         } else {
             fatalError("This should not be called")
@@ -223,5 +144,3 @@ extension CocktailsListViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int { return 2 }
 }
-
-private class EmptyHeader : UICollectionReusableView { }

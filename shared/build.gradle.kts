@@ -15,6 +15,14 @@ android {
 }
 
 kotlin {
+    androidTarget {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = JavaVersion.VERSION_1_8.toString()
+            }
+        }
+    }
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -33,7 +41,7 @@ kotlin {
     androidTarget()
 
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 api(dependencyNotation = project(path = ":core"))
                 api(dependencyNotation = project(path = ":common"))
