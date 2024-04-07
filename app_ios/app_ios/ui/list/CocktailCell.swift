@@ -38,7 +38,12 @@ final class CocktailCell: UICollectionViewCell {
     }
     
     func bind(cocktail: CocktailsListComponentCocktailModel) {
-        imageView.kf.setImage(with: URL(string: cocktail.imageUrl))
+        imageView.kf.setImage(
+            with: URL(string: cocktail.imageUrl),
+            placeholder: themeProvider.theme.mode == .light ?
+                UiComponentImages.shared.cocktailPlaceholderLight.toUIImage() :
+                UiComponentImages.shared.cocktailPlaceholderDark.toUIImage()
+        )
         titleLabel.text = cocktail.name
     }
     

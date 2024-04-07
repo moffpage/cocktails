@@ -10,15 +10,14 @@ final class ErrorView: UIView {
     private let errorIconView = UIImageView(image: UIImage(imageLiteralResourceName: "error"))
     
     private let errorLabel: UILabel = {
-        let label = UILabel()
-        label.text = UiComponentsStrings.shared.errorOccurred.desc().localized()
+        let label = UILabel(text: UiComponentsStrings.shared.errorOccurred)
         label.textAlignment = .center
         return label
     }()
     
     private let retryButton: UIButton = {
         let button = UIButton()
-        button.setTitle(UiComponentsStrings.shared.retry.desc().localized(), for: .normal)
+        button.setTitle(UiComponentsStrings.shared.retry)
         return button
     }()
     

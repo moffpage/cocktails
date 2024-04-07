@@ -10,16 +10,11 @@ final class CocktailsHeaderView: UICollectionReusableView {
         }
     }
     
+    var onSegmentClicked: ((Int) -> Void)?
     var onSearchQueryCleared: (() -> Void)?
     var onSearchQueryChanged: ((String) -> Void)?
-    var onFirstSegmentClicked: (() -> Void)?
-    var onSecondSegmentClicked: (() -> Void)?
     
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = CoreStrings.shared.cocktails.desc().localized()
-        return label
-    }()
+    private let titleLabel = UILabel(text: CommonStrings.shared.cocktails)
     
     private let searchBar: TextField = {
         let searchBar = TextField()
@@ -43,8 +38,8 @@ final class CocktailsHeaderView: UICollectionReusableView {
         let textStyle = themeProvider.theme.typography.h4
         let control = SegmentControl(
             items: [
-                CoreStrings.shared.nonAlcoholic.desc().localized().image(textStyle: textStyle),
-                CoreStrings.shared.alcoholic.desc().localized().image(textStyle: textStyle),
+                CommonStrings.shared.nonAlcoholic.desc().localized().image(textStyle: textStyle),
+                CommonStrings.shared.alcoholic.desc().localized().image(textStyle: textStyle),
             ]
         )
         control.layer.borderWidth = 2
@@ -101,11 +96,7 @@ final class CocktailsHeaderView: UICollectionReusableView {
     
     @objc
     private func segmentTapped(_ control: UISegmentedControl) {
-        if segmentedControl.selectedSegmentIndex == 0 {
-            onFirstSegmentClicked?()
-        } else if segmentedControl.selectedSegmentIndex == 1 {
-            onSecondSegmentClicked?()
-        }
+        onSegmentClicked?(control.selectedSegmentIndex)
     }
     
     @objc

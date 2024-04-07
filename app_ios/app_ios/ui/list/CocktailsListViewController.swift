@@ -89,17 +89,18 @@ extension CocktailsListViewController: UICollectionViewDelegateFlowLayout {
         if (kind == UICollectionView.elementKindSectionHeader) {
             if (indexPath.section == 0) {
                 let headerView: CocktailsHeaderView = collectionView.dequeueHeaderView(for: indexPath)
+                headerView.onSegmentClicked = { [unowned self] index in
+                    if index == 0 {
+                        self.component.displayNonAlcoholicCocktails()
+                    } else {
+                        self.component.displayAlcoholicCocktails()
+                    }
+                }
                 headerView.onSearchQueryCleared = { [unowned self] in
                     self.component.clearSearch()
                 }
                 headerView.onSearchQueryChanged = { [unowned self] searchQuery in
                     self.component.findCocktail(searchQuery: searchQuery)
-                }
-                headerView.onFirstSegmentClicked = { [unowned self] in
-                    self.component.displayNonAlcoholicCocktails()
-                }
-                headerView.onSecondSegmentClicked = { [unowned self] in
-                    self.component.displayAlcoholicCocktails()
                 }
                 return headerView
             } else {

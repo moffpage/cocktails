@@ -3,8 +3,19 @@ import shared
 import UIKit
 
 extension UILabel {
+    convenience init(text: StringResource) {
+        self.init(frame: .zero)
+        self.text = text.desc().localized()
+    }
+    
     func setTextStyle(style textStyle: TextStyle) {
         font = textStyle.fontFamily.fonts.first?.resource.uiFont(withSize: textStyle.fontSize)
+    }
+}
+
+extension UIButton {
+    func setTitle(_ title: StringResource, for state: UIControl.State = .normal) {
+        setTitle(title.desc().localized(), for: state)
     }
 }
 
