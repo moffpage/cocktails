@@ -3,17 +3,21 @@ package kz.grandera.vlifetesttaskapp.ui_components.textfield
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.runtime.Composable
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 
 import kz.grandera.vlifetesttaskapp.ui_components.R
 import kz.grandera.vlifetesttaskapp.ui_components.resources.UiComponentsStrings
+import kz.grandera.vlifetesttaskapp.ui_components.theming.VlifeTestTaskAppTheme
 
 @Composable
 public fun SearchBar(
@@ -50,4 +54,28 @@ public fun SearchBar(
         keyboardActions = keyboardActions,
         keyboardOptions = keyboardOptions
     )
+}
+
+@Preview
+@Composable
+private fun LightSearchBarPreview() {
+    VlifeTestTaskAppTheme(applyDarkTheme = false) {
+        SearchBar(
+            modifier = Modifier.height(height = 36.dp),
+            text = "Martini",
+            onValueChange = { }
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun SearchBarDarkPreview() {
+    VlifeTestTaskAppTheme(applyDarkTheme = true) {
+        SearchBar(
+            modifier = Modifier.height(height = 36.dp),
+            text = "Martini",
+            onValueChange = { }
+        )
+    }
 }

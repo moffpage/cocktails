@@ -10,7 +10,6 @@ buildscript {
         classpath(dependencyNotation = libs.gradle.kotlin)
         classpath(dependencyNotation = libs.gradle.android)
         classpath(dependencyNotation = libs.gradle.kotlinx.serialization)
-        classpath(libs.gradle.kotlin)
     }
 }
 

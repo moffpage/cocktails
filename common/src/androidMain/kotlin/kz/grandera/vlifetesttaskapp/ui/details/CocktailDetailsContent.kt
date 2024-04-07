@@ -17,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.material.Text
-import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -26,7 +25,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.aspectRatio
@@ -35,19 +33,19 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.displayCutoutPadding
-import androidx.annotation.DrawableRes
-
-import coil.compose.AsyncImage
 
 import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
 
 import kz.grandera.vlifetesttaskapp.R
 import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent
 import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent.DrinkCategory
-import kz.grandera.vlifetesttaskapp.resources.CoreStrings
+import kz.grandera.vlifetesttaskapp.resources.CommonStrings
+import kz.grandera.vlifetesttaskapp.ui_components.chip.Chip
 import kz.grandera.vlifetesttaskapp.ui_components.R as UiCompR
 import kz.grandera.vlifetesttaskapp.ui_components.error.ErrorContent
+import kz.grandera.vlifetesttaskapp.ui_components.theming.ThemedAsyncImage
 import kz.grandera.vlifetesttaskapp.ui_components.modifier.verticalFadingEdge
+import kz.grandera.vlifetesttaskapp.ui_components.resources.UiComponentImages
 
 @Composable
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -70,7 +68,7 @@ internal fun CocktailDetailsContent(
                 Column(modifier = Modifier.fillMaxSize()) {
                     Box {
                         var imageHeight by remember { mutableFloatStateOf(value = 0f) }
-                        AsyncImage(
+                        ThemedAsyncImage(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .aspectRatio(ratio = 1f)
@@ -78,12 +76,18 @@ internal fun CocktailDetailsContent(
                                     imageHeight = size.height.toFloat()
                                 }
                                 .verticalFadingEdge(
-                                    startY = imageHeight * (2/3),
+                                    startY = imageHeight*(2/3),
                                     endY = imageHeight,
                                     endColor = MaterialTheme.colors.background,
                                     startColor = Color.Transparent,
                                 ),
                             model = model.imageUrl,
+                            lightPlaceholderPainter = painterResource(
+                                id = UiComponentImages.cocktailPlaceholderLight.drawableResId
+                            ),
+                            darkPlaceholderPainter = painterResource(
+                                id = UiComponentImages.cocktailPlaceholderDark.drawableResId
+                            ),
                             contentDescription = model.cocktailName
                         )
                         Text(
@@ -111,9 +115,9 @@ internal fun CocktailDetailsContent(
                         )
                         Chip(
                             text = if (model.isAlcoholic) {
-                                stringResource(id = CoreStrings.alcoholic.resourceId)
+                                stringResource(id = CommonStrings.alcoholic.resourceId)
                             } else {
-                                stringResource(id = CoreStrings.nonAlcoholic.resourceId)
+                                stringResource(id = CommonStrings.nonAlcoholic.resourceId)
                             },
                             iconResourceId = null
                         )
@@ -122,7 +126,7 @@ internal fun CocktailDetailsContent(
                         modifier = Modifier
                             .padding(top = 36.dp)
                             .padding(horizontal = 8.dp),
-                        text = stringResource(id = CoreStrings.instructions.resourceId),
+                        text = stringResource(id = CommonStrings.instructions.resourceId),
                         style = MaterialTheme.typography.h2
                             .copy(color = MaterialTheme.colors.primary)
                     )
@@ -170,46 +174,3 @@ private val DrinkCategory.iconResourceId: Int get() =
         DrinkCategory.Cocktail -> R.drawable.cocktail
         DrinkCategory.Ordinary -> R.drawable.regular_drink
     }
-
-@Composable
-private fun Chip(
-    modifier: Modifier = Modifier,
-    text: String,
-    @DrawableRes iconResourceId: Int?,
-) {
-    val alcoholicIndicationColor = if (iconResourceId != null) {
-        MaterialTheme.colors.primary
-    } else {
-        MaterialTheme.colors.secondary
-    }
-
-    Surface(
-        modifier = modifier,
-        shape = CircleShape,
-        contentColor = alcoholicIndicationColor
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .height(height = 40.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(space = 8.dp),
-        ) {
-            if (iconResourceId != null) {
-                Icon(
-                    painter = painterResource(id = iconResourceId),
-                    contentDescription = text
-                )
-            }
-
-            Text(
-                text = text,
-                style = MaterialTheme.typography.h4
-                    .copy(
-                        color = alcoholicIndicationColor,
-                        textAlign = TextAlign.Center
-                    )
-            )
-        }
-    }
-}
