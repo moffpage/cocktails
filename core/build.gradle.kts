@@ -1,14 +1,16 @@
 plugins {
-    kotlin(module = "multiplatform")
-
-    id("com.android.library")
-
-    kotlin(module = "plugin.serialization")
+    id(libs.plugins.android.library.get().pluginId)
+    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.multiplatform)
 }
 
 android {
     namespace = "kz.grandera.vlifetesttaskapp.core"
     compileSdk = 34
+
+    defaultConfig {
+        minSdk = 21
+    }
 
     buildFeatures {
         buildConfig = true
