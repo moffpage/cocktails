@@ -33,8 +33,7 @@ final class CocktailDetailsView: UIView {
     }()
     
     private let instructionsLabel: UILabel = {
-        let label = UILabel()
-        label.text = CoreStrings.shared.instructions.desc().localized()
+        let label = UILabel(text: CommonStrings.shared.instructions)
         label.backgroundColor = .clear
         return label
     }()
@@ -73,20 +72,21 @@ final class CocktailDetailsView: UIView {
     
     func bind(model: CocktailDetailsComponentModel) {
         cocktailImageView.kf.setImage(
-            with: URL(string: model.imageUrl)
-        ) { [unowned self] result in
-            if case .success(_) = result {
-                self.addGradient()
-            }
+            with: URL(string: model.imageUrl),
+            placeholder: themeProvider.theme.mode == .light ?
+                UiComponentImages.shared.cocktailPlaceholderLight.toUIImage() :
+                UiComponentImages.shared.cocktailPlaceholderDark.toUIImage()
+        ) { [unowned self] _ in
+            self.addGradient()
         }
         cocktailTitleView.text = model.cocktailName
         instructionsTextView.text = model.preparationInstruction
         
         let alcoholicSign: StringResource
         if model.isAlcoholic {
-            alcoholicSign = CoreStrings.shared.alcoholic
+            alcoholicSign = CommonStrings.shared.alcoholic
         } else {
-            alcoholicSign = CoreStrings.shared.nonAlcoholic
+            alcoholicSign = CommonStrings.shared.nonAlcoholic
         }
         
         if let category = model.category {

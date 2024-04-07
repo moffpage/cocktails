@@ -2,6 +2,8 @@ plugins {
     kotlin(module = "multiplatform")
 
     id("com.android.library")
+
+    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 android {
