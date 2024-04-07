@@ -20,22 +20,16 @@ androidx-activity = "1.8.2"
 
 [libraries]
 
-napier = "io.github.aakira:napier:2.7.1"
-reaktive = "com.badoo.reaktive:reaktive:2.0.1"
-
 android-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 
-gradle-android = "com.android.tools.build:gradle:8.2.2"
-gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-gradle-kotlinx-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
-
 coil-compose = "io.coil-kt:coil-compose:2.6.0"
-lottie-compose = "com.airbnb.android:lottie-compose:6.4.0"
+
+gradle-android = "com.android.tools.build:gradle:8.2.2"
+gradle-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+gradle-kotlinx-serialization = { group = "org.jetbrains.kotlin", name = "kotlin-serialization", version.ref = "kotlin" }
 
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
-
-essenty-lifecycle = { module = "com.arkivanov.essenty:lifecycle", version.ref = "essenty" }
 
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
@@ -44,26 +38,33 @@ ktor-engine-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "kto
 ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-contentnegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 
-kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0"
-
 moko-resources-common = { module = "dev.icerock.moko:resources", version.ref = "moko-resoures" }
 moko-resources-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "moko-resoures" }
 moko-resources-generator = { module = "dev.icerock.moko:resources-generator", version.ref = "moko-resoures" }
 
-mvikotlin-rx = { module = "com.arkivanov.mvikotlin:rx", version.ref = "mvikotlin" }
-mvikotlin-core = { module = "com.arkivanov.mvikotlin:mvikotlin", version.ref = "mvikotlin" }
-mvikotlin-main = { module = "com.arkivanov.mvikotlin:mvikotlin-main", version.ref = "mvikotlin" }
-mvikotlin-logging = { module = "com.arkivanov.mvikotlin:mvikotlin-logging", version.ref = "mvikotlin" }
-mvikotlin-coroutines = { module = "com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines", version.ref = "mvikotlin" }
+lottie-compose = "com.airbnb.android:lottie-compose:6.4.0"
 
-decompose-core = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
-decompose-extensions-compose-jetpack = { module = "com.arkivanov.decompose:extensions-compose-jetpack", version.ref = "decompose" }
-
-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
-compose-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
+compose-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
 compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }
 compose-material2 = { module = "androidx.compose.material:material", version.ref = "compose" }
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
+
+essenty-lifecycle = { module = "com.arkivanov.essenty:lifecycle", version.ref = "essenty" }
+
+kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0"
+
+decompose-core = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
+decompose-extensions-compose-jetpack = { group = "com.arkivanov.decompose", name = "extensions-compose-jetpack", version.ref = "decompose" }
+
+mvikotlin-rx = { group = "com.arkivanov.mvikotlin", name = "rx", version.ref = "mvikotlin" }
+mvikotlin-core = { group = "com.arkivanov.mvikotlin", name = "mvikotlin", version.ref = "mvikotlin" }
+mvikotlin-main = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-main", version.ref = "mvikotlin" }
+mvikotlin-logging = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-logging", version.ref = "mvikotlin" }
+mvikotlin-coroutines = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-extensions-coroutines", version.ref = "mvikotlin" }
+
+napier = "io.github.aakira:napier:2.7.1"
+reaktive = "com.badoo.reaktive:reaktive:2.0.1"
 
 [bundles]
 
