@@ -2,6 +2,7 @@
 import shared
 import UIKit
 import SnapKit
+import Kingfisher
 
 final class CocktailDetailsView: UIView {
     private let backIconView: UIView = {
@@ -71,13 +72,21 @@ final class CocktailDetailsView: UIView {
     }
     
     func bind(model: CocktailDetailsComponentModel) {
-        cocktailImageView.kf.setImage(
-            with: URL(string: model.imageUrl),
-            placeholder: themeProvider.theme.mode == .light ?
-                UiComponentImages.shared.cocktailPlaceholderLight.toUIImage() :
-                UiComponentImages.shared.cocktailPlaceholderDark.toUIImage()
-        ) { [unowned self] _ in
+        cocktailImageView.kf.setImage(with: URL(string: model.imageUrl)) { [unowned cocktailImageView,
+                                                                            unowned themeProvider] result in
             self.addGradient()
+            
+            switch result {
+            case .success: break
+            case .failure(let error):
+                switch error {
+                case .imageSettingError: break
+                default:
+                    cocktailImageView.image = themeProvider.theme.mode == .light ?
+                        UiComponentImages.shared.cocktailPlaceholderLight.toUIImage() :
+                        UiComponentImages.shared.cocktailPlaceholderDark.toUIImage()
+                }
+            }
         }
         cocktailTitleView.text = model.cocktailName
         instructionsTextView.text = model.preparationInstruction

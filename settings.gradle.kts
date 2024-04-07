@@ -1,3 +1,5 @@
+rootProject.name = "Vlife_Task"
+
 pluginManagement {
     repositories {
         google()
@@ -13,7 +15,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Vlife_Task"
 include(":app_android")
 include(":common")
 include(":ui_components")

@@ -38,12 +38,20 @@ final class CocktailCell: UICollectionViewCell {
     }
     
     func bind(cocktail: CocktailsListComponentCocktailModel) {
-        imageView.kf.setImage(
-            with: URL(string: cocktail.imageUrl),
-            placeholder: themeProvider.theme.mode == .light ?
-                UiComponentImages.shared.cocktailPlaceholderLight.toUIImage() :
-                UiComponentImages.shared.cocktailPlaceholderDark.toUIImage()
-        )
+        imageView.kf.setImage(with: URL(string: cocktail.imageUrl)) { [unowned imageView,
+                                                                       unowned themeProvider] result in
+            switch result {
+            case .success: break
+            case .failure(let error):
+                switch error {
+                case .imageSettingError: break
+                default:
+                    imageView.image = themeProvider.theme.mode == .light ?
+                        UiComponentImages.shared.cocktailPlaceholderLight.toUIImage() :
+                        UiComponentImages.shared.cocktailPlaceholderDark.toUIImage()
+                }
+            }
+        }
         titleLabel.text = cocktail.name
     }
     

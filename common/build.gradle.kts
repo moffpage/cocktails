@@ -1,18 +1,19 @@
 import dev.icerock.gradle.MRVisibility
 
 plugins {
-    kotlin(module = "multiplatform")
-
-    id("com.android.library")
-
-    id("dev.icerock.mobile.multiplatform-resources")
-
-    kotlin(module = "plugin.serialization")
+    alias(libs.plugins.moko.resources.generator)
+    id(libs.plugins.android.library.get().pluginId)
+    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.multiplatform)
 }
 
 android {
     namespace = "kz.grandera.vlifetesttaskapp"
     compileSdk = 34
+
+    defaultConfig {
+        minSdk = 21
+    }
 
     buildFeatures {
         compose = true
@@ -51,23 +52,21 @@ kotlin {
             languageSettings.optIn("kotlin.experimental.ExperimentalObjCRefinement")
         }
 
-        val commonMain by getting {
-            dependencies {
-                implementation(dependencyNotation = project(path = ":core"))
-                implementation(dependencyNotation = project(path = ":ui_components"))
+        commonMain.dependencies {
+            implementation(dependencyNotation = project(path = ":core"))
+            implementation(dependencyNotation = project(path = ":ui_components"))
 
-                implementation(dependencyNotation = libs.koin.core)
-                implementation(dependencyNotation = libs.ktor.core)
-                implementation(dependencyNotation = libs.moko.resources.common)
-                implementation(dependencyNotation = libs.kotlinx.coroutines)
-                implementation(dependencyNotation = libs.bundles.mvikotlin.common)
-                implementation(dependencyNotation = libs.mvikotlin.logging)
-                implementation(dependencyNotation = libs.decompose.core)
-            }
+            implementation(dependencyNotation = libs.koin.core)
+            implementation(dependencyNotation = libs.ktor.core)
+            implementation(dependencyNotation = libs.moko.resources.common)
+            implementation(dependencyNotation = libs.kotlinx.coroutines)
+            implementation(dependencyNotation = libs.bundles.mvikotlin.common)
+            implementation(dependencyNotation = libs.mvikotlin.logging)
+            implementation(dependencyNotation = libs.decompose.core)
         }
 
-        val androidMain by getting {
-            dependsOn(commonMain)
+        androidMain {
+            dependsOn(commonMain.get())
             dependencies {
                 implementation(dependencyNotation = libs.decompose.extensions.compose.jetpack)
             }

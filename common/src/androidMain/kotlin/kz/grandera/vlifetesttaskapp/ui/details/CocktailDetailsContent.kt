@@ -97,10 +97,7 @@ internal fun CocktailDetailsContent(
                                 .padding(horizontal = 16.dp),
                             text = model.cocktailName,
                             style = MaterialTheme.typography.h1
-                                .copy(
-                                    color = Color.White,
-                                    textAlign = TextAlign.Center
-                                )
+                                .copy(textAlign = TextAlign.Center)
                         )
                     }
                     Row(

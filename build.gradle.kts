@@ -1,23 +1,8 @@
-buildscript {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath(dependencyNotation = libs.moko.resources.generator)
-        classpath(dependencyNotation = libs.gradle.kotlin)
-        classpath(dependencyNotation = libs.gradle.android)
-        classpath(dependencyNotation = libs.gradle.kotlinx.serialization)
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
+plugins {
+    alias(libs.plugins.moko.resources.generator).apply(false)
+    alias(libs.plugins.android.application).apply(false)
+    alias(libs.plugins.kotlinx.serialization).apply(false)
+    alias(libs.plugins.multiplatform).apply(false)
 }
 
 tasks.register<Delete>("clean") {

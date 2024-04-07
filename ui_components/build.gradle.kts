@@ -1,11 +1,9 @@
 import dev.icerock.gradle.MRVisibility
 
 plugins {
-    kotlin(module = "multiplatform")
-
-    id("com.android.library")
-
-    id("dev.icerock.mobile.multiplatform-resources")
+    alias(libs.plugins.moko.resources.generator)
+    id(libs.plugins.android.library.get().pluginId)
+    alias(libs.plugins.multiplatform)
 }
 
 android {
@@ -14,7 +12,6 @@ android {
 
     defaultConfig {
         minSdk = 21
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildFeatures {

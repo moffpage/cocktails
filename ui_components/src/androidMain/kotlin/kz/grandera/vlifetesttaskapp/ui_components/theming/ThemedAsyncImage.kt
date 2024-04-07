@@ -28,7 +28,7 @@ public fun ThemedAsyncImage(
 ) {
     val themedPainter = rememberAsyncImagePainter(
         model = model,
-        placeholder = if (MaterialTheme.colors.isLight) lightPlaceholderPainter else darkPlaceholderPainter,
+        error = if (MaterialTheme.colors.isLight) lightPlaceholderPainter else darkPlaceholderPainter,
         filterQuality = filterQuality
     )
 
