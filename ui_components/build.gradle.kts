@@ -58,8 +58,11 @@ kotlin {
         val androidMain by getting {
             dependsOn(commonMain)
             dependencies {
-                implementation(dependencyNotation = libs.lottie.compose)
-                implementation(dependencyNotation = libs.bundles.compose)
+                api(dependencyNotation = libs.moko.resources.compose)
+                api(dependencyNotation = libs.coil.compose)
+                api(dependencyNotation = libs.lottie.compose)
+                api(dependencyNotation = libs.bundles.compose)
+                api(dependencyNotation = libs.compose.tooling)
             }
         }
     }

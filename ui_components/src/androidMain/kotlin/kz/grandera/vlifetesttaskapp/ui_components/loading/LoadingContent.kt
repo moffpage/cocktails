@@ -2,6 +2,7 @@ package kz.grandera.vlifetesttaskapp.ui_components.loading
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.graphics.Color
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 
 import kz.grandera.vlifetesttaskapp.ui_components.modifier.disableInput
 import kz.grandera.vlifetesttaskapp.ui_components.resources.Animations
+import kz.grandera.vlifetesttaskapp.ui_components.theming.VlifeTestTaskAppTheme
 
 @Composable
 public fun LoadingContent(
@@ -49,5 +51,21 @@ public fun LoadingContent(
             progress = { progress },
             composition = composition,
         )
+    }
+}
+
+@Preview
+@Composable
+private fun LoadingContentLightPreview() {
+    VlifeTestTaskAppTheme(applyDarkTheme = false) {
+        LoadingContent()
+    }
+}
+
+@Preview
+@Composable
+private fun LoadingContentDarkPreview() {
+    VlifeTestTaskAppTheme(applyDarkTheme = true) {
+        LoadingContent()
     }
 }

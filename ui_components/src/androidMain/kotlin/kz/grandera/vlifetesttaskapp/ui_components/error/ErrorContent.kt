@@ -4,7 +4,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.runtime.Composable
 import androidx.compose.material.Text
 import androidx.compose.material.Button
@@ -21,6 +23,7 @@ import androidx.compose.foundation.layout.PaddingValues
 
 import kz.grandera.vlifetesttaskapp.ui_components.R
 import kz.grandera.vlifetesttaskapp.ui_components.resources.UiComponentsStrings
+import kz.grandera.vlifetesttaskapp.ui_components.theming.VlifeTestTaskAppTheme
 
 @Composable
 public fun ErrorContent(
@@ -51,6 +54,7 @@ public fun ErrorContent(
             Text(
                 text = errorText,
                 style = MaterialTheme.typography.h3
+                    .copy(textAlign = TextAlign.Center)
             )
             Spacer(modifier = Modifier.height(height = 16.dp))
             Button(
@@ -67,5 +71,21 @@ public fun ErrorContent(
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun ErrorContentLightPreview() {
+    VlifeTestTaskAppTheme(applyDarkTheme = false) {
+        ErrorContent(onRetry = {})
+    }
+}
+
+@Preview
+@Composable
+private fun ErrorContentDarkPreview() {
+    VlifeTestTaskAppTheme(applyDarkTheme = true) {
+        ErrorContent(onRetry = {})
     }
 }

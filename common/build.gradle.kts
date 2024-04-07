@@ -69,10 +69,6 @@ kotlin {
         val androidMain by getting {
             dependsOn(commonMain)
             dependencies {
-                implementation(dependencyNotation = libs.coil.compose)
-                implementation(dependencyNotation = libs.moko.resources.compose)
-                implementation(dependencyNotation = libs.lottie.compose)
-                implementation(dependencyNotation = libs.bundles.compose)
                 implementation(dependencyNotation = libs.decompose.extensions.compose.jetpack)
             }
         }

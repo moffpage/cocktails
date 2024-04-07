@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
@@ -15,7 +14,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
 import androidx.compose.material.Text
-import androidx.compose.material.Surface
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.ExperimentalMaterialApi
@@ -30,30 +28,24 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBarsPadding
 
-import coil.compose.AsyncImage
-
 import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
 
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent
-import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent.CocktailModel
-import kz.grandera.vlifetesttaskapp.resources.CoreStrings
+import kz.grandera.vlifetesttaskapp.resources.CommonStrings
 import kz.grandera.vlifetesttaskapp.ui_components.error.ErrorContent
 import kz.grandera.vlifetesttaskapp.ui_components.loading.LoadingContent
+import kz.grandera.vlifetesttaskapp.ui_components.segment.SegmentedControl
 import kz.grandera.vlifetesttaskapp.ui_components.textfield.SearchBar
 
 @Composable
@@ -108,13 +100,13 @@ internal fun CocktailsListContent(
                 ) {
                     item(
                         key = "title",
-                        span = { GridItemSpan(currentLineSpan = maxLineSpan)}
+                        span = { GridItemSpan(currentLineSpan = maxLineSpan) }
                     ) {
                         Text(
                             modifier = Modifier
                                 .padding(bottom = 20.dp)
                                 .statusBarsPadding(),
-                            text = stringResource(id = CoreStrings.cocktails.resourceId),
+                            text = stringResource(id = CommonStrings.cocktails.resourceId),
                             style = MaterialTheme.typography.h1
                                 .copy(color = MaterialTheme.colors.onBackground)
                         )
@@ -151,13 +143,26 @@ internal fun CocktailsListContent(
                             value = MaterialTheme.typography.h4
                                 .copy(textAlign = TextAlign.Center)
                         ) {
-                            TwoSegmentsControl(
+                            SegmentedControl(
                                 modifier = Modifier.padding(vertical = 8.dp),
-                                selected = !model.listsAlcoholicCocktails,
-                                firstSegmentTitle = stringResource(id = CoreStrings.nonAlcoholic.resourceId),
-                                secondSegmentTitle = stringResource(id = CoreStrings.alcoholic.resourceId),
-                                onFirstSegmentClick = { component.displayNonAlcoholicCocktails() },
-                                onSecondSegmentClick = { component.displayAlcoholicCocktails() },
+                                selected = { index ->
+                                    if (index == 0) {
+                                        !model.listsAlcoholicCocktails
+                                    } else {
+                                        model.listsAlcoholicCocktails
+                                    }
+                                },
+                                titles = listOf(
+                                    stringResource(id = CommonStrings.nonAlcoholic.resourceId),
+                                    stringResource(id = CommonStrings.alcoholic.resourceId)
+                                ),
+                                onSegmentClick = { index ->
+                                    if (index == 0) {
+                                        component.displayNonAlcoholicCocktails()
+                                    } else {
+                                        component.displayAlcoholicCocktails()
+                                    }
+                                },
                             )
                         }
                     }
@@ -189,90 +194,5 @@ internal fun CocktailsListContent(
         if (model.isLoading) {
             LoadingContent()
         }
-    }
-}
-
-@Composable
-private fun TwoSegmentsControl(
-    modifier: Modifier = Modifier,
-    selected: Boolean,
-    firstSegmentTitle: String,
-    secondSegmentTitle: String,
-    onFirstSegmentClick: () -> Unit,
-    onSecondSegmentClick: () -> Unit
-) {
-    val tab: @Composable RowScope.(
-        text: String,
-        selected: Boolean,
-        onClick: () -> Unit,
-    ) -> Unit = {text, isSelected, onClick ->
-        val tabBackgroundColor = if (isSelected) {
-            MaterialTheme.colors.primary
-        } else {
-            MaterialTheme.colors.surface
-        }
-        Surface(
-            modifier = Modifier
-                .weight(weight = 1f)
-                .clip(shape = CircleShape)
-                .clickable(onClick = onClick),
-            color = tabBackgroundColor,
-        ) {
-            Text(
-                modifier = Modifier.padding(vertical = 8.dp),
-                text = text,
-            )
-        }
-    }
-
-    Surface(
-        modifier = modifier,
-        shape = CircleShape,
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(all = 2.dp)
-                .clip(shape = CircleShape),
-        ) {
-            tab(
-                firstSegmentTitle,
-                selected,
-                onFirstSegmentClick
-            )
-            tab(
-                secondSegmentTitle,
-                !selected,
-                onSecondSegmentClick
-            )
-        }
-    }
-}
-
-@Composable
-private fun CocktailItem(
-    modifier: Modifier = Modifier,
-    cocktail: CocktailModel,
-    onClick: (Long) -> Unit
-) {
-    Box(
-        modifier = modifier
-            .clip(shape = MaterialTheme.shapes.large)
-            .clickable { onClick(cocktail.id) },
-    ) {
-        AsyncImage(
-            modifier = Modifier.matchParentSize(),
-            model = cocktail.imageUrl,
-            contentDescription = cocktail.name
-        )
-        Text(
-            modifier = Modifier.align(alignment = Alignment.Center),
-            text = cocktail.name,
-            style = MaterialTheme.typography.h4
-                .copy(
-                    color = MaterialTheme.colors.onPrimary,
-                    textAlign = TextAlign.Center
-                )
-        )
     }
 }
