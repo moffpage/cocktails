@@ -12,6 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         InitializationKt.initializeKoin()
         InitializationKt.enableLogging()
         
+        let window = UIWindow(frame: UIScreen.main.bounds)
         let lifecycle = ApplicationLifecycle()
         let backDispatcher = BackDispatcherKt.BackDispatcher()
         let componentContext = DefaultComponentContext(
@@ -24,17 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             componentContext: componentContext
         )
         let shakeDetector = ShakeDetectorKt.ShakeDetectorFactory(lifecycle: lifecycle)
-        let cocktailsViewController = CocktailsViewControllerKt.CocktailsComposeViewController(
+        let cocktailsViewController = CocktailsViewControllerKt.CocktailsViewController(
             component: component,
             shakeDetector: shakeDetector,
             backDispatcher: backDispatcher
         )
-        let window = UIWindow(frame: UIScreen.main.bounds)
         
         window.rootViewController = cocktailsViewController
-        
-        self.window = window
-        
         window.makeKeyAndVisible()
         
         return true

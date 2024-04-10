@@ -2,7 +2,6 @@ package kz.grandera.vlifetesttaskapp.features.root.component
 
 import kotlinx.serialization.Serializable
 
-import com.arkivanov.essenty.backhandler.BackHandlerOwner
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.value.Value
@@ -21,8 +20,7 @@ import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsCo
 
 internal class CocktailsComponentImpl(componentContext: ComponentContext) :
     CocktailsComponent,
-    ComponentContext by componentContext,
-    BackHandlerOwner
+    ComponentContext by componentContext
 {
     private val navigation = StackNavigation<Configuration>()
     private val childStack = childStack(

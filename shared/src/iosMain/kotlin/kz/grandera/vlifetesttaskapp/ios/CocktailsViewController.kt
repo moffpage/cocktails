@@ -29,7 +29,7 @@ import kz.grandera.vlifetesttaskapp.ui_components.theming.LocalAppTheme
 import kz.grandera.vlifetesttaskapp.ui_components.theming.VlifeTestTaskAppTheme
 import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent
 
-public fun CocktailsComposeViewController(
+public fun CocktailsViewController(
     component: CocktailsComponent,
     shakeDetector: ShakeDetector,
     backDispatcher: BackDispatcher
