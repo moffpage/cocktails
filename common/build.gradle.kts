@@ -3,12 +3,13 @@ import dev.icerock.gradle.MRVisibility
 plugins {
     alias(libs.plugins.moko.resources.generator)
     id(libs.plugins.android.library.get().pluginId)
+    alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.multiplatform)
 }
 
 android {
-    namespace = "kz.grandera.vlifetesttaskapp"
+    namespace = "kz.grandera.vlifetesttaskapp.common"
     compileSdk = 34
 
     defaultConfig {
@@ -47,35 +48,24 @@ kotlin {
     }
 
     sourceSets {
-        all {
-            languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
-            languageSettings.optIn("kotlin.experimental.ExperimentalObjCRefinement")
-        }
-
         commonMain.dependencies {
+            api(dependencyNotation = libs.decompose.extensions.compose)
+
             implementation(dependencyNotation = project(path = ":core"))
             implementation(dependencyNotation = project(path = ":ui_components"))
 
             implementation(dependencyNotation = libs.koin.core)
             implementation(dependencyNotation = libs.ktor.core)
-            implementation(dependencyNotation = libs.moko.resources.common)
             implementation(dependencyNotation = libs.kotlinx.coroutines)
             implementation(dependencyNotation = libs.bundles.mvikotlin.common)
             implementation(dependencyNotation = libs.mvikotlin.logging)
             implementation(dependencyNotation = libs.decompose.core)
         }
-
-        androidMain {
-            dependsOn(commonMain.get())
-            dependencies {
-                implementation(dependencyNotation = libs.decompose.extensions.compose.jetpack)
-            }
-        }
     }
 }
 
 multiplatformResources {
-    multiplatformResourcesPackage = "kz.grandera.vlifetesttaskapp.common"
-    multiplatformResourcesClassName = "CommonRes"
-    multiplatformResourcesVisibility = MRVisibility.Internal
+    resourcesPackage.set("kz.grandera.vlifetesttaskapp.common")
+    resourcesClassName.set("CommonRes")
+    resourcesVisibility.set(MRVisibility.Internal)
 }

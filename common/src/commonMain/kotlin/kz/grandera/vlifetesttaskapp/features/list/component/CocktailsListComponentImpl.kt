@@ -49,8 +49,8 @@ internal class CocktailsListComponentImpl(
         store.accept(intent = Intent.Shuffle)
     }
 
-    override fun showCocktail(cocktailId: Long) {
-        onShowCocktail(cocktailId)
+    override fun showCocktail(cocktail: CocktailModel) {
+        onShowCocktail(cocktail.id)
     }
 
     override fun clearSearch() {

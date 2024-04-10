@@ -3,6 +3,7 @@ import dev.icerock.gradle.MRVisibility
 plugins {
     alias(libs.plugins.moko.resources.generator)
     id(libs.plugins.android.library.get().pluginId)
+    alias(libs.plugins.compose)
     alias(libs.plugins.multiplatform)
 }
 
@@ -46,27 +47,40 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+
+        iosMain {
+            dependsOn(commonMain.get())
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
             dependencies {
-                implementation(dependencyNotation = libs.moko.resources.common)
+                implementation(dependencyNotation = libs.coil.network.ktor)
             }
         }
 
-        val androidMain by getting {
-            dependsOn(commonMain)
+        androidMain {
+            dependsOn(commonMain.get())
             dependencies {
-                api(dependencyNotation = libs.moko.resources.compose)
-                api(dependencyNotation = libs.coil.compose)
-                api(dependencyNotation = libs.lottie.compose)
-                api(dependencyNotation = libs.bundles.compose)
-                api(dependencyNotation = libs.compose.tooling)
+                implementation(dependencyNotation = libs.coil.network.okhttp)
             }
+        }
+
+        commonMain.dependencies {
+            api(dependencyNotation = libs.coil.compose)
+            api(dependencyNotation = libs.moko.resources.compose)
+            api(dependencyNotation = libs.bundles.compose)
+            api(dependencyNotation = libs.compottie)
+
+            implementation(dependencyNotation = libs.compose.tooling)
         }
     }
 }
 
 multiplatformResources {
-    multiplatformResourcesPackage = "kz.grandera.vlifetesttaskapp.ui_components"
-    multiplatformResourcesClassName = "UiComponentsRes"
-    multiplatformResourcesVisibility = MRVisibility.Internal
+    resourcesPackage.set("kz.grandera.vlifetesttaskapp.ui_components")
+    resourcesClassName.set("UiComponentsRes")
+    resourcesVisibility.set(MRVisibility.Internal)
 }

@@ -12,25 +12,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         InitializationKt.initializeKoin()
         InitializationKt.enableLogging()
         
-        ThemeConfigurator.configureTheme(
-            shapes: ShapesFactoryKt.ShapesFactory,
-            typography: TypographyFactoryKt.TypographyFactory
-        )
-        
         let lifecycle = ApplicationLifecycle()
+        let backDispatcher = BackDispatcherKt.BackDispatcher()
         let componentContext = DefaultComponentContext(
             lifecycle: lifecycle,
             stateKeeper: nil,
             instanceKeeper: nil,
-            backHandler: nil
+            backHandler: backDispatcher
         )
-        let cocktailsComponent = FactoryKt.cocktailsComponentFactory(
+        let component = FactoryKt.cocktailsComponentFactory(
             componentContext: componentContext
         )
-        let cocktailsViewController = CocktailsViewController(
-            component: cocktailsComponent
+        let shakeDetector = ShakeDetectorKt.ShakeDetectorFactory(lifecycle: lifecycle)
+        let cocktailsViewController = CocktailsViewControllerKt.CocktailsComposeViewController(
+            component: component,
+            shakeDetector: shakeDetector,
+            backDispatcher: backDispatcher
         )
-        let window = ThemeWindow(frame: UIScreen.main.bounds)
+        let window = UIWindow(frame: UIScreen.main.bounds)
         
         window.rootViewController = cocktailsViewController
         
@@ -38,14 +37,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window.makeKeyAndVisible()
         
-        themeProvider.register(observer: self)
-        
         return true
     }
 }
 
-extension AppDelegate: Themeable {
-    func apply(theme: any Theme) {
-        window?.backgroundColor = theme.colors.background
-    }
+extension UIWindow {
+     open override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            NotificationCenter.default.post(name: Notification.Name("deviceDidShakeNotification"), object: nil)
+        }
+     }
 }

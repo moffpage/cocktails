@@ -43,14 +43,13 @@ kotlin {
                 api(dependencyNotation = libs.napier)
                 implementation(dependencyNotation = libs.reaktive)
 
+                implementation(dependencyNotation = libs.koin.core)
                 implementation(dependencyNotation = libs.ktor.core)
                 implementation(dependencyNotation = libs.ktor.logging)
                 implementation(dependencyNotation = libs.ktor.serialization.json)
                 implementation(dependencyNotation = libs.ktor.contentnegotiation)
-                implementation(dependencyNotation = libs.koin.core)
                 implementation(dependencyNotation = libs.essenty.lifecycle)
                 implementation(dependencyNotation = libs.decompose.core)
-                implementation(dependencyNotation = libs.mvikotlin.rx)
                 implementation(dependencyNotation = libs.mvikotlin.core)
             }
         }

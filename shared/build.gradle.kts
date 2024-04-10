@@ -1,11 +1,12 @@
 plugins {
     alias(libs.plugins.moko.resources.generator)
     alias(libs.plugins.android.application)
+    alias(libs.plugins.compose)
     alias(libs.plugins.multiplatform)
 }
 
 android {
-    namespace = "kz.grandera.vlifetesttaskapp.android"
+    namespace = "kz.grandera.vlifetesttaskapp.shared"
     compileSdk = 34
 
     defaultConfig {
@@ -13,7 +14,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-        applicationId = "kz.grandera.vlifetesttaskapp.android"
+        applicationId = "kz.grandera.vlifetesttaskapp"
     }
 
     buildFeatures {
@@ -67,30 +68,40 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
-            export(dependency = libs.moko.resources.common)
+            export(dependency = libs.essenty.lifecycle)
+            export(dependency = libs.essenty.backhandler)
             export(dependency = libs.decompose.core)
-            export(dependency = project(":core"))
             export(dependency = project(":common"))
-            export(dependency = project(":ui_components"))
         }
     }
 
     sourceSets {
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+
+        iosMain {
+            dependsOn(commonMain.get())
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
+        }
+
         androidMain {
             dependsOn(commonMain.get())
             dependencies {
                 implementation(dependencyNotation = libs.koin.android)
                 implementation(dependencyNotation = libs.android.activity.compose)
+                implementation(dependencyNotation = libs.seismic)
             }
         }
 
         commonMain.dependencies {
-            api(dependencyNotation = project(path = ":core"))
             api(dependencyNotation = project(path = ":common"))
-            api(dependencyNotation = project(path = ":ui_components"))
-
             api(dependencyNotation = libs.decompose.core)
-            implementation(dependencyNotation = libs.napier)
+
+            implementation(dependencyNotation = project(path = ":core"))
+            implementation(dependencyNotation = project(path = ":ui_components"))
         }
     }
 }
