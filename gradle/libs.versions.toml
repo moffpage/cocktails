@@ -29,10 +29,11 @@ multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotl
 
 android-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 
+napier = "io.github.aakira:napier:2.7.1"
+seismic = "com.squareup:seismic:1.0.3"
+reaktive = "com.badoo.reaktive:reaktive:2.0.1"
 coil-compose = "io.coil-kt:coil-compose:2.6.0"
 lottie-compose = "com.airbnb.android:lottie-compose:6.4.0"
-napier = "io.github.aakira:napier:2.7.1"
-reaktive = "com.badoo.reaktive:reaktive:2.0.1"
 kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0"
 
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
