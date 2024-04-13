@@ -1,6 +1,7 @@
 package kz.grandera.vlifetesttaskapp.ui_components.theming
 
 import androidx.compose.runtime.Composable
+import androidx.compose.material.Surface
 import androidx.compose.material.MaterialTheme
 
 import kz.grandera.vlifetesttaskapp.ui_components.theming.text.ComposeTypography
@@ -17,6 +18,6 @@ public fun VlifeTestTaskAppTheme(
         colors = if (applyDarkTheme) darkColors else lightColors,
         shapes = ComposeShapes,
         typography = ComposeTypography,
-        content = content
+        content = { Surface(content = content) }
     )
 }

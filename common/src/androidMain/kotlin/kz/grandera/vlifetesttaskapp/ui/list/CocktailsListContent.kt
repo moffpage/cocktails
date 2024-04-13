@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
 import androidx.compose.material.Text
 import androidx.compose.material.MaterialTheme
@@ -22,6 +23,7 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -62,7 +64,11 @@ internal fun CocktailsListContent(
     Box(
         modifier = modifier
             .background(color = MaterialTheme.colors.background)
-            .clickable { focusManager.clearFocus() }
+            .clickable(
+                onClick = { focusManager.clearFocus() },
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() },
+            )
             .fillMaxSize()
     ) {
         if (model.isError) {

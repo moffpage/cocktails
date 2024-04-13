@@ -12,7 +12,7 @@ public val lightColors: Colors = with(lightColorScheme) {
         onBackground = onBackground.toComposeColor(),
 
         surface = surface.toComposeColor(),
-        onSurface = surface.toComposeColor(),
+        onSurface = onSurface.toComposeColor(),
 
         secondary = secondary.toComposeColor(),
 

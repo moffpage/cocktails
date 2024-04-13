@@ -44,7 +44,7 @@ public fun SegmentedControl(
                 .weight(weight = 1f)
                 .clip(shape = CircleShape)
                 .clickable(onClick = onClick),
-            color = tabBackgroundColor,
+            color = tabBackgroundColor
         ) {
             Text(
                 modifier = Modifier.padding(vertical = 8.dp),

@@ -33,9 +33,11 @@ android {
     buildTypes {
         debug {
             isMinifyEnabled = false
+            isShrinkResources = false
         }
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -69,7 +71,6 @@ kotlin {
             baseName = "shared"
             export(dependency = libs.moko.resources.common)
             export(dependency = libs.decompose.core)
-            export(dependency = project(":core"))
             export(dependency = project(":common"))
             export(dependency = project(":ui_components"))
         }
@@ -80,6 +81,7 @@ kotlin {
             dependsOn(commonMain.get())
             dependencies {
                 implementation(dependencyNotation = libs.koin.android)
+                implementation(dependencyNotation = libs.seismic)
                 implementation(dependencyNotation = libs.android.activity.compose)
             }
         }

@@ -46,14 +46,14 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 implementation(dependencyNotation = libs.moko.resources.common)
             }
         }
 
-        val androidMain by getting {
-            dependsOn(commonMain)
+        androidMain {
+            dependsOn(commonMain.get())
             dependencies {
                 api(dependencyNotation = libs.moko.resources.compose)
                 api(dependencyNotation = libs.coil.compose)

@@ -38,7 +38,7 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 api(dependencyNotation = libs.napier)
                 implementation(dependencyNotation = libs.reaktive)
@@ -55,7 +55,7 @@ kotlin {
             }
         }
 
-        val androidMain by getting {
+        androidMain {
             dependencies {
                 implementation(dependencyNotation = libs.ktor.engine.okhttp)
             }
@@ -65,8 +65,8 @@ kotlin {
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
 
-        val iosMain by creating {
-            dependsOn(commonMain)
+        iosMain {
+            dependsOn(commonMain.get())
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
