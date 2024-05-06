@@ -70,6 +70,7 @@ kotlin {
         it.binaries.framework {
             baseName = "shared"
             export(dependency = libs.moko.resources.common)
+            export(dependency = libs.essenty.lifecycle)
             export(dependency = libs.decompose.core)
             export(dependency = project(":common"))
             export(dependency = project(":ui_components"))

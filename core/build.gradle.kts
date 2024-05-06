@@ -41,7 +41,6 @@ kotlin {
         commonMain {
             dependencies {
                 api(dependencyNotation = libs.napier)
-                implementation(dependencyNotation = libs.reaktive)
 
                 implementation(dependencyNotation = libs.ktor.core)
                 implementation(dependencyNotation = libs.ktor.logging)
@@ -50,7 +49,6 @@ kotlin {
                 implementation(dependencyNotation = libs.koin.core)
                 implementation(dependencyNotation = libs.essenty.lifecycle)
                 implementation(dependencyNotation = libs.decompose.core)
-                implementation(dependencyNotation = libs.mvikotlin.rx)
                 implementation(dependencyNotation = libs.mvikotlin.core)
             }
         }

@@ -89,7 +89,7 @@ private class ExecutorImpl(
 ) {
     private var fetchCocktailDetailsJob: Job? = null
 
-    override fun executeAction(action: Action, getState: () -> State) {
+    override fun executeAction(action: Action) {
         when (action) {
             is Action.LoadCocktail -> {
                 fetchCocktailDetailsJob?.cancel()
@@ -120,12 +120,12 @@ private class ExecutorImpl(
         }
     }
 
-    override fun executeIntent(intent: Intent, getState: () -> State) {
+    override fun executeIntent(intent: Intent) {
         when (intent) {
             is Intent.Refresh -> {
                 executeAction(
                     action = Action.LoadCocktail(
-                        cocktailId = getState().cocktailId
+                        cocktailId = state().cocktailId
                     )
                 )
             }
