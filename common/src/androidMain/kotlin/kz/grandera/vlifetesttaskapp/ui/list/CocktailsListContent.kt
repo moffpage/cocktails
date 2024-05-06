@@ -41,7 +41,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBarsPadding
 
-import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent
 import kz.grandera.vlifetesttaskapp.resources.CommonStrings

@@ -34,7 +34,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.displayCutoutPadding
 
-import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 
 import kz.grandera.vlifetesttaskapp.R
 import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent

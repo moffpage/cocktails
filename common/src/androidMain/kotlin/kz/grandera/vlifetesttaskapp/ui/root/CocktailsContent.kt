@@ -5,12 +5,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.material.ExperimentalMaterialApi
 
 import com.arkivanov.decompose.ExperimentalDecomposeApi
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.plus
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.fade
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.scale
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.predictiveback.predictiveBackAnimation
+import com.arkivanov.decompose.extensions.compose.stack.Children
+import com.arkivanov.decompose.extensions.compose.stack.animation.plus
+import com.arkivanov.decompose.extensions.compose.stack.animation.fade
+import com.arkivanov.decompose.extensions.compose.stack.animation.scale
+import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
+import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback.predictiveBackAnimation
 
 import kz.grandera.vlifetesttaskapp.ui.list.CocktailsListContent
 import kz.grandera.vlifetesttaskapp.ui.details.CocktailDetailsContent
@@ -29,7 +29,7 @@ public fun CocktailsContent(
         modifier = modifier,
         animation = predictiveBackAnimation(
             backHandler = component.backHandler,
-            animation = stackAnimation(animator = fade() + scale()),
+            fallbackAnimation = stackAnimation(animator = fade() + scale()),
             onBack = { component.onBackInvoked() }
         )
     ) { child ->
