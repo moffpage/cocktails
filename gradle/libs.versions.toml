@@ -1,23 +1,23 @@
 [versions]
 
 coil = "3.0.0-alpha06"
-koin = "3.5.3"
-ktor = "2.3.9"
+koin = "3.5.6"
+ktor = "2.3.10"
 
 moko-resources = "0.24.0-alpha-5"
 
 compose = "1.6.1"
-compose-compiler = "1.5.11"
+compose-compiler = "1.5.13"
 
-essenty = "2.0.0-beta01"
-decompose = "3.0.0-beta01"
-mvikotlin = "4.0.0-beta01"
+essenty = "2.0.0"
+decompose = "3.0.0"
+mvikotlin = "4.0.0"
 
 kotlin = "1.9.23"
 kotlinx-serialization = "1.6.3"
 
 android-gradle = "8.2.2"
-androidx-activity = "1.8.2"
+androidx-activity = "1.9.0"
 
 [plugins]
 moko-resources-generator = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "moko-resources" }

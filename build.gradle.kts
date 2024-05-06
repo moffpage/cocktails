@@ -5,7 +5,3 @@ plugins {
     alias(libs.plugins.kotlinx.serialization).apply(false)
     alias(libs.plugins.multiplatform).apply(false)
 }
-
-tasks.register<Delete>("clean") {
-    delete(rootProject.buildDir)
-}

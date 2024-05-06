@@ -41,7 +41,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(dependencyNotation = libs.napier)
-                implementation(dependencyNotation = libs.reaktive)
 
                 implementation(dependencyNotation = libs.koin.core)
                 implementation(dependencyNotation = libs.ktor.core)
