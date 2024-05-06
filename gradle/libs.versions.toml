@@ -33,7 +33,6 @@ android-activity-compose = { module = "androidx.activity:activity-compose", vers
 
 napier = "io.github.aakira:napier:2.7.1"
 seismic = "com.squareup:seismic:1.0.3"
-reaktive = "com.badoo.reaktive:reaktive:2.0.1"
 kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0"
 compottie = "io.github.alexzhirkevich:compottie:1.1.1"
 
