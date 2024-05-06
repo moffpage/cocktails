@@ -1,75 +1,60 @@
 
 import shared
-import UIKit
+import SwiftUI
 
-struct ColorPalette {
-    let primary: UIColor
-    let onPrimary: UIColor
-    
-    let surface: UIColor
-    let onSurface: UIColor
-    
-    let background: UIColor
-    let onBackground: UIColor
-    
-    let secondary: UIColor
-    
-    let error: UIColor
-    
+final class ColorPalette: ObservableObject {
     static let dark: ColorPalette = ColorSchemeFactoryKt.darkColorScheme.toColorPalette()
     static let light: ColorPalette = ColorSchemeFactoryKt.lightColorScheme.toColorPalette()
     
-    @available(iOS 13.0, *)
-    static let adaptive: ColorPalette = .init(
-        primary: UIColor(
-            dynamicProvider: { traitCollection in
-                adaptivePalette(traitCollection: traitCollection).primary
-            }
-        ),
-        onPrimary: UIColor(
-            dynamicProvider: { traitCollection in
-                adaptivePalette(traitCollection: traitCollection).onPrimary
-            }
-        ),
-        surface: UIColor(
-            dynamicProvider: { traitCollection in
-                adaptivePalette(traitCollection: traitCollection).surface
-            }
-        ),
-        onSurface: UIColor(
-            dynamicProvider: { traitCollection in
-                adaptivePalette(traitCollection: traitCollection).onSurface
-            }
-        ),
-        background: UIColor(
-            dynamicProvider: { traitCollection in
-                adaptivePalette(traitCollection: traitCollection).background
-            }
-        ),
-        onBackground: UIColor(
-            dynamicProvider: { traitCollection in
-                adaptivePalette(traitCollection: traitCollection).onBackground
-            }
-        ),
-        secondary: UIColor(
-            dynamicProvider: { traitCollection in
-                adaptivePalette(traitCollection: traitCollection).secondary
-            }
-        ),
-        error: UIColor(
-            dynamicProvider: { traitCollection in
-                adaptivePalette(traitCollection: traitCollection).secondary
-            }
-        )
-    )
-
-    @available(iOS 13.0, *)
-    private static func adaptivePalette(traitCollection: UITraitCollection) -> ColorPalette {
-        switch traitCollection.userInterfaceStyle {
-        case .dark:
-            return .dark
-        default:
-            return .light
+    @Published
+    var primary: SwiftUI.Color
+    @Published
+    var onPrimary: SwiftUI.Color
+    
+    @Published
+    var surface: SwiftUI.Color
+    @Published
+    var onSurface: SwiftUI.Color
+    
+    @Published
+    var background: SwiftUI.Color
+    @Published
+    var onBackground: SwiftUI.Color
+    
+    @Published
+    var secondary: SwiftUI.Color
+    
+    @Published
+    var error: SwiftUI.Color
+    
+    init(
+        primary: SwiftUI.Color,
+        onPrimary: SwiftUI.Color,
+        surface: SwiftUI.Color,
+        onSurface: SwiftUI.Color,
+        background: SwiftUI.Color,
+        onBackground: SwiftUI.Color,
+        secondary: SwiftUI.Color,
+        error: SwiftUI.Color
+    ) {
+        self.primary = primary
+        self.onPrimary = onPrimary
+        self.surface = surface
+        self.onSurface = onSurface
+        self.background = background
+        self.onBackground = onBackground
+        self.secondary = secondary
+        self.error = error
+    }
+    
+    func contentColor(for backgroundColor: SwiftUI.Color) -> SwiftUI.Color {
+        switch backgroundColor {
+        case primary: return onPrimary
+        case surface: return onSurface
+        case background: return onBackground
+        case secondary: return .black
+        case error: return .white
+        default: return .clear
         }
     }
 }

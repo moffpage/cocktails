@@ -1,51 +1,50 @@
 
 import shared
 import UIKit
+import SwiftUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    internal var window: UIWindow?
+    var window: UIWindow?
     
-    func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
-    ) -> Bool {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
+    ) -> Bool
+    {
         InitializationKt.initializeKoin()
         InitializationKt.enableLogging()
         
-        ThemeConfigurator.configureTheme(
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        let component = FactoryKt.cocktailsComponentFactory(
+            componentContext: DefaultComponentContext(
+                lifecycle: ApplicationLifecycle(),
+                stateKeeper: nil,
+                instanceKeeper: nil,
+                backHandler: nil
+            )
+        )
+        let systemTheme = UIScreen.main.traitCollection.userInterfaceStyle
+        let themeProvider = ThemeProvider(
             shapes: ShapesFactoryKt.ShapesFactory,
-            typography: TypographyFactoryKt.TypographyFactory
+            typography: Typography(
+                factory: TypographyFactoryKt.TypographyFactory,
+                palette: systemTheme.toColorPalette()
+            ),
+            colorScheme: systemTheme.toColorScheme()
         )
+        let contentView = CocktailsView(
+            component: component,
+            themeProvider: themeProvider
+        )
+        let rootViewController = UIHostingController(rootView: contentView)
         
-        let lifecycle = ApplicationLifecycle()
-        let componentContext = DefaultComponentContext(
-            lifecycle: lifecycle,
-            stateKeeper: nil,
-            instanceKeeper: nil,
-            backHandler: nil
-        )
-        let cocktailsComponent = FactoryKt.cocktailsComponentFactory(
-            componentContext: componentContext
-        )
-        let cocktailsViewController = CocktailsViewController(
-            component: cocktailsComponent
-        )
-        let window = ThemeWindow(frame: UIScreen.main.bounds)
-        
-        window.rootViewController = cocktailsViewController
+        window.rootViewController = rootViewController
         
         self.window = window
         
         window.makeKeyAndVisible()
         
-        themeProvider.register(observer: self)
-        
         return true
-    }
-}
-
-extension AppDelegate: Themeable {
-    func apply(theme: any Theme) {
-        window?.backgroundColor = theme.colors.background
     }
 }

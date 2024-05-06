@@ -1,52 +1,81 @@
 
-import UIKit
+import shared
+import SwiftUI
 
-class SegmentControl: UISegmentedControl {
-    // Can't be zero or size will error when click segment
-    private let segmentInset: CGFloat = 0.1
+struct SegmentedControl: View {
+    @EnvironmentObject
+    private var theme: AppTheme
     
-    override init(items: [Any]?) {
-        super.init(items: items)
-        themeProvider.register(observer: self)
+    private let titles: [String]
+    private let selected: (Int) -> Bool
+    private let onSegmentClick: (Int) -> Void
+    
+    init(
+        titles: [String],
+        selected: @escaping (Int) -> Bool,
+        onSegmentClick: @escaping (Int) -> Void
+    ) {
+        self.titles = titles
+        self.selected = selected
+        self.onSegmentClick = onSegmentClick
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        clipOval()
-        
-        if #available(iOS 13.0, *) {
-            removeTinting()
-        }
-        
-        if let selectedImageView = subviews[numberOfSegments] as? UIImageView {
-            selectedImageView.image = nil
-            selectedImageView.bounds = selectedImageView.bounds.insetBy(dx: segmentInset, dy: segmentInset)
-            selectedImageView.backgroundColor = themeProvider.theme.colors.primary
-            selectedImageView.clipOval()
-            selectedImageView.layer.removeAnimation(forKey: "SelectionBounds")
-        }
-    }
-    
-    private func removeTinting() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            for index in 0 ... (self.numberOfSegments - 1)  {
-                let backgroundSegmentView = self.subviews[index]
-                backgroundSegmentView.isHidden = true
+    var body: some View {
+        ZStack {
+            HStack {
+                ForEach(
+                    Array(titles.enumerated()),
+                    id: \.element
+                ) { index, title in
+                    SegmentView(
+                        title: title,
+                        isSelected: selected(index)
+                    )
+                    .clipShape(Capsule())
+                    .onTapGesture { onSegmentClick(index) }
+                }
             }
+            .frame(maxWidth: .infinity)
+            .padding(.all, 2)
         }
+        .background(theme.colors.surface)
+        .clipShape(Capsule())
     }
 }
 
-extension SegmentControl: Themeable {
-    func apply(theme: any Theme) {
-        backgroundColor = theme.colors.surface
-        layer.borderColor = theme.colors.surface.cgColor
-        setTitleTextAttributes([.foregroundColor: theme.colors.onSurface], for: .normal)
-        setTitleTextAttributes([.foregroundColor: theme.colors.onPrimary], for: .selected)
+private struct SegmentView: View {
+    @EnvironmentObject
+    private var theme: AppTheme
+    
+    private let title: String
+    private let isSelected: Bool
+    
+    init(title: String, isSelected: Bool) {
+        self.title = title
+        self.isSelected = isSelected
+    }
+    
+    var body: some View {
+        ZStack(alignment: .center) {
+            Text(title)
+                .modifier(
+                    theme.typography.h4(
+                        color: isSelected ?
+                        theme.colors.onPrimary :
+                        theme.colors.onSurface
+                    )
+                )
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 8)
+                .padding(.horizontal, 10)
+                .lineLimit(1)
+                .multilineTextAlignment(.center)
+        }
+        .clipShape(Capsule())
+        .background(
+            isSelected ?
+                theme.colors.primary :
+                theme.colors.surface
+        )
     }
 }

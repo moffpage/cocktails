@@ -1,229 +1,110 @@
 
 import shared
-import UIKit
-import SnapKit
-import Kingfisher
+import SwiftUI
 
-final class CocktailDetailsView: UIView {
-    private let backIconView: UIView = {
-        let closeImageView = UIImageView(
-            frame: CGRect(
-                origin: CGPoint(x: 8, y: 8),
-                size: CGSize(
-                    width: 24,
-                    height: 24
+struct CocktailDetailsView: View {
+    @EnvironmentObject
+    private var theme: AppTheme
+    
+    @State
+    private var imageLoaded = false
+    
+    @StateValue
+    private var model: CocktailDetailsComponentModel
+    
+    private let component: CocktailDetailsComponent
+    
+    init(component: CocktailDetailsComponent) {
+        self.component = component
+        self._model = StateValue(component.model)
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            ZStack(alignment: .bottom) {
+                KingfisherView(
+                    url: model.imageUrl,
+                    onSuccess: { _ in
+                        imageLoaded = true
+                    }
                 )
-            )
-        )
-        closeImageView.image = UIImage(imageLiteralResourceName: "back")
-        closeImageView.tintColor = .white
-        
-        let surfaceView = UIView()
-        surfaceView.clip(to: RoundedCornerShape(cornerRadius: 20.0))
-        surfaceView.addSubview(closeImageView)
-        
-        return surfaceView
-    }()
-    
-    private let cocktailImageView = UIImageView()
-    
-    private let cocktailTitleView: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        return label
-    }()
-    
-    private let instructionsLabel: UILabel = {
-        let label = UILabel(text: CommonStrings.shared.instructions)
-        label.backgroundColor = .clear
-        return label
-    }()
-    
-    private let instructionsTextView: UITextView = {
-        let textView = UITextView()
-        textView.backgroundColor = .clear
-        return textView
-    }()
-    
-    private let characteristicsView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 16
-        return stackView
-    }()
-    
-    private let onBackClick: (() -> Void)?
-    
-    init(onBackClick: @escaping () -> Void) {
-        self.onBackClick = onBackClick
-        super.init(frame: .zero)
-        addSubviews()
-        constrainSubviews()
-        addOnBackClickBehavior()
-        themeProvider.register(observer: self)
-    }
-    
-    override init(frame: CGRect) {
-        fatalError("init(onBackClick: () -> Void) must be used")
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func bind(model: CocktailDetailsComponentModel) {
-        cocktailImageView.kf.setImage(with: URL(string: model.imageUrl)) { [unowned cocktailImageView,
-                                                                            unowned themeProvider] result in
-            self.addGradient()
-            
-            switch result {
-            case .success: break
-            case .failure(let error):
-                switch error {
-                case .imageSettingError: break
-                default:
-                    cocktailImageView.image = themeProvider.theme.mode == .light ?
-                        UiComponentImages.shared.cocktailPlaceholderLight.toUIImage() :
-                        UiComponentImages.shared.cocktailPlaceholderDark.toUIImage()
+                
+                if imageLoaded {
+                    LinearGradient(
+                        gradient: Gradient(
+                            colors: [
+                                .clear,
+                                theme.colors.background
+                            ]
+                        ),
+                        startPoint: .init(x: 0.5, y: 0),
+                        endPoint: .init(x: 0.5, y: 1)
+                    )
+                    .frame(
+                        maxWidth: .infinity,
+                        maxHeight: 125
+                    )
                 }
+                
+                Text(model.cocktailName)
+                    .modifier(theme.typography.h1(color: theme.colors.onBackground))
+                    .padding(.bottom, 16)
             }
-        }
-        cocktailTitleView.text = model.cocktailName
-        instructionsTextView.text = model.preparationInstruction
-        
-        let alcoholicSign: StringResource
-        if model.isAlcoholic {
-            alcoholicSign = CommonStrings.shared.alcoholic
-        } else {
-            alcoholicSign = CommonStrings.shared.nonAlcoholic
-        }
-        
-        if let category = model.category {
-            bindCharacteristics(
-                text: model.glassType,
-                iconName: category.iconName
+            .overlay(
+                BackButton {
+                    component.navigateBack()
+                }
+                .frame(
+                    width: 40,
+                    height: 40
+                )
+                .padding(.top, 16)
+                .padding(.leading, 12)
+                .statusBarPadding(),
+                alignment: .topLeading
             )
-            bindCharacteristics(
-                text: alcoholicSign.desc().localized(),
-                iconName: nil
-            )
+            
+            HStack(alignment: .center) {
+                ChipView(
+                    text: model.glassType,
+                    iconResource: model.category?.iconName,
+                    surfaceColor: theme.colors.surface,
+                    contentColor: theme.colors.primary
+                )
+                ChipView(
+                    text: model.isAlcoholic ?
+                        CommonStrings.shared.alcoholic.desc().localized() :
+                        CommonStrings.shared.nonAlcoholic.desc().localized(),
+                    surfaceColor: theme.colors.surface,
+                    contentColor: theme.colors.secondary
+                )
+            }
+            .frame(maxWidth: .infinity)
+            
+            Text(CommonStrings.shared.instructions
+                .desc().localized())
+                .padding(.top, 32)
+                .padding(.leading, 16)
+                .modifier(theme.typography.h2(color: theme.colors.primary))
+            
+            Text(model.preparationInstruction)
+                .padding(.top, 4)
+                .padding(.horizontal, 16)
+                .modifier(theme.typography.h4(color: theme.colors.onBackground))
+            
+            Spacer()
         }
-    }
-    
-    private func addSubviews() {
-        addSubview(cocktailImageView)
-        addSubview(characteristicsView)
-        addSubview(instructionsLabel)
-        addSubview(instructionsTextView)
-        addSubview(backIconView)
-        cocktailImageView.addSubview(cocktailTitleView)
-    }
-    
-    private func constrainSubviews() {
-        backIconView.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).inset(8)
-            make.size.equalTo(40)
-            make.leading.equalToSuperview().inset(16)
-        }
-        
-        cocktailImageView.snp.makeConstraints { make in
-            make.top.width.equalToSuperview()
-            make.height.equalTo(cocktailImageView.snp.width)
-        }
-        
-        cocktailTitleView.snp.makeConstraints { make in
-            make.bottom.equalTo(cocktailImageView.snp.bottom).inset(16)
-            make.horizontalEdges.equalToSuperview()
-        }
-        
-        instructionsLabel.snp.makeConstraints { make in
-            make.top.equalTo(characteristicsView.snp.bottom).offset(36)
-            make.width.equalTo(140)
-            make.height.equalTo(24)
-            make.leading.equalToSuperview().inset(16)
-        }
-        
-        characteristicsView.snp.makeConstraints { make in
-            make.width.lessThanOrEqualToSuperview()
-            make.height.equalTo(40)
-            make.center.equalToSuperview()
-        }
-        
-        instructionsTextView.snp.makeConstraints { make in
-            make.top.equalTo(instructionsLabel.snp.bottom)
-            make.bottom.equalToSuperview()
-            make.horizontalEdges.equalToSuperview().inset(8)
-        }
-    }
-    
-    private func addGradient() {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = CGRect(
-            x: 0,
-            y: 0,
-            width: cocktailImageView.bounds.width,
-            height: cocktailImageView.bounds.height
-        )
-        gradientLayer.locations = [NSNumber(value: (2.0/3.0)), 1]
-        gradientLayer.colors = [
-            UIColor.clear.cgColor,
-            themeProvider.theme.colors.background.cgColor
-        ]
-        cocktailImageView.layer.insertSublayer(gradientLayer, at: 0)
-    }
-    
-    private func addOnBackClickBehavior() {
-        backIconView.addGestureRecognizer(
-            UITapGestureRecognizer(
-                target: self,
-                action: #selector(onBackClicked)
-            )
-        )
-    }
-    
-    private func bindCharacteristics(text: String, iconName: String?) {
-        characteristicsView.addArrangedSubview(
-            CocktailCharacteristicChip(
-                text: text,
-                iconName: iconName
-            )
-        )
-    }
-    
-    @objc
-    private func onBackClicked() {
-        self.onBackClick?()
+        .background(theme.colors.background)
+        .navigationBarHidden(true)
     }
 }
 
-extension CocktailDetailsView: Themeable {
-    func apply(theme: any Theme) {
-        backgroundColor = theme.colors.background
-        backIconView.backgroundColor = theme.colors.primary.withAlphaComponent(0.3)
-        cocktailTitleView.textColor = theme.colors.onBackground
-        instructionsLabel.textColor = theme.colors.primary
-        instructionsTextView.textColor = theme.colors.onBackground
-        cocktailTitleView.setTextStyle(style: theme.typography.h1)
-        instructionsLabel.setTextStyle(style: theme.typography.h3)
-        instructionsTextView.setTextStyle(style: theme.typography.h4)
-    }
-}
-
-private extension CocktailDetailsComponentDrinkCategory {
+private extension shared.CocktailDetailsComponentDrinkCategory {
     var iconName: String {
         switch self {
-        case .beer: return "beer"
-        case .shot: return "shot"
         case .soft: return "soft_drink"
-        case .cocoa: return "cocoa"
-        case .shake: return "shake"
-        case .punch: return "punch"
-        case .coffee: return "coffee"
-        case .other: return "other"
-        case .liqueur: return "liqueur"
-        case .cocktail: return "cocktail"
         case .ordinary: return "regular_drink"
-        default: return ""
+        default: return self.name.lowercased()
         }
     }
 }

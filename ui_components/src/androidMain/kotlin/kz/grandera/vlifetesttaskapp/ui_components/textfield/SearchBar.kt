@@ -22,17 +22,17 @@ import kz.grandera.vlifetesttaskapp.ui_components.theming.VlifeTestTaskAppTheme
 @Composable
 public fun SearchBar(
     modifier: Modifier = Modifier,
-    text: String,
+    value: String,
     placeholder: String = stringResource(id = UiComponentsStrings.search.resourceId),
     onValueChange: (String) -> Unit,
-    showTrailingContent: Boolean = text.isNotEmpty(),
+    showTrailingContent: Boolean = value.isNotEmpty(),
     onTrailingContentClicked: (() -> Unit)? = null,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default
 ) {
     TextField(
         modifier = modifier,
-        value = text,
+        value = value,
         onValueChange = onValueChange,
         textStyle = MaterialTheme.typography.h4,
         leadingContent = {
@@ -62,7 +62,7 @@ private fun LightSearchBarPreview() {
     VlifeTestTaskAppTheme(applyDarkTheme = false) {
         SearchBar(
             modifier = Modifier.height(height = 36.dp),
-            text = "Martini",
+            value = "Martini",
             onValueChange = { }
         )
     }
@@ -74,7 +74,7 @@ private fun SearchBarDarkPreview() {
     VlifeTestTaskAppTheme(applyDarkTheme = true) {
         SearchBar(
             modifier = Modifier.height(height = 36.dp),
-            text = "Martini",
+            value = "Martini",
             onValueChange = { }
         )
     }

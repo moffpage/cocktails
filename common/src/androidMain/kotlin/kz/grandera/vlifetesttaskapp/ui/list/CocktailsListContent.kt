@@ -124,7 +124,7 @@ internal fun CocktailsListContent(
                     ) {
                         SearchBar(
                             modifier = Modifier.height(height = 36.dp),
-                            text = model.searchQuery,
+                            value = model.searchQuery,
                             onValueChange = { text ->
                                 component.findCocktail(
                                     searchQuery = text

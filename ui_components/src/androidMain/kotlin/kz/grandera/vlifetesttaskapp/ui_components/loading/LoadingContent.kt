@@ -49,7 +49,7 @@ public fun LoadingContent(
                 .align(alignment = Alignment.Center)
                 .matchParentSize(),
             progress = { progress },
-            composition = composition,
+            composition = composition
         )
     }
 }
