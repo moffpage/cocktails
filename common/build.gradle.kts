@@ -68,7 +68,7 @@ kotlin {
         androidMain {
             dependsOn(commonMain.get())
             dependencies {
-                implementation(dependencyNotation = libs.decompose.extensions.compose.jetpack)
+                implementation(dependencyNotation = libs.decompose.extensions.compose)
             }
         }
     }

@@ -88,7 +88,7 @@ private class ExecutorImpl(
 ) {
     private var fetchCocktailsJob: Job? = null
 
-    override fun executeAction(action: Action, getState: () -> State) {
+    override fun executeAction(action: Action) {
         when (action) {
             is Action.LoadCocktails -> {
                 executeIntent(
@@ -100,7 +100,7 @@ private class ExecutorImpl(
         }
     }
 
-    override fun executeIntent(intent: Intent, getState: () -> State) {
+    override fun executeIntent(intent: Intent) {
         when (intent) {
             is Intent.Shuffle -> {
                 scope.launch {
@@ -112,7 +112,7 @@ private class ExecutorImpl(
                     delay(1000L)
                     dispatch(
                         message = Message.CocktailsChanged(
-                            cocktails = getState().filteredCocktails
+                            cocktails = state().filteredCocktails
                                 .shuffled()
                         )
                     )
@@ -131,7 +131,7 @@ private class ExecutorImpl(
                 )
                 dispatch(
                     message = Message.CocktailsChanged(
-                        cocktails = getState().cocktails
+                        cocktails = state().cocktails
                             .filter { cocktail ->
                                 cocktail.name.startsWith(
                                     prefix = intent.query,
@@ -142,7 +142,7 @@ private class ExecutorImpl(
                 )
             }
             is Intent.Filter -> {
-                val cocktails = getState().cocktails
+                val cocktails = state().cocktails
                 val filterOutAlcoholic = intent.isAlcoholic
 
                 if (cocktails.any { cocktail -> cocktail.isAlcoholic == filterOutAlcoholic }) {
