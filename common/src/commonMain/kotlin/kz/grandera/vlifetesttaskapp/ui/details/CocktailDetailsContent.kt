@@ -36,13 +36,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.displayCutoutPadding
 
-import dev.icerock.moko.resources.compose.stringResource
-import dev.icerock.moko.resources.compose.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.resources.painterResource
 
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 
 import coil3.compose.SubcomposeAsyncImage
 
+import kz.grandera.vlifetesttaskapp.common.Res
+import kz.grandera.vlifetesttaskapp.common.alcoholic
+import kz.grandera.vlifetesttaskapp.common.non_alcoholic
+import kz.grandera.vlifetesttaskapp.common.instructions_label
 import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent
 import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent.DrinkCategory
 import kz.grandera.vlifetesttaskapp.resources.Icons
@@ -57,12 +61,11 @@ import kz.grandera.vlifetesttaskapp.resources.icons.RegularDrink
 import kz.grandera.vlifetesttaskapp.resources.icons.Shot
 import kz.grandera.vlifetesttaskapp.resources.icons.Shake
 import kz.grandera.vlifetesttaskapp.resources.icons.SoftDrink
-import kz.grandera.vlifetesttaskapp.resources.CommonStrings
 import kz.grandera.vlifetesttaskapp.ui_components.chip.Chip
 import kz.grandera.vlifetesttaskapp.ui_components.error.ErrorContent
 import kz.grandera.vlifetesttaskapp.ui_components.theming.AppTheme
 import kz.grandera.vlifetesttaskapp.ui_components.modifier.verticalFadingEdge
-import kz.grandera.vlifetesttaskapp.ui_components.resources.UiComponentImages
+import kz.grandera.vlifetesttaskapp.ui_components.resources.cocktailPlaceholderResource
 
 @Composable
 internal fun CocktailDetailsContent(
@@ -101,7 +104,7 @@ internal fun CocktailDetailsContent(
                             error = {
                                 Image(
                                     painter = painterResource(
-                                        imageResource = UiComponentImages.cocktailPlaceholder(
+                                        resource = cocktailPlaceholderResource(
                                             theme = AppTheme(
                                                 isLight = MaterialTheme.colors.isLight
                                             )
@@ -145,9 +148,9 @@ internal fun CocktailDetailsContent(
                         )
                         Chip(
                             text = if (model.isAlcoholic) {
-                                stringResource(resource = CommonStrings.alcoholic)
+                                stringResource(resource = Res.string.alcoholic)
                             } else {
-                                stringResource(resource = CommonStrings.nonAlcoholic)
+                                stringResource(resource = Res.string.non_alcoholic)
                             },
                             iconPainter = null
                         )
@@ -156,7 +159,7 @@ internal fun CocktailDetailsContent(
                         modifier = Modifier
                             .padding(top = 36.dp)
                             .padding(horizontal = 8.dp),
-                        text = stringResource(resource = CommonStrings.instructions),
+                        text = stringResource(resource = Res.string.instructions_label),
                         style = MaterialTheme.typography.h2
                             .copy(color = MaterialTheme.colors.primary)
                     )

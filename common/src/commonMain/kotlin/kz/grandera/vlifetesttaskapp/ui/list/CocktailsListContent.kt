@@ -38,16 +38,18 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBarsPadding
 
-import dev.icerock.moko.resources.compose.stringResource
-
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import kz.grandera.vlifetesttaskapp.common.Res
+import kz.grandera.vlifetesttaskapp.common.alcoholic
+import kz.grandera.vlifetesttaskapp.common.cocktails
+import kz.grandera.vlifetesttaskapp.common.non_alcoholic
 
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent
-import kz.grandera.vlifetesttaskapp.resources.CommonStrings
 import kz.grandera.vlifetesttaskapp.ui_components.error.ErrorContent
 import kz.grandera.vlifetesttaskapp.ui_components.loading.LoadingContent
 import kz.grandera.vlifetesttaskapp.ui_components.segment.SegmentedControl
 import kz.grandera.vlifetesttaskapp.ui_components.textfield.SearchBar
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 @ExperimentalMaterialApi
@@ -109,7 +111,7 @@ internal fun CocktailsListContent(
                             modifier = Modifier
                                 .padding(bottom = 20.dp)
                                 .statusBarsPadding(),
-                            text = stringResource(resource = CommonStrings.cocktails),
+                            text = stringResource(resource = Res.string.cocktails),
                             style = MaterialTheme.typography.h1
                                 .copy(color = MaterialTheme.colors.onBackground)
                         )
@@ -156,8 +158,8 @@ internal fun CocktailsListContent(
                                     }
                                 },
                                 titles = listOf(
-                                    stringResource(resource = CommonStrings.nonAlcoholic),
-                                    stringResource(resource = CommonStrings.alcoholic)
+                                    stringResource(resource = Res.string.non_alcoholic),
+                                    stringResource(resource = Res.string.alcoholic)
                                 ),
                                 onSegmentClick = { index ->
                                     if (index == 0) {

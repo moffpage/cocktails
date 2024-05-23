@@ -1,9 +1,7 @@
-import dev.icerock.gradle.MRVisibility
-
 plugins {
-    alias(libs.plugins.moko.resources.generator)
     id(libs.plugins.android.library.get().pluginId)
     alias(libs.plugins.compose)
+    alias(libs.plugins.compose.kotlin)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.multiplatform)
 }
@@ -20,20 +18,15 @@ android {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
-
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-
-    sourceSets.getByName("main").res.srcDir(File(buildDir, "generated/moko/androidMain/res"))
 }
 
 kotlin {
     explicitApiWarning()
+    applyDefaultHierarchyTemplate()
 
     iosX64()
     iosArm64()
@@ -42,7 +35,7 @@ kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_1_8.toString()
+                jvmTarget = JavaVersion.VERSION_17.toString()
             }
         }
     }
@@ -64,8 +57,8 @@ kotlin {
     }
 }
 
-multiplatformResources {
-    resourcesPackage.set("kz.grandera.vlifetesttaskapp.common")
-    resourcesClassName.set("CommonRes")
-    resourcesVisibility.set(MRVisibility.Internal)
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "kz.grandera.vlifetesttaskapp.common"
+    generateResClass = always
 }

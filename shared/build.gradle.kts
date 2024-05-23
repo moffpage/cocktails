@@ -1,7 +1,7 @@
 plugins {
-    alias(libs.plugins.moko.resources.generator)
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose)
+    alias(libs.plugins.compose.kotlin)
     alias(libs.plugins.multiplatform)
 }
 
@@ -19,10 +19,6 @@ android {
 
     buildFeatures {
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
 
     packaging {
@@ -45,21 +41,15 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-
-    sourceSets.getByName("main").res.srcDir(File(buildDir, "generated/moko/androidMain/res"))
 }
 
 kotlin {
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_1_8.toString()
-            }
-        }
-    }
+    applyDefaultHierarchyTemplate()
+
+    androidTarget()
 
     listOf(
         iosX64(),
@@ -76,15 +66,21 @@ kotlin {
     }
 
     sourceSets {
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
+        commonMain {
+            dependencies {
+                api(dependencyNotation = project(path = ":common"))
+                api(dependencyNotation = libs.decompose.core)
+
+                implementation(dependencyNotation = project(path = ":core"))
+                implementation(dependencyNotation = project(path = ":ui_components"))
+            }
+        }
 
         iosMain {
             dependsOn(commonMain.get())
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
+            iosX64 { dependsOn(this@iosMain) }
+            iosArm64 { dependsOn(this@iosMain) }
+            iosSimulatorArm64 { dependsOn(this@iosMain) }
         }
 
         androidMain {
@@ -94,14 +90,6 @@ kotlin {
                 implementation(dependencyNotation = libs.android.activity.compose)
                 implementation(dependencyNotation = libs.seismic)
             }
-        }
-
-        commonMain.dependencies {
-            api(dependencyNotation = project(path = ":common"))
-            api(dependencyNotation = libs.decompose.core)
-
-            implementation(dependencyNotation = project(path = ":core"))
-            implementation(dependencyNotation = project(path = ":ui_components"))
         }
     }
 }

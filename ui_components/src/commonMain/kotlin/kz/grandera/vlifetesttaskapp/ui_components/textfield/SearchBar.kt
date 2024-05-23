@@ -14,15 +14,16 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 
-import dev.icerock.moko.resources.compose.stringResource
+import org.jetbrains.compose.resources.stringResource
 
-import kz.grandera.vlifetesttaskapp.ui_components.resources.UiComponentsStrings
+import kz.grandera.vlifetesttaskapp.ui_components.Res
+import kz.grandera.vlifetesttaskapp.ui_components.search
 
 @Composable
 public fun SearchBar(
     modifier: Modifier = Modifier,
     text: String,
-    placeholder: String = stringResource(resource = UiComponentsStrings.search),
+    placeholder: String = stringResource(resource = Res.string.search),
     onValueChange: (String) -> Unit,
     showTrailingContent: Boolean = text.isNotEmpty(),
     onTrailingContentClicked: (() -> Unit)? = null,

@@ -11,13 +11,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 
-import coil3.compose.SubcomposeAsyncImage
+import org.jetbrains.compose.resources.painterResource
 
-import dev.icerock.moko.resources.compose.painterResource
+import coil3.compose.SubcomposeAsyncImage
 
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent.CocktailModel
 import kz.grandera.vlifetesttaskapp.ui_components.theming.AppTheme
-import kz.grandera.vlifetesttaskapp.ui_components.resources.UiComponentImages
+import kz.grandera.vlifetesttaskapp.ui_components.resources.cocktailPlaceholderResource
 
 @Composable
 internal fun CocktailItem(
@@ -36,7 +36,7 @@ internal fun CocktailItem(
             error = {
                 Image(
                     painter = painterResource(
-                        imageResource = UiComponentImages.cocktailPlaceholder(
+                        resource = cocktailPlaceholderResource(
                             theme = AppTheme(
                                 isLight = MaterialTheme.colors.isLight
                             )

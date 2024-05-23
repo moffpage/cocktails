@@ -3,9 +3,9 @@ package kz.grandera.vlifetesttaskapp.ui_components.theming
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import androidx.compose.material.Typography
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.runtime.Composable
+import androidx.compose.material.Typography
 
 @Composable
 public fun Typography(): Typography = Typography(

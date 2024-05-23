@@ -18,9 +18,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.PaddingValues
 
-import dev.icerock.moko.resources.compose.stringResource
+import org.jetbrains.compose.resources.stringResource
 
-import kz.grandera.vlifetesttaskapp.ui_components.resources.UiComponentsStrings
+import kz.grandera.vlifetesttaskapp.ui_components.Res
+import kz.grandera.vlifetesttaskapp.ui_components.retry
+import kz.grandera.vlifetesttaskapp.ui_components.error_occurred
 import kz.grandera.vlifetesttaskapp.ui_components.resources.Icons
 import kz.grandera.vlifetesttaskapp.ui_components.resources.icons.Error
 
@@ -42,7 +44,7 @@ public fun ErrorContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val errorText = stringResource(
-                resource = UiComponentsStrings.errorOccurred
+                resource = Res.string.error_occurred
             )
             Image(
                 modifier = Modifier.size(size = 48.dp),
@@ -65,7 +67,7 @@ public fun ErrorContent(
                 )
             ) {
                 Text(
-                    text = stringResource(resource = UiComponentsStrings.retry),
+                    text = stringResource(resource = Res.string.retry),
                     style = MaterialTheme.typography.body1
                 )
             }

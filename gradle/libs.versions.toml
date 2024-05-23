@@ -2,39 +2,38 @@
 
 coil = "3.0.0-alpha06"
 koin = "3.5.6"
-ktor = "2.3.10"
+ktor = "2.3.11"
 
-moko-resources = "0.24.0-alpha-5"
-
-compose = "1.6.1"
-compose-compiler = "1.5.13"
+compose = "1.6.10"
 
 essenty = "2.0.0"
 decompose = "3.0.0"
 mvikotlin = "4.0.0"
 
-kotlin = "1.9.23"
-kotlinx-serialization = "1.6.3"
+kotlin = "2.0.0"
+kotlinx-serialization = "1.7.0-RC"
 
 android-gradle = "8.2.2"
 androidx-activity = "1.9.0"
 
 [plugins]
-moko-resources-generator = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "moko-resources" }
 android-library = { id = "com.android.library", version.ref = "android-gradle" }
 android-application = { id = "com.android.application", version.ref = "android-gradle" }
+
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
-kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+compose-kotlin = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 
-[libraries]
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
+[libraries]
 android-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 
 napier = "io.github.aakira:napier:2.7.1"
 seismic = "com.squareup:seismic:1.0.3"
-kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0"
-compottie = "io.github.alexzhirkevich:compottie:1.1.1"
+kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1"
+compottie = "io.github.alexzhirkevich:compottie:1.1.2"
 
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-network-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor", version.ref = "coil" }
@@ -50,10 +49,9 @@ ktor-engine-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "kto
 ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-contentnegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 
-moko-resources-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "moko-resources" }
-
 compose-ui = { group = "org.jetbrains.compose.ui", name = "ui", version.ref = "compose" }
 compose-tooling = { group = "org.jetbrains.compose.components", name = "components-ui-tooling-preview", version.ref = "compose" }
+compose-resources = { group = "org.jetbrains.compose.components", name = "components-resources", version.ref = "compose" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose" }
 compose-material2 = { module = "org.jetbrains.compose.material:material", version.ref = "compose" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose" }
@@ -74,6 +72,7 @@ mvikotlin-coroutines = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-ex
 compose = [
     "compose-ui",
     "compose-runtime",
+    "compose-resources",
     "compose-foundation",
     "compose-material2",
 ]
