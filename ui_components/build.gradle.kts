@@ -18,13 +18,9 @@ android {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
-
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     sourceSets.getByName("main").res.srcDir(File(buildDir, "generated/moko/androidMain/res"))
@@ -40,7 +36,7 @@ kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_1_8.toString()
+                jvmTarget = JavaVersion.VERSION_17.toString()
             }
         }
     }
@@ -66,7 +62,7 @@ kotlin {
 }
 
 multiplatformResources {
-    multiplatformResourcesPackage = "kz.grandera.vlifetesttaskapp.ui_components"
-    multiplatformResourcesClassName = "UiComponentsRes"
-    multiplatformResourcesVisibility = MRVisibility.Internal
+    resourcesPackage.set("kz.grandera.vlifetesttaskapp.ui_components")
+    resourcesClassName.set("UiComponentsRes")
+    resourcesVisibility.set(MRVisibility.Internal)
 }

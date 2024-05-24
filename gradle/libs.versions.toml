@@ -1,24 +1,24 @@
 [versions]
 
 koin = "3.5.6"
-ktor = "2.3.10"
+ktor = "2.3.11"
 
-moko-resources = "0.23.0"
+moko-resources = "0.24.0-beta-5"
 
 compose = "1.6.7"
-compose-compiler = "1.5.13"
 
 essenty = "2.0.0"
 decompose = "3.0.0"
 mvikotlin = "4.0.0"
 
-kotlin = "1.9.23"
-kotlinx-serialization = "1.6.3"
+kotlin = "2.0.0"
+kotlinx-serialization = "1.7.0-RC"
 
 android-gradle = "8.2.2"
 androidx-activity = "1.9.0"
 
 [plugins]
+
 moko-resources-generator = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "moko-resources" }
 android-library = { id = "com.android.library", version.ref = "android-gradle" }
 android-application = { id = "com.android.application", version.ref = "android-gradle" }
@@ -33,20 +33,20 @@ napier = "io.github.aakira:napier:2.7.1"
 seismic = "com.squareup:seismic:1.0.3"
 coil-compose = "io.coil-kt:coil-compose:2.6.0"
 lottie-compose = "com.airbnb.android:lottie-compose:6.4.0"
-kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0"
+kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1"
 
-koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
-koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 
-ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
-ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
-ktor-engine-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor"}
-ktor-engine-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
-ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
-ktor-contentnegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
+ktor-engine-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor"}
+ktor-engine-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+ktor-serialization-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-contentnegotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 
-moko-resources-common = { module = "dev.icerock.moko:resources", version.ref = "moko-resources" }
-moko-resources-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "moko-resources" }
+moko-resources-common = { group = "dev.icerock.moko", name = "resources", version.ref = "moko-resources" }
+moko-resources-compose = { group = "dev.icerock.moko", name = "resources-compose", version.ref = "moko-resources" }
 
 compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
 compose-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
