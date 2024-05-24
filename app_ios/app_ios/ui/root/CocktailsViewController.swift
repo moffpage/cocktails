@@ -28,7 +28,7 @@ final class CocktailsViewController: UINavigationController {
     }
     
     private func observeChildren() {
-        component.model.observe { [unowned self] childStack in
+        component.model.subscribe { [unowned self] childStack in
             switch childStack.active.instance {
             case let child as CocktailsComponentChildCocktailsList:
                 let cocktailsListViewController = CocktailsListViewController(

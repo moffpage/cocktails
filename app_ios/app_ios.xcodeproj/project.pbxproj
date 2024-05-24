@@ -12,11 +12,11 @@
 		CE1D2F2629AC8BD200DC6B90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1D2F2529AC8BD200DC6B90 /* AppDelegate.swift */; };
 		CE1D2F2829AC8CCC00DC6B90 /* CocktailDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1D2F2729AC8CCC00DC6B90 /* CocktailDetailsViewController.swift */; };
 		CE1D2F2A29AC8D1D00DC6B90 /* CocktailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1D2F2929AC8D1D00DC6B90 /* CocktailsViewController.swift */; };
+		CE29353A2C011D6200447641 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE2935392C011D6200447641 /* SnapKit */; };
+		CE29353C2C011D6200447641 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = CE29353B2C011D6200447641 /* SnapKit-Dynamic */; };
 		CE2CB76129C176A700592488 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CE2CB76029C176A700592488 /* Lottie */; };
 		CE8582642BB8388A00613DA6 /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8582632BB8388A00613DA6 /* UICollectionView+Extensions.swift */; };
 		CE8582662BB89F1800613DA6 /* UIRefreshControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8582652BB89F1800613DA6 /* UIRefreshControl+Extensions.swift */; };
-		CE85826A2BB91EAB00613DA6 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE8582692BB91EAB00613DA6 /* SnapKit */; };
-		CE85826C2BB91EAB00613DA6 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = CE85826B2BB91EAB00613DA6 /* SnapKit-Dynamic */; };
 		CE85826E2BB952CF00613DA6 /* ViewHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85826D2BB952CF00613DA6 /* ViewHolder.swift */; };
 		CE8582702BB9530100613DA6 /* CocktailDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85826F2BB9530100613DA6 /* CocktailDetailsView.swift */; };
 		CE8582722BB959CC00613DA6 /* CocktailsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8582712BB959CC00613DA6 /* CocktailsListView.swift */; };
@@ -105,10 +105,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE85826A2BB91EAB00613DA6 /* SnapKit in Frameworks */,
+				CE29353A2C011D6200447641 /* SnapKit in Frameworks */,
 				CE981B5729BB7CC300261645 /* Kingfisher in Frameworks */,
 				CE2CB76129C176A700592488 /* Lottie in Frameworks */,
-				CE85826C2BB91EAB00613DA6 /* SnapKit-Dynamic in Frameworks */,
+				CE29353C2C011D6200447641 /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,8 +303,8 @@
 			packageProductDependencies = (
 				CE981B5629BB7CC300261645 /* Kingfisher */,
 				CE2CB76029C176A700592488 /* Lottie */,
-				CE8582692BB91EAB00613DA6 /* SnapKit */,
-				CE85826B2BB91EAB00613DA6 /* SnapKit-Dynamic */,
+				CE2935392C011D6200447641 /* SnapKit */,
+				CE29353B2C011D6200447641 /* SnapKit-Dynamic */,
 			);
 			productName = app_ios;
 			productReference = 7555FF7B242A565900829871 /* Vlife Task.app */;
@@ -338,7 +338,7 @@
 			packageReferences = (
 				CE981B5529BB7CC300261645 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				CE2CB75F29C176A700592488 /* XCRemoteSwiftPackageReference "lottie-spm" */,
-				CE8582682BB91EAB00613DA6 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				CE2935382C011D6200447641 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
@@ -637,20 +637,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CE2935382C011D6200447641 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
 		CE2CB75F29C176A700592488 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 4.0.0;
-			};
-		};
-		CE8582682BB91EAB00613DA6 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.7.1;
 			};
 		};
 		CE981B5529BB7CC300261645 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
@@ -664,20 +664,20 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CE2935392C011D6200447641 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE2935382C011D6200447641 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		CE29353B2C011D6200447641 /* SnapKit-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE2935382C011D6200447641 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = "SnapKit-Dynamic";
+		};
 		CE2CB76029C176A700592488 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CE2CB75F29C176A700592488 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
-		};
-		CE8582692BB91EAB00613DA6 /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CE8582682BB91EAB00613DA6 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
-		};
-		CE85826B2BB91EAB00613DA6 /* SnapKit-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CE8582682BB91EAB00613DA6 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
 		};
 		CE981B5629BB7CC300261645 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

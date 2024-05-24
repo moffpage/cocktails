@@ -20,10 +20,6 @@ android {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
-
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -46,8 +42,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     sourceSets.getByName("main").res.srcDir(File(buildDir, "generated/moko/androidMain/res"))
@@ -57,7 +53,7 @@ kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_1_8.toString()
+                jvmTarget = JavaVersion.VERSION_17.toString()
             }
         }
     }
@@ -70,6 +66,7 @@ kotlin {
         it.binaries.framework {
             baseName = "shared"
             export(dependency = libs.moko.resources.common)
+            export(dependency = libs.essenty.lifecycle)
             export(dependency = libs.decompose.core)
             export(dependency = project(":common"))
             export(dependency = project(":ui_components"))

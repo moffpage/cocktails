@@ -27,7 +27,7 @@ final class CocktailDetailsViewController: UIViewController, ViewHolder {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        component.model.observe { [unowned self] model in
+        component.model.subscribe { [unowned self] model in
             self.rootView.bind(model: model)
         }
     }
