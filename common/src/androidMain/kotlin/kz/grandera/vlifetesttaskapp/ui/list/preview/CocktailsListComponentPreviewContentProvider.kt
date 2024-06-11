@@ -4,7 +4,7 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
 import com.arkivanov.decompose.value.MutableValue
 
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent.Model

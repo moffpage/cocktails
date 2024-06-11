@@ -4,7 +4,6 @@ import kotlinx.serialization.Serializable
 
 import com.arkivanov.essenty.backhandler.BackHandlerOwner
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
@@ -48,7 +47,6 @@ internal class CocktailsComponentImpl(componentContext: ComponentContext) :
         CocktailsListComponentImpl(
             componentContext = componentContext,
             onShowCocktail = { id ->
-                @OptIn(ExperimentalDecomposeApi::class)
                 navigation.pushNew(
                     configuration = Configuration.Details(
                         id = id

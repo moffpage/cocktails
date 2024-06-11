@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.moko.resources.generator)
     alias(libs.plugins.android.application)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.compose.kotlin)
     alias(libs.plugins.multiplatform)
 }
 
@@ -50,6 +52,8 @@ android {
 }
 
 kotlin {
+    applyDefaultHierarchyTemplate()
+
     androidTarget {
         compilations.all {
             kotlinOptions {

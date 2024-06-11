@@ -3,6 +3,8 @@ import dev.icerock.gradle.MRVisibility
 plugins {
     alias(libs.plugins.moko.resources.generator)
     id(libs.plugins.android.library.get().pluginId)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.compose.kotlin)
     alias(libs.plugins.multiplatform)
 }
 
@@ -28,6 +30,7 @@ android {
 
 kotlin {
     explicitApiWarning()
+    applyDefaultHierarchyTemplate()
 
     iosX64()
     iosArm64()
@@ -45,6 +48,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(dependencyNotation = libs.moko.resources.common)
+                implementation(dependencyNotation = libs.compose.runtime)
             }
         }
 

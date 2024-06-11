@@ -1,7 +1,5 @@
 package kz.grandera.vlifetesttaskapp.ui.list
 
-import android.annotation.SuppressLint
-
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
@@ -51,7 +49,6 @@ import kz.grandera.vlifetesttaskapp.ui_components.segment.SegmentedControl
 import kz.grandera.vlifetesttaskapp.ui_components.textfield.SearchBar
 
 @Composable
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @ExperimentalMaterialApi
 internal fun CocktailsListContent(
     modifier: Modifier = Modifier,

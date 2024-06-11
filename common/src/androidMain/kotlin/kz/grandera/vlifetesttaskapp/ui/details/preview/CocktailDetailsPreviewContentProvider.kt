@@ -3,7 +3,7 @@ package kz.grandera.vlifetesttaskapp.ui.details.preview
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.MutableValue
 
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 
 import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent
 
