@@ -1,9 +1,10 @@
 package kz.grandera.vlifetesttaskapp.ui.list.preview
 
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.runtime.Composable
 import androidx.compose.material.ExperimentalMaterialApi
+
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 
 import kz.grandera.vlifetesttaskapp.ui.list.CocktailsListContent
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent

@@ -1,13 +1,12 @@
 package kz.grandera.vlifetesttaskapp.android.activity
 
-import android.app.Activity
 import android.os.Bundle
+import android.app.Activity
 import android.graphics.Color
 import android.hardware.SensorManager
 
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.SideEffect
@@ -40,6 +39,7 @@ class VlifeTestTaskActivity : ComponentActivity() {
         val component = cocktailsComponentFactory(
             componentContext = defaultComponentContext()
         )
+        val sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 
         enableEdgeToEdge(
             statusBarStyle = systemBarsStyle,
@@ -59,7 +59,6 @@ class VlifeTestTaskActivity : ComponentActivity() {
                         applyingTheme.value = !applyingTheme.value
                     }
                 }
-                val sensorManager = LocalContext.current.getSystemService(SENSOR_SERVICE) as SensorManager
 
                 LaunchedEffect(applyDarkTheme) {
                     val window = (view.context as Activity).window
@@ -69,9 +68,11 @@ class VlifeTestTaskActivity : ComponentActivity() {
                     }
                 }
 
-
                 SideEffect {
-                    shakeDetector.start(sensorManager, SensorManager.SENSOR_DELAY_GAME)
+                    shakeDetector.start(
+                        sensorManager,
+                        SensorManager.SENSOR_DELAY_GAME
+                    )
                 }
 
                 VlifeTestTaskAppTheme(applyDarkTheme = applyDarkTheme) {

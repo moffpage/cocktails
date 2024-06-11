@@ -1,7 +1,5 @@
 package kz.grandera.vlifetesttaskapp.ui.details
 
-import android.annotation.SuppressLint
-
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
@@ -48,7 +46,6 @@ import kz.grandera.vlifetesttaskapp.ui_components.modifier.verticalFadingEdge
 import kz.grandera.vlifetesttaskapp.ui_components.resources.UiComponentImages
 
 @Composable
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 internal fun CocktailDetailsContent(
     modifier: Modifier = Modifier,
     component: CocktailDetailsComponent

@@ -24,6 +24,7 @@ android {
 
 kotlin {
     explicitApiWarning()
+    applyDefaultHierarchyTemplate()
 
     iosX64()
     iosArm64()
@@ -59,15 +60,8 @@ kotlin {
             }
         }
 
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-
         iosMain {
             dependsOn(commonMain.get())
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
 
             dependencies {
                 implementation(dependencyNotation = libs.ktor.engine.darwin)
