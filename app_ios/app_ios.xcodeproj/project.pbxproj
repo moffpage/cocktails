@@ -13,7 +13,6 @@
 		CE1D2F2829AC8CCC00DC6B90 /* CocktailDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1D2F2729AC8CCC00DC6B90 /* CocktailDetailsViewController.swift */; };
 		CE1D2F2A29AC8D1D00DC6B90 /* CocktailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1D2F2929AC8D1D00DC6B90 /* CocktailsViewController.swift */; };
 		CE29353A2C011D6200447641 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE2935392C011D6200447641 /* SnapKit */; };
-		CE29353C2C011D6200447641 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = CE29353B2C011D6200447641 /* SnapKit-Dynamic */; };
 		CE2CB76129C176A700592488 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CE2CB76029C176A700592488 /* Lottie */; };
 		CE8582642BB8388A00613DA6 /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8582632BB8388A00613DA6 /* UICollectionView+Extensions.swift */; };
 		CE8582662BB89F1800613DA6 /* UIRefreshControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8582652BB89F1800613DA6 /* UIRefreshControl+Extensions.swift */; };
@@ -108,7 +107,6 @@
 				CE29353A2C011D6200447641 /* SnapKit in Frameworks */,
 				CE981B5729BB7CC300261645 /* Kingfisher in Frameworks */,
 				CE2CB76129C176A700592488 /* Lottie in Frameworks */,
-				CE29353C2C011D6200447641 /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,7 +302,6 @@
 				CE981B5629BB7CC300261645 /* Kingfisher */,
 				CE2CB76029C176A700592488 /* Lottie */,
 				CE2935392C011D6200447641 /* SnapKit */,
-				CE29353B2C011D6200447641 /* SnapKit-Dynamic */,
 			);
 			productName = app_ios;
 			productReference = 7555FF7B242A565900829871 /* Vlife Task.app */;
@@ -668,11 +665,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CE2935382C011D6200447641 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		CE29353B2C011D6200447641 /* SnapKit-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CE2935382C011D6200447641 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
 		};
 		CE2CB76029C176A700592488 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
