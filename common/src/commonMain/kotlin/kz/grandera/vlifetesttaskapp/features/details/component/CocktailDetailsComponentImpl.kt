@@ -56,12 +56,12 @@ internal class CocktailDetailsComponentImpl(
 }
 
 private fun State.toModel(): Model = Model(
-    isError = isError,
+    isError = this.isError,
     category = DrinkCategory.entries
         .firstOrNull { category -> category.name in this.category },
-    imageUrl = imageUrl,
-    glassType = glassType,
-    isAlcoholic = isAlcoholic,
-    cocktailName = cocktailName,
-    preparationInstruction = preparationInstruction
+    imageUrl = this.imageUrl,
+    glassType = this.glassType,
+    isAlcoholic = this.isAlcoholic,
+    cocktailName = this.cocktailName,
+    preparationInstruction = this.preparationInstruction
 )
