@@ -33,18 +33,9 @@ private sealed interface DivisionMethod {
     val path: String
     val parameters: Map<String, String>
 
-    data class Filter(
-        val isAlcoholic: Boolean?
-    ) : DivisionMethod {
+    data class Filter(val isAlcoholic: Boolean) : DivisionMethod {
         override val path: String = "filter"
-        override val parameters: Map<String, String> = mutableMapOf<String, String>()
-            .apply {
-                isAlcoholic?.let { isAlcoholic ->
-                    put(
-                        key = "a",
-                        value = if (isAlcoholic) "Alcoholic" else "Non_Alcoholic"
-                    )
-                }
-            }
+        override val parameters: Map<String, String> =
+            mapOf("a" to if (isAlcoholic) "Alcoholic" else "Non_Alcoholic")
     }
 }

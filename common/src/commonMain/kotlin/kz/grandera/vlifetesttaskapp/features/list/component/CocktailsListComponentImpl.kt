@@ -95,16 +95,16 @@ internal class CocktailsListComponentImpl(
 }
 
 private fun State.toModel(): Model = Model(
-    isError = isError,
-    isLoading = isLoading,
-    isRefreshing = isRefreshing,
-    searchQuery = searchQuery,
-    cocktails = filteredCocktails.map { cocktail -> cocktail.toCocktailModel() },
-    listsAlcoholicCocktails = filteredCocktails.any { cocktail -> cocktail.isAlcoholic }
+    isError = this.isError,
+    isLoading = this.isLoading,
+    isRefreshing = this.isRefreshing,
+    searchQuery = this.searchQuery,
+    cocktails = this.filteredCocktails.map { cocktail -> cocktail.toCocktailModel() },
+    listsAlcoholicCocktails = this.filteredCocktails.any { cocktail -> cocktail.isAlcoholic }
 )
 
 private fun Cocktail.toCocktailModel(): CocktailModel = CocktailModel(
-    id = id,
-    name = name,
-    imageUrl = "$imageUrl/preview",
+    id = this.id,
+    name = this.name,
+    imageUrl = "${this.imageUrl}/preview",
 )

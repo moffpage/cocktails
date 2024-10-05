@@ -40,7 +40,7 @@ private fun reducer(): Reducer<State, Message> = Reducer { message ->
         is Message.CocktailsLoaded -> copy(
             isError = false,
             isLoading = false,
-            cocktails = cocktails + message.cocktails,
+            cocktails = this.cocktails + message.cocktails,
             filteredCocktails = message.cocktails
         )
         is Message.CocktailsChanged -> copy(
@@ -144,12 +144,17 @@ private class ExecutorImpl(
             is Intent.Filter -> {
                 val cocktails = state().cocktails
                 val filterOutAlcoholic = intent.isAlcoholic
+                val predicate = cocktails.any { cocktail ->
+                    cocktail.isAlcoholic == filterOutAlcoholic
+                }
 
-                if (cocktails.any { cocktail -> cocktail.isAlcoholic == filterOutAlcoholic }) {
+                if (predicate) {
                     dispatch(
                         message = Message.CocktailsChanged(
                             cocktails = cocktails
-                                .filter { cocktail -> cocktail.isAlcoholic == filterOutAlcoholic }
+                                .filter { cocktail ->
+                                    cocktail.isAlcoholic == filterOutAlcoholic
+                                }
                         )
                     )
                 } else {
@@ -190,8 +195,8 @@ private class ExecutorImpl(
 
 private fun CocktailEntity.toCocktail(isAlcoholic: Boolean): Cocktail =
     Cocktail(
-        id = id.toLong(),
-        name = name,
-        imageUrl = imageUrl,
+        id = this.id.toLong(),
+        name = this.name,
+        imageUrl = this.imageUrl,
         isAlcoholic = isAlcoholic
     )
