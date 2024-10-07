@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     alias(libs.plugins.kotlinx.serialization)
@@ -30,7 +32,15 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
-    androidTarget()
+    androidTarget {
+        compilations.all {
+            compileTaskProvider {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_17)
+                }
+            }
+        }
+    }
 
     sourceSets {
         commonMain.dependencies {
@@ -51,8 +61,6 @@ kotlin {
         }
 
         iosMain {
-            dependsOn(commonMain.get())
-
             iosX64 { dependsOn(this@iosMain) }
             iosArm64 { dependsOn(this@iosMain) }
             iosSimulatorArm64 { dependsOn(this@iosMain) }

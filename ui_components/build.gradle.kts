@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     alias(libs.plugins.compose)
@@ -33,8 +35,10 @@ kotlin {
 
     androidTarget {
         compilations.all {
-            kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_17.toString()
+            compileTaskProvider {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_17)
+                }
             }
         }
     }
@@ -49,8 +53,6 @@ kotlin {
         }
 
         iosMain {
-            dependsOn(commonMain.get())
-
             iosX64 { dependsOn(this@iosMain) }
             iosArm64 { dependsOn(this@iosMain) }
             iosSimulatorArm64 { dependsOn(this@iosMain) }
@@ -61,7 +63,6 @@ kotlin {
         }
 
         androidMain {
-            dependsOn(commonMain.get())
             dependencies {
                 implementation(dependencyNotation = libs.coil.network.okhttp)
             }
