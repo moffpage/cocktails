@@ -1,4 +1,5 @@
 import dev.icerock.gradle.MRVisibility
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.moko.resources.generator)
@@ -38,29 +39,26 @@ kotlin {
 
     androidTarget {
         compilations.all {
-            kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_17.toString()
+            compileTaskProvider {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_17)
+                }
             }
         }
     }
 
     sourceSets {
-        commonMain {
-            dependencies {
-                implementation(dependencyNotation = libs.moko.resources.common)
-                implementation(dependencyNotation = libs.compose.runtime)
-            }
+        commonMain.dependencies {
+            implementation(dependencyNotation = libs.moko.resources.common)
+            implementation(dependencyNotation = libs.compose.runtime)
         }
 
-        androidMain {
-            dependsOn(commonMain.get())
-            dependencies {
-                api(dependencyNotation = libs.moko.resources.compose)
-                api(dependencyNotation = libs.coil.compose)
-                api(dependencyNotation = libs.lottie.compose)
-                api(dependencyNotation = libs.bundles.compose)
-                api(dependencyNotation = libs.compose.tooling)
-            }
+        androidMain.dependencies {
+            api(dependencyNotation = libs.moko.resources.compose)
+            api(dependencyNotation = libs.coil.compose)
+            api(dependencyNotation = libs.lottie.compose)
+            api(dependencyNotation = libs.bundles.compose)
+            api(dependencyNotation = libs.compose.tooling)
         }
     }
 }
