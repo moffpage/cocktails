@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.moko.resources.generator)
     alias(libs.plugins.android.application)
@@ -56,8 +58,10 @@ kotlin {
 
     androidTarget {
         compilations.all {
-            kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_17.toString()
+            compileTaskProvider {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_17)
+                }
             }
         }
     }
@@ -78,13 +82,10 @@ kotlin {
     }
 
     sourceSets {
-        androidMain {
-            dependsOn(commonMain.get())
-            dependencies {
-                implementation(dependencyNotation = libs.koin.android)
-                implementation(dependencyNotation = libs.seismic)
-                implementation(dependencyNotation = libs.android.activity.compose)
-            }
+        androidMain.dependencies {
+            implementation(dependencyNotation = libs.koin.android)
+            implementation(dependencyNotation = libs.seismic)
+            implementation(dependencyNotation = libs.android.activity.compose)
         }
 
         commonMain.dependencies {
