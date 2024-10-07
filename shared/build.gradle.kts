@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose)
@@ -49,7 +51,15 @@ android {
 kotlin {
     applyDefaultHierarchyTemplate()
 
-    androidTarget()
+    androidTarget {
+        compilations.all {
+            compileTaskProvider {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_17)
+                }
+            }
+        }
+    }
 
     listOf(
         iosX64(),
@@ -76,20 +86,10 @@ kotlin {
             }
         }
 
-        iosMain {
-            dependsOn(commonMain.get())
-            iosX64 { dependsOn(this@iosMain) }
-            iosArm64 { dependsOn(this@iosMain) }
-            iosSimulatorArm64 { dependsOn(this@iosMain) }
-        }
-
-        androidMain {
-            dependsOn(commonMain.get())
-            dependencies {
-                implementation(dependencyNotation = libs.koin.android)
-                implementation(dependencyNotation = libs.android.activity.compose)
-                implementation(dependencyNotation = libs.seismic)
-            }
+        androidMain.dependencies {
+            implementation(dependencyNotation = libs.koin.android)
+            implementation(dependencyNotation = libs.android.activity.compose)
+            implementation(dependencyNotation = libs.seismic)
         }
     }
 }
