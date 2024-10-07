@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id(libs.plugins.android.library.get().pluginId)
     alias(libs.plugins.kotlinx.serialization)
@@ -32,40 +34,34 @@ kotlin {
 
     androidTarget {
         compilations.all {
-            kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_17.toString()
+            compileTaskProvider {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_17)
+                }
             }
         }
     }
 
     sourceSets {
-        commonMain {
-            dependencies {
-                api(dependencyNotation = libs.napier)
+        commonMain.dependencies {
+            api(dependencyNotation = libs.napier)
 
-                implementation(dependencyNotation = libs.ktor.core)
-                implementation(dependencyNotation = libs.ktor.logging)
-                implementation(dependencyNotation = libs.ktor.serialization.json)
-                implementation(dependencyNotation = libs.ktor.contentnegotiation)
-                implementation(dependencyNotation = libs.koin.core)
-                implementation(dependencyNotation = libs.essenty.lifecycle)
-                implementation(dependencyNotation = libs.decompose.core)
-                implementation(dependencyNotation = libs.mvikotlin.core)
-            }
+            implementation(dependencyNotation = libs.ktor.core)
+            implementation(dependencyNotation = libs.ktor.logging)
+            implementation(dependencyNotation = libs.ktor.serialization.json)
+            implementation(dependencyNotation = libs.ktor.contentnegotiation)
+            implementation(dependencyNotation = libs.koin.core)
+            implementation(dependencyNotation = libs.essenty.lifecycle)
+            implementation(dependencyNotation = libs.decompose.core)
+            implementation(dependencyNotation = libs.mvikotlin.core)
         }
 
-        androidMain {
-            dependencies {
-                implementation(dependencyNotation = libs.ktor.engine.okhttp)
-            }
+        androidMain.dependencies {
+            implementation(dependencyNotation = libs.ktor.engine.okhttp)
         }
 
-        iosMain {
-            dependsOn(commonMain.get())
-
-            dependencies {
-                implementation(dependencyNotation = libs.ktor.engine.darwin)
-            }
+        iosMain.dependencies {
+            implementation(dependencyNotation = libs.ktor.engine.darwin)
         }
     }
 }
