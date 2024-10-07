@@ -1,4 +1,5 @@
 import dev.icerock.gradle.MRVisibility
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.moko.resources.generator)
@@ -39,8 +40,10 @@ kotlin {
 
     androidTarget {
         compilations.all {
-            kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_17.toString()
+            compileTaskProvider {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_17)
+                }
             }
         }
     }
@@ -64,11 +67,8 @@ kotlin {
             implementation(dependencyNotation = libs.decompose.core)
         }
 
-        androidMain {
-            dependsOn(commonMain.get())
-            dependencies {
-                implementation(dependencyNotation = libs.decompose.extensions.compose)
-            }
+        androidMain.dependencies {
+            implementation(dependencyNotation = libs.decompose.extensions.compose)
         }
     }
 }
