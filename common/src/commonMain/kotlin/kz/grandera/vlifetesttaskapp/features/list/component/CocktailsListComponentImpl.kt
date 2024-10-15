@@ -1,24 +1,22 @@
 package kz.grandera.vlifetesttaskapp.features.list.component
 
-import kotlin.coroutines.CoroutineContext
-
 import androidx.compose.ui.Modifier
 import androidx.compose.runtime.Composable
 import androidx.compose.material.ExperimentalMaterialApi
 
-import org.koin.core.component.inject
-import org.koin.core.component.KoinComponent
+import org.koin.dsl.module
+import org.koin.core.component.getScopeId
 import org.koin.core.qualifier.named
+import org.koin.core.qualifier.qualifier
 
 import com.arkivanov.decompose.value.Value
-import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.operator.map
-import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 
 import kz.grandera.vlifetesttaskapp.ui.list.CocktailsListContent
-import kz.grandera.vlifetesttaskapp.api.cocktails.CocktailsApi
+import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
 import kz.grandera.vlifetesttaskapp.core.extensions.states
+import kz.grandera.vlifetesttaskapp.core.scope.koinScope
 import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore
 import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore.State
 import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore.Intent
@@ -27,24 +25,19 @@ import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListCompone
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent.CocktailModel
 
 internal class CocktailsListComponentImpl(
-    componentContext: ComponentContext,
+    componentContext: AppComponentContext,
     private val onShowCocktail: (cocktailId: Long) -> Unit
 ) : CocktailsListComponent,
-    KoinComponent,
-    ComponentContext by componentContext
+    AppComponentContext by componentContext
 {
-    private val mainContext by inject<CoroutineContext>(qualifier = named(name = "Main"))
-    private val ioContext by inject<CoroutineContext>(qualifier = named(name = "IO"))
-    private val cocktailsApi by inject<CocktailsApi>()
-    private val storeFactory by inject<StoreFactory>()
+    private val koinScope = koinScope(
+        cocktailsListModule,
+        scopeId = getScopeId(),
+        qualifier = qualifier<CocktailsListComponent>()
+    )
 
     private val store = instanceKeeper.getStore {
-        CocktailsListStore(
-            storeFactory = storeFactory,
-            mainContext = mainContext,
-            ioContext = ioContext,
-            cocktailsApi = cocktailsApi
-        )
+        koinScope.inject<CocktailsListStore>().value
     }
 
     @OptIn(ExperimentalMaterialApi::class)
@@ -53,8 +46,7 @@ internal class CocktailsListComponentImpl(
         CocktailsListContent(modifier = modifier, component = this)
     }
 
-    override val model: Value<Model> = store.states
-        .map { state -> state.toModel() }
+    override val model: Value<Model> = store.states.map { state -> state.toModel() }
 
     override fun reload() {
         store.accept(intent = Intent.Shuffle)
@@ -102,6 +94,19 @@ internal class CocktailsListComponentImpl(
                 isAlcoholic = false
             )
         )
+    }
+}
+
+private val cocktailsListModule = module {
+    scope<CocktailsListComponent> {
+        scoped<CocktailsListStore> {
+            CocktailsListStore(
+                storeFactory = get(),
+                mainContext = get(qualifier = named("Main")),
+                ioContext = get(qualifier = named("IO")),
+                cocktailsApi = get()
+            )
+        }
     }
 }
 

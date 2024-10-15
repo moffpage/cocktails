@@ -16,24 +16,36 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 
+import org.koin.core.scope.Scope
+import org.koin.android.scope.AndroidScopeComponent
+import org.koin.androidx.scope.activityScope
+
 import com.squareup.seismic.ShakeDetector
 
 import com.arkivanov.decompose.defaultComponentContext
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 
 import kz.grandera.vlifetesttaskapp.ui.root.CocktailsContent
+import kz.grandera.vlifetesttaskapp.core.componentcontext.wrapComponentContext
 import kz.grandera.vlifetesttaskapp.theming.SystemAppearance
 import kz.grandera.vlifetesttaskapp.features.root.component.cocktailsComponentFactory
 import kz.grandera.vlifetesttaskapp.ui_components.theming.AppTheme
 import kz.grandera.vlifetesttaskapp.ui_components.theming.LocalAppTheme
 import kz.grandera.vlifetesttaskapp.ui_components.theming.VlifeTestTaskAppTheme
 
-class VlifeTestTaskActivity : ComponentActivity() {
+class VlifeTestTaskActivity : ComponentActivity(), AndroidScopeComponent {
+    override val scope: Scope by activityScope()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        scope.declare(this)
+
         val component = cocktailsComponentFactory(
-            componentContext = defaultComponentContext()
+            componentContext = wrapComponentContext(
+                context = defaultComponentContext(),
+                parentScopeId = scope.id
+            )
         )
 
         enableEdgeToEdge(

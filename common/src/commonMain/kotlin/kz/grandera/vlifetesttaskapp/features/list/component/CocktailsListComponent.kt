@@ -3,8 +3,16 @@ package kz.grandera.vlifetesttaskapp.features.list.component
 import com.arkivanov.decompose.value.Value
 
 import kz.grandera.vlifetesttaskapp.component.Component
+import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
 
 public interface CocktailsListComponent : Component {
+    public fun interface Factory {
+        public fun create(
+            componentContext: AppComponentContext,
+            onShowCocktail: (Long) -> Unit
+        ) : CocktailsListComponent
+    }
+
     public data class Model(
         public val isError: Boolean,
         public val isLoading: Boolean,

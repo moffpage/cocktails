@@ -2,7 +2,9 @@ package kz.grandera.vlifetesttaskapp.features.root.component
 
 import kotlinx.serialization.Serializable
 
-import com.arkivanov.decompose.ComponentContext
+import org.koin.core.component.getScopeId
+import org.koin.core.qualifier.qualifier
+
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
@@ -10,25 +12,33 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 
-import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponentImpl.Configuration
-import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent
-import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponentImpl
-import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent
-import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponentImpl
+import kz.grandera.vlifetesttaskapp.core.scope.koinScope
+import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
+import kz.grandera.vlifetesttaskapp.core.componentcontext.wrapComponentContext
 import kz.grandera.vlifetesttaskapp.component.Component
+import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent
+import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent
 
-internal class CocktailsComponentImpl(componentContext: ComponentContext) :
+internal class CocktailsComponentImpl(componentContext: AppComponentContext) :
     CocktailsComponent,
-    ComponentContext by componentContext
+    AppComponentContext by componentContext
 {
+    private val koinScope = koinScope(
+        scopeId = getScopeId(),
+        qualifier = qualifier<CocktailsComponent>(),
+    )
+
+    private val cocktailsListComponentFactory by koinScope.inject<CocktailsListComponent.Factory>()
+    private val cocktailDetailsComponentFactory by koinScope.inject<CocktailDetailsComponent.Factory>()
+
     private val navigation = StackNavigation<Configuration>()
     private val childStack = childStack(
         source = navigation,
         serializer = Configuration.serializer(),
         childFactory = { configuration, componentContext ->
             child(
-                configuration = configuration,
-                componentContext = componentContext
+                context = componentContext,
+                configuration = configuration
             )
         },
         handleBackButton = true,
@@ -41,27 +51,36 @@ internal class CocktailsComponentImpl(componentContext: ComponentContext) :
         navigation.pop()
     }
 
-    internal fun listComponent(componentContext: ComponentContext): CocktailsListComponent =
-        CocktailsListComponentImpl(
-            componentContext = componentContext,
-            onShowCocktail = { id ->
-                navigation.pushNew(
-                    configuration = Configuration.Details(
-                        id = id
+    private fun child(
+        context: AppComponentContext,
+        configuration: Configuration,
+    ): Component {
+        val componentContext = wrapComponentContext(
+            context = context,
+            parentScopeId = koinScope.id
+        )
+        return when (configuration) {
+            is Configuration.List -> cocktailsListComponentFactory.create(
+                componentContext = componentContext,
+                onShowCocktail = { cocktailId ->
+                    navigation.pushNew(
+                        Configuration.Details(
+                            id = cocktailId
+                        )
                     )
-                )
-            }
-        )
+                }
+            )
 
-    internal fun detailsComponent(id: Long, componentContext: ComponentContext): CocktailDetailsComponent =
-        CocktailDetailsComponentImpl(
-            id = id,
-            componentContext = componentContext,
-            onNavigateBack = { navigation.pop() }
-        )
+            is Configuration.Details -> cocktailDetailsComponentFactory.create(
+                onBack = { navigation.pop() },
+                cocktailId = configuration.id,
+                componentContext = componentContext
+            )
+        }
+    }
 
     @Serializable
-    internal sealed interface Configuration {
+    private sealed interface Configuration {
         @Serializable
         data object List : Configuration
 
@@ -69,16 +88,3 @@ internal class CocktailsComponentImpl(componentContext: ComponentContext) :
         data class Details(val id: Long) : Configuration
     }
 }
-
-private fun CocktailsComponentImpl.child(
-    configuration: Configuration,
-    componentContext: ComponentContext
-): Component = when (configuration) {
-        is Configuration.List -> listComponent(
-            componentContext = componentContext
-        )
-        is Configuration.Details -> detailsComponent(
-            id = configuration.id,
-            componentContext = componentContext
-        )
-    }

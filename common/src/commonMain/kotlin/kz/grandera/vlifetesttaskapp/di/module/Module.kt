@@ -9,5 +9,6 @@ public val cocktailsModules: List<Module> = listOf(
     asyncModule,
     httpClientModule,
     networkModule,
-    storeFactoryModule
+    storeFactoryModule,
+    componentsModule
 )

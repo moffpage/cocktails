@@ -1,23 +1,22 @@
 package kz.grandera.vlifetesttaskapp.features.details.component
 
-import kotlin.coroutines.CoroutineContext
-
 import androidx.compose.ui.Modifier
 import androidx.compose.runtime.Composable
 
-import org.koin.core.component.inject
-import org.koin.core.component.KoinComponent
+import org.koin.dsl.module
+import org.koin.core.component.getScopeId
+import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
+import org.koin.core.qualifier.qualifier
 
-import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.operator.map
-import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 
 import kz.grandera.vlifetesttaskapp.ui.details.CocktailDetailsContent
-import kz.grandera.vlifetesttaskapp.api.cocktails.CocktailsApi
+import kz.grandera.vlifetesttaskapp.core.scope.koinScope
 import kz.grandera.vlifetesttaskapp.core.extensions.states
+import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
 import kz.grandera.vlifetesttaskapp.features.details.store.CocktailDetailsStore
 import kz.grandera.vlifetesttaskapp.features.details.store.CocktailDetailsStore.State
 import kz.grandera.vlifetesttaskapp.features.details.store.CocktailDetailsStore.Intent
@@ -26,25 +25,23 @@ import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsCo
 
 internal class CocktailDetailsComponentImpl(
     id: Long,
-    componentContext: ComponentContext,
+    componentContext: AppComponentContext,
     private val onNavigateBack: () -> Unit,
 ) : CocktailDetailsComponent,
-    KoinComponent,
-    ComponentContext by componentContext
+    AppComponentContext by componentContext
 {
-    private val mainContext by inject<CoroutineContext>(qualifier = named(name = "Main"))
-    private val ioContext by inject<CoroutineContext>(qualifier = named(name = "IO"))
-    private val cocktailsApi by inject<CocktailsApi>()
-    private val storeFactory by inject<StoreFactory>()
+    private val koinScope = koinScope(
+        cocktailDetailsModule,
+        scopeId = getScopeId(),
+        qualifier = qualifier<CocktailDetailsComponent>()
+    )
 
     private val store = instanceKeeper.getStore {
-        CocktailDetailsStore(
-            cocktailId = id,
-            storeFactory = storeFactory,
-            mainContext = mainContext,
-            ioContext = ioContext,
-            cocktailsApi = cocktailsApi
-        )
+        koinScope.inject<CocktailDetailsStore>(
+            parameters = {
+                parametersOf(id)
+            }
+        ).value
     }
 
     @Composable
@@ -61,6 +58,20 @@ internal class CocktailDetailsComponentImpl(
 
     override fun refetchDetails() {
         store.accept(intent = Intent.Refresh)
+    }
+}
+
+private val cocktailDetailsModule = module {
+    scope<CocktailDetailsComponent> {
+        scoped<CocktailDetailsStore> { (cocktailId: Long) ->
+            CocktailDetailsStore(
+                cocktailId = cocktailId,
+                storeFactory = get(),
+                mainContext = get(qualifier = named("Main")),
+                ioContext = get(qualifier = named("IO")),
+                cocktailsApi = get()
+            )
+        }
     }
 }
 
