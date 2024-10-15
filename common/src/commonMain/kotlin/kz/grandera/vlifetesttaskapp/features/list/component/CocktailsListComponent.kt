@@ -2,7 +2,9 @@ package kz.grandera.vlifetesttaskapp.features.list.component
 
 import com.arkivanov.decompose.value.Value
 
-public interface CocktailsListComponent {
+import kz.grandera.vlifetesttaskapp.component.Component
+
+public interface CocktailsListComponent : Component {
     public data class Model(
         public val isError: Boolean,
         public val isLoading: Boolean,

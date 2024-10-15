@@ -10,12 +10,12 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 
-import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent.Child
 import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponentImpl.Configuration
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponentImpl
 import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent
 import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponentImpl
+import kz.grandera.vlifetesttaskapp.component.Component
 
 internal class CocktailsComponentImpl(componentContext: ComponentContext) :
     CocktailsComponent,
@@ -35,7 +35,7 @@ internal class CocktailsComponentImpl(componentContext: ComponentContext) :
         initialConfiguration = Configuration.List
     )
 
-    override val model: Value<ChildStack<*, Child>> = childStack
+    override val model: Value<ChildStack<*, Component>> = childStack
 
     override fun onBackInvoked() {
         navigation.pop()
@@ -73,16 +73,12 @@ internal class CocktailsComponentImpl(componentContext: ComponentContext) :
 private fun CocktailsComponentImpl.child(
     configuration: Configuration,
     componentContext: ComponentContext
-): Child = when (configuration) {
-        is Configuration.List -> Child.CocktailsList(
-            component = listComponent(
-                componentContext = componentContext
-            )
+): Component = when (configuration) {
+        is Configuration.List -> listComponent(
+            componentContext = componentContext
         )
-        is Configuration.Details -> Child.CocktailDetails(
-            component = detailsComponent(
-                id = configuration.id,
-                componentContext = componentContext
-            )
+        is Configuration.Details -> detailsComponent(
+            id = configuration.id,
+            componentContext = componentContext
         )
     }

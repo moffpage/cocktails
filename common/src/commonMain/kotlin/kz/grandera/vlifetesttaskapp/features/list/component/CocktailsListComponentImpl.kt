@@ -2,6 +2,10 @@ package kz.grandera.vlifetesttaskapp.features.list.component
 
 import kotlin.coroutines.CoroutineContext
 
+import androidx.compose.ui.Modifier
+import androidx.compose.runtime.Composable
+import androidx.compose.material.ExperimentalMaterialApi
+
 import org.koin.core.component.inject
 import org.koin.core.component.KoinComponent
 import org.koin.core.qualifier.named
@@ -12,6 +16,7 @@ import com.arkivanov.decompose.value.operator.map
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 
+import kz.grandera.vlifetesttaskapp.ui.list.CocktailsListContent
 import kz.grandera.vlifetesttaskapp.api.cocktails.CocktailsApi
 import kz.grandera.vlifetesttaskapp.core.extensions.states
 import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore
@@ -40,6 +45,12 @@ internal class CocktailsListComponentImpl(
             ioContext = ioContext,
             cocktailsApi = cocktailsApi
         )
+    }
+
+    @OptIn(ExperimentalMaterialApi::class)
+    @Composable
+    override fun Content(modifier: Modifier) {
+        CocktailsListContent(modifier = modifier, component = this)
     }
 
     override val model: Value<Model> = store.states

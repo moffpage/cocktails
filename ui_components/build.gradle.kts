@@ -62,10 +62,8 @@ kotlin {
             }
         }
 
-        androidMain {
-            dependencies {
-                implementation(dependencyNotation = libs.coil.network.okhttp)
-            }
+        androidMain.dependencies {
+            implementation(dependencyNotation = libs.coil.network.okhttp)
         }
     }
 }

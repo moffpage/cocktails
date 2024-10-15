@@ -10,7 +10,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
@@ -19,8 +18,8 @@ import androidx.activity.compose.setContent
 
 import com.squareup.seismic.ShakeDetector
 
-import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.defaultComponentContext
+import com.arkivanov.decompose.ExperimentalDecomposeApi
 
 import kz.grandera.vlifetesttaskapp.ui.root.CocktailsContent
 import kz.grandera.vlifetesttaskapp.theming.SystemAppearance
@@ -65,12 +64,9 @@ class VlifeTestTaskActivity : ComponentActivity() {
                     shakeDetector.start(sensorManager, SensorManager.SENSOR_DELAY_GAME)
                 }
                 VlifeTestTaskAppTheme(appTheme = appTheme) {
-                    SystemAppearance(darkSystemBars = appTheme != AppTheme.Dark)
-                    @OptIn(
-                        ExperimentalMaterialApi::class,
-                        ExperimentalDecomposeApi::class
-                    )
+                    @OptIn(ExperimentalDecomposeApi::class)
                     CocktailsContent(component = component)
+                    SystemAppearance(darkSystemBars = appTheme != AppTheme.Dark)
                 }
             }
         }
