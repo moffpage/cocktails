@@ -1,4 +1,4 @@
-package kz.grandera.vlifetesttaskapp.core.extensions
+package kz.grandera.vlifetesttaskapp.core.observable
 
 import com.arkivanov.decompose.Cancellation
 import com.arkivanov.decompose.value.Value

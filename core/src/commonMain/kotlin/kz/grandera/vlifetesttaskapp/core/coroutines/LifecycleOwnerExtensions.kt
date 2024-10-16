@@ -1,4 +1,4 @@
-package kz.grandera.vlifetesttaskapp.core.lifecycle
+package kz.grandera.vlifetesttaskapp.core.coroutines
 
 import kotlin.coroutines.CoroutineContext
 

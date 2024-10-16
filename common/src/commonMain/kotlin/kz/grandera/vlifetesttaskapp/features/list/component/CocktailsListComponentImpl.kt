@@ -14,9 +14,9 @@ import com.arkivanov.decompose.value.operator.map
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 
 import kz.grandera.vlifetesttaskapp.ui.list.CocktailsListContent
-import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
-import kz.grandera.vlifetesttaskapp.core.extensions.states
 import kz.grandera.vlifetesttaskapp.core.scope.koinScope
+import kz.grandera.vlifetesttaskapp.core.observable.states
+import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
 import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore
 import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore.State
 import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore.Intent
