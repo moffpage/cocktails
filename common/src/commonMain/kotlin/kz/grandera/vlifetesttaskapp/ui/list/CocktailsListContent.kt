@@ -1,5 +1,8 @@
 package kz.grandera.vlifetesttaskapp.ui.list
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.input.ImeAction
@@ -51,11 +54,13 @@ import kz.grandera.vlifetesttaskapp.ui_components.segment.SegmentedControl
 import kz.grandera.vlifetesttaskapp.ui_components.textfield.SearchBar
 import org.jetbrains.compose.resources.stringResource
 
+@ExperimentalSharedTransitionApi
 @Composable
 @ExperimentalMaterialApi
-internal fun CocktailsListContent(
-    modifier: Modifier = Modifier,
-    component: CocktailsListComponent
+internal fun SharedTransitionScope.CocktailsListContent(
+    component: CocktailsListComponent,
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    modifier: Modifier = Modifier
 ) {
     val model by component.model.subscribeAsState()
 
@@ -179,6 +184,7 @@ internal fun CocktailsListContent(
                         CocktailItem(
                             modifier = Modifier.aspectRatio(ratio = 1f),
                             cocktail = cocktail,
+                            animatedVisibilityScope = animatedVisibilityScope,
                             onClick = { selectedCocktail ->
                                 component.showCocktail(
                                     cocktail = selectedCocktail

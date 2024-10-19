@@ -1,5 +1,8 @@
 package kz.grandera.vlifetesttaskapp.ui.details
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
@@ -67,10 +70,12 @@ import kz.grandera.vlifetesttaskapp.ui_components.theming.AppTheme
 import kz.grandera.vlifetesttaskapp.ui_components.modifier.verticalFadingEdge
 import kz.grandera.vlifetesttaskapp.ui_components.resources.cocktailPlaceholderResource
 
+@ExperimentalSharedTransitionApi
 @Composable
-internal fun CocktailDetailsContent(
+internal fun SharedTransitionScope.CocktailDetailsContent(
     modifier: Modifier = Modifier,
-    component: CocktailDetailsComponent
+    component: CocktailDetailsComponent,
+    animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     val model by component.model.subscribeAsState()
 
@@ -89,6 +94,11 @@ internal fun CocktailDetailsContent(
                         var imageHeight by remember { mutableFloatStateOf(value = 0f) }
                         SubcomposeAsyncImage(
                             modifier = Modifier
+                                .sharedBounds(
+                                    sharedContentState = rememberSharedContentState("item-image-${model.cocktailId}"),
+                                    animatedVisibilityScope = animatedVisibilityScope,
+                                    renderInOverlayDuringTransition = false,
+                                )
                                 .fillMaxWidth()
                                 .aspectRatio(ratio = 1f)
                                 .onSizeChanged { size ->
@@ -123,6 +133,11 @@ internal fun CocktailDetailsContent(
                         )
                         Text(
                             modifier = Modifier
+                                .sharedBounds(
+                                    sharedContentState = rememberSharedContentState("item-text-${model.cocktailId}"),
+                                    animatedVisibilityScope = animatedVisibilityScope,
+                                    renderInOverlayDuringTransition = false,
+                                )
                                 .align(alignment = Alignment.BottomCenter)
                                 .padding(bottom = 16.dp)
                                 .padding(horizontal = 16.dp),

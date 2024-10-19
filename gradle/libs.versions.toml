@@ -4,16 +4,16 @@ coil = "3.0.0-alpha10"
 koin = "4.0.0"
 ktor = "2.3.12"
 
-compose = "1.6.11"
+compose = "1.7.0"
 
 essenty = "2.1.0"
-decompose = "3.1.0"
+decompose = "3.2.0-beta03"
 mvikotlin = "4.2.0"
 
 kotlin = "2.0.20"
 kotlinx-serialization = "1.7.3"
 
-android-gradle = "8.5.2"
+android-gradle = "8.2.0"
 androidx-activity = "1.9.2"
 
 [plugins]
@@ -60,7 +60,7 @@ essenty-lifecycle = { group = "com.arkivanov.essenty", name = "lifecycle", versi
 essenty-backhandler = { group = "com.arkivanov.essenty", name = "back-handler", version.ref = "essenty" }
 
 decompose-core = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
-decompose-extensions-compose = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose" }
+decompose-extensions-compose = { group = "com.arkivanov.decompose", name = "extensions-compose-experimental", version.ref = "decompose" }
 
 mvikotlin-core = { group = "com.arkivanov.mvikotlin", name = "mvikotlin", version.ref = "mvikotlin" }
 mvikotlin-main = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-main", version.ref = "mvikotlin" }

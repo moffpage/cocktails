@@ -4,6 +4,7 @@ import com.arkivanov.decompose.value.Value
 
 public interface CocktailDetailsComponent {
     public data class Model(
+        public val cocktailId: Long,
         public val isError: Boolean,
         public val category: DrinkCategory?,
         public val imageUrl: String,
