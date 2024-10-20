@@ -1,6 +1,7 @@
 package kz.grandera.vlifetesttaskapp.ui_components.textfield
 
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -40,7 +41,7 @@ public fun TextField(
     trailingContent: @Composable (() -> Unit)? = null,
     textColor: Color = MaterialTheme.colors.onBackground,
     backgroundColor: Color = MaterialTheme.colors.surface,
-    placeholderColor: Color = contentColorFor(backgroundColor = backgroundColor),
+    placeholderColor: Color = contentColorFor(backgroundColor),
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
@@ -59,6 +60,7 @@ public fun TextField(
     BasicTextField(
         enabled = enabled,
         modifier = modifier
+            .clip(shape = shape)
             .background(
                 color = colors.backgroundColor(enabled = enabled).value,
                 shape = shape

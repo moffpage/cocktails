@@ -17,10 +17,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 
 @Composable
 public fun SegmentedControl(
-    modifier: Modifier = Modifier,
     selected: ((index: Int) -> Boolean),
     titles: List<String>,
     onSegmentClick: (index: Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val tab: @Composable RowScope.(
         text: String,

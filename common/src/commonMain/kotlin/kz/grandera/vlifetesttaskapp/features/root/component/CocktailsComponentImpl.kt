@@ -10,6 +10,7 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 
+import kz.grandera.vlifetesttaskapp.features.dto.CocktailDto
 import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent.Child
 import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponentImpl.Configuration
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent
@@ -44,18 +45,28 @@ internal class CocktailsComponentImpl(componentContext: ComponentContext) :
     internal fun listComponent(componentContext: ComponentContext): CocktailsListComponent =
         CocktailsListComponentImpl(
             componentContext = componentContext,
-            onShowCocktail = { id ->
+            onShowCocktail = { cocktail ->
                 navigation.pushNew(
                     configuration = Configuration.Details(
-                        id = id
+                        cocktail = CocktailDto(
+                            id = cocktail.id,
+                            name = cocktail.name,
+                            imageUrl = cocktail.imageUrl,
+                            isAlcoholic = (childStack.value.active.instance as Child.CocktailsList)
+                                .component
+                                .model.value.listsAlcoholicCocktails
+                        )
                     )
                 )
             }
         )
 
-    internal fun detailsComponent(id: Long, componentContext: ComponentContext): CocktailDetailsComponent =
+    internal fun detailsComponent(
+        cocktail: CocktailDto,
+        componentContext: ComponentContext
+    ): CocktailDetailsComponent =
         CocktailDetailsComponentImpl(
-            id = id,
+            cocktail = cocktail,
             componentContext = componentContext,
             onNavigateBack = { navigation.pop() }
         )
@@ -66,7 +77,7 @@ internal class CocktailsComponentImpl(componentContext: ComponentContext) :
         data object List : Configuration
 
         @Serializable
-        data class Details(val id: Long) : Configuration
+        data class Details(val cocktail: CocktailDto) : Configuration
     }
 }
 
@@ -81,7 +92,7 @@ private fun CocktailsComponentImpl.child(
         )
         is Configuration.Details -> Child.CocktailDetails(
             component = detailsComponent(
-                id = configuration.id,
+                cocktail = configuration.cocktail,
                 componentContext = componentContext
             )
         )

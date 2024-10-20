@@ -13,6 +13,7 @@ import com.arkivanov.mvikotlin.core.utils.JvmSerializable
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 
 import kz.grandera.vlifetesttaskapp.api.cocktails.CocktailsApi
+import kz.grandera.vlifetesttaskapp.features.dto.CocktailDto
 import kz.grandera.vlifetesttaskapp.features.details.store.CocktailDetailsStore.State
 import kz.grandera.vlifetesttaskapp.features.details.store.CocktailDetailsStore.Intent
 
@@ -33,7 +34,7 @@ private sealed interface Message : JvmSerializable {
 }
 
 internal fun CocktailDetailsStore(
-    cocktailId: Long,
+    cocktail: CocktailDto,
     storeFactory: StoreFactory,
     mainContext: CoroutineContext,
     ioContext: CoroutineContext,
@@ -57,18 +58,18 @@ internal fun CocktailDetailsStore(
             }
         },
         initialState = State(
-            cocktailId = cocktailId,
+            cocktailId = cocktail.id,
             isError = false,
             category = "",
-            imageUrl = "",
+            imageUrl = cocktail.imageUrl,
             glassType = "",
-            isAlcoholic = false,
-            cocktailName = "",
+            isAlcoholic = cocktail.isAlcoholic,
+            cocktailName = cocktail.name,
             preparationInstruction = ""
         ),
         bootstrapper = SimpleBootstrapper(
             Action.LoadCocktail(
-                cocktailId = cocktailId
+                cocktailId = cocktail.id
             )
         ),
         executorFactory = {

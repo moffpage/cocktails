@@ -23,7 +23,7 @@ import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListCompone
 
 internal class CocktailsListComponentImpl(
     componentContext: ComponentContext,
-    private val onShowCocktail: (cocktailId: Long) -> Unit
+    private val onShowCocktail: (cocktail: CocktailModel) -> Unit
 ) : CocktailsListComponent,
     KoinComponent,
     ComponentContext by componentContext
@@ -50,7 +50,7 @@ internal class CocktailsListComponentImpl(
     }
 
     override fun showCocktail(cocktail: CocktailModel) {
-        onShowCocktail(cocktail.id)
+        onShowCocktail(cocktail)
     }
 
     override fun clearSearch() {

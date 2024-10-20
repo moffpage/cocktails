@@ -22,7 +22,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.contentColorFor
 import androidx.compose.material.icons.Icons as MaterialIcons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.foundation.Image
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.Box
@@ -37,18 +37,17 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.displayCutoutPadding
 
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.resources.painterResource
 
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 
-import coil3.compose.SubcomposeAsyncImage
+import coil3.compose.AsyncImage
 
+import kz.grandera.vlifetesttaskapp.ui.animation.CombinedSharedTransitionScope
 import kz.grandera.vlifetesttaskapp.common.Res
 import kz.grandera.vlifetesttaskapp.common.alcoholic
 import kz.grandera.vlifetesttaskapp.common.non_alcoholic
 import kz.grandera.vlifetesttaskapp.common.instructions_label
 import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent
-import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent.DrinkCategory
 import kz.grandera.vlifetesttaskapp.resources.Icons
 import kz.grandera.vlifetesttaskapp.resources.icons.Beer
 import kz.grandera.vlifetesttaskapp.resources.icons.Cocoa
@@ -61,16 +60,17 @@ import kz.grandera.vlifetesttaskapp.resources.icons.RegularDrink
 import kz.grandera.vlifetesttaskapp.resources.icons.Shot
 import kz.grandera.vlifetesttaskapp.resources.icons.Shake
 import kz.grandera.vlifetesttaskapp.resources.icons.SoftDrink
+import kz.grandera.vlifetesttaskapp.ui.animation.SharedTransitionKeys
 import kz.grandera.vlifetesttaskapp.ui_components.chip.Chip
 import kz.grandera.vlifetesttaskapp.ui_components.error.ErrorContent
-import kz.grandera.vlifetesttaskapp.ui_components.theming.AppTheme
 import kz.grandera.vlifetesttaskapp.ui_components.modifier.verticalFadingEdge
-import kz.grandera.vlifetesttaskapp.ui_components.resources.cocktailPlaceholderResource
 
 @Composable
+@ExperimentalSharedTransitionApi
 internal fun CocktailDetailsContent(
+    component: CocktailDetailsComponent,
     modifier: Modifier = Modifier,
-    component: CocktailDetailsComponent
+    sharedTransitionScope: CombinedSharedTransitionScope? = null
 ) {
     val model by component.model.subscribeAsState()
 
@@ -87,8 +87,23 @@ internal fun CocktailDetailsContent(
                 Column(modifier = Modifier.fillMaxSize()) {
                     Box {
                         var imageHeight by remember { mutableFloatStateOf(value = 0f) }
-                        SubcomposeAsyncImage(
+                        AsyncImage(
                             modifier = Modifier
+                                .then(
+                                    if (sharedTransitionScope != null) {
+                                        with(sharedTransitionScope) {
+                                            Modifier.sharedBounds(
+                                                sharedContentState = rememberSharedContentState(
+                                                    key = SharedTransitionKeys.itemImage(model.cocktailId)
+                                                ),
+                                                animatedVisibilityScope = this,
+                                                renderInOverlayDuringTransition = false
+                                            )
+                                        }
+                                    } else {
+                                        Modifier
+                                    }
+                                )
                                 .fillMaxWidth()
                                 .aspectRatio(ratio = 1f)
                                 .onSizeChanged { size ->
@@ -101,28 +116,25 @@ internal fun CocktailDetailsContent(
                                     startColor = Color.Transparent,
                                 ),
                             model = model.imageUrl,
-                            error = {
-                                Image(
-                                    painter = painterResource(
-                                        resource = cocktailPlaceholderResource(
-                                            theme = AppTheme(
-                                                isLight = MaterialTheme.colors.isLight
-                                            )
-                                        )
-                                    ),
-                                    contentDescription = model.cocktailName
-                                )
-                            },
-                            success = { state ->
-                                Image(
-                                    painter = state.painter,
-                                    contentDescription = model.cocktailName
-                                )
-                            },
                             contentDescription = model.cocktailName
                         )
                         Text(
                             modifier = Modifier
+                                .then(
+                                    if (sharedTransitionScope != null) {
+                                        with(sharedTransitionScope) {
+                                            Modifier.sharedBounds(
+                                                sharedContentState = rememberSharedContentState(
+                                                    key = SharedTransitionKeys.itemText(model.cocktailId)
+                                                ),
+                                                animatedVisibilityScope = this,
+                                                renderInOverlayDuringTransition = false
+                                            )
+                                        }
+                                    } else {
+                                        Modifier
+                                    }
+                                )
                                 .align(alignment = Alignment.BottomCenter)
                                 .padding(bottom = 16.dp)
                                 .padding(horizontal = 16.dp),
@@ -137,14 +149,15 @@ internal fun CocktailDetailsContent(
                             .padding(top = 16.dp),
                         horizontalArrangement = Arrangement.spacedBy(space = 16.dp)
                     ) {
+                        val painter = model.category?.iconPainter?.let { imageVector ->
+                            rememberVectorPainter(
+                                image = imageVector
+                            )
+                        }
                         Chip(
                             text = model.glassType,
-                            iconPainter = model.category?.iconPainter
-                                ?.let { imageVector ->
-                                    rememberVectorPainter(
-                                        image = imageVector
-                                    )
-                                }
+                            loading = painter == null,
+                            iconPainter = painter
                         )
                         Chip(
                             text = if (model.isAlcoholic) {
@@ -175,6 +188,15 @@ internal fun CocktailDetailsContent(
         }
         IconButton(
             modifier = Modifier
+                .then(
+                    if (sharedTransitionScope != null) {
+                        with(sharedTransitionScope) {
+                            Modifier.renderInSharedTransitionScopeOverlay()
+                        }
+                    } else {
+                        Modifier
+                    }
+                )
                 .padding(start = 12.dp)
                 .statusBarsPadding()
                 .displayCutoutPadding()
@@ -186,9 +208,7 @@ internal fun CocktailDetailsContent(
             onClick = { component.navigateBack() }
         ) {
             Icon(
-                tint = contentColorFor(
-                    backgroundColor = MaterialTheme.colors.primary
-                ),
+                tint = contentColorFor(MaterialTheme.colors.primary),
                 imageVector = MaterialIcons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = null
             )
@@ -196,17 +216,17 @@ internal fun CocktailDetailsContent(
     }
 }
 
-private val DrinkCategory.iconPainter: ImageVector get() =
+private val CocktailDetailsComponent.DrinkCategory.iconPainter: ImageVector get() =
     when (this) {
-        DrinkCategory.Beer -> Icons.Beer
-        DrinkCategory.Shot -> Icons.Shot
-        DrinkCategory.Shake -> Icons.Shake
-        DrinkCategory.Soft -> Icons.SoftDrink
-        DrinkCategory.Cocoa -> Icons.Cocoa
-        DrinkCategory.Coffee -> Icons.Coffee
-        DrinkCategory.Other -> Icons.Other
-        DrinkCategory.Punch -> Icons.Punch
-        DrinkCategory.Liqueur -> Icons.Liqueur
-        DrinkCategory.Cocktail -> Icons.Cocktail
-        DrinkCategory.Ordinary -> Icons.RegularDrink
+        CocktailDetailsComponent.DrinkCategory.Beer -> Icons.Beer
+        CocktailDetailsComponent.DrinkCategory.Shot -> Icons.Shot
+        CocktailDetailsComponent.DrinkCategory.Shake -> Icons.Shake
+        CocktailDetailsComponent.DrinkCategory.Soft -> Icons.SoftDrink
+        CocktailDetailsComponent.DrinkCategory.Cocoa -> Icons.Cocoa
+        CocktailDetailsComponent.DrinkCategory.Coffee -> Icons.Coffee
+        CocktailDetailsComponent.DrinkCategory.Other -> Icons.Other
+        CocktailDetailsComponent.DrinkCategory.Punch -> Icons.Punch
+        CocktailDetailsComponent.DrinkCategory.Liqueur -> Icons.Liqueur
+        CocktailDetailsComponent.DrinkCategory.Cocktail -> Icons.Cocktail
+        CocktailDetailsComponent.DrinkCategory.Ordinary -> Icons.RegularDrink
     }

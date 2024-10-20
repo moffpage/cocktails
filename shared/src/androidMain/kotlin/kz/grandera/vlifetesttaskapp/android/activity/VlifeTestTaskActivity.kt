@@ -11,6 +11,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
@@ -35,6 +36,11 @@ class VlifeTestTaskActivity : ComponentActivity() {
 
         val component = cocktailsComponentFactory(
             componentContext = defaultComponentContext()
+        )
+
+        val systemBarsStyle = SystemBarStyle.auto(
+            lightScrim = Color.TRANSPARENT,
+            darkScrim = Color.TRANSPARENT
         )
 
         enableEdgeToEdge(
@@ -65,21 +71,15 @@ class VlifeTestTaskActivity : ComponentActivity() {
                     shakeDetector.start(sensorManager, SensorManager.SENSOR_DELAY_GAME)
                 }
                 VlifeTestTaskAppTheme(appTheme = appTheme) {
-                    SystemAppearance(darkSystemBars = appTheme != AppTheme.Dark)
                     @OptIn(
                         ExperimentalMaterialApi::class,
-                        ExperimentalDecomposeApi::class
+                        ExperimentalDecomposeApi::class,
+                        ExperimentalSharedTransitionApi::class
                     )
                     CocktailsContent(component = component)
+                    SystemAppearance(darkSystemBars = appTheme != AppTheme.Dark)
                 }
             }
         }
-    }
-
-    private companion object {
-        val systemBarsStyle = SystemBarStyle.auto(
-            lightScrim = Color.TRANSPARENT,
-            darkScrim = Color.TRANSPARENT
-        )
     }
 }

@@ -7,6 +7,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.runtime.Composable
 import androidx.compose.material.Text
 import androidx.compose.material.MaterialTheme
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -16,22 +17,38 @@ import org.jetbrains.compose.resources.painterResource
 import coil3.compose.SubcomposeAsyncImage
 
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent.CocktailModel
+import kz.grandera.vlifetesttaskapp.ui.animation.SharedTransitionKeys
+import kz.grandera.vlifetesttaskapp.ui.animation.CombinedSharedTransitionScope
 import kz.grandera.vlifetesttaskapp.ui_components.theming.AppTheme
 import kz.grandera.vlifetesttaskapp.ui_components.resources.cocktailPlaceholderResource
 
 @Composable
+@ExperimentalSharedTransitionApi
 internal fun CocktailItem(
-    modifier: Modifier = Modifier,
     cocktail: CocktailModel,
-    onClick: (CocktailModel) -> Unit
+    onClick: (CocktailModel) -> Unit,
+    modifier: Modifier = Modifier,
+    sharedTransitionScope: CombinedSharedTransitionScope? = null
 ) {
-    Box(
-        modifier = modifier
-            .clip(shape = MaterialTheme.shapes.large)
-            .clickable { onClick(cocktail) },
-    ) {
+    Box(modifier = modifier.clickable { onClick(cocktail) }) {
         SubcomposeAsyncImage(
-            modifier = Modifier.matchParentSize(),
+            modifier = Modifier
+                .then(
+                    if (sharedTransitionScope != null) {
+                        with(sharedTransitionScope) {
+                            Modifier.sharedBounds(
+                                sharedContentState = rememberSharedContentState(
+                                    key = SharedTransitionKeys.itemImage(cocktail.id)
+                                ),
+                                animatedVisibilityScope = this
+                            )
+                        }
+                    } else {
+                        Modifier
+                    }
+                )
+                .clip(shape = MaterialTheme.shapes.large)
+                .matchParentSize(),
             model = cocktail.imageUrl,
             error = {
                 Image(
@@ -54,7 +71,22 @@ internal fun CocktailItem(
             contentDescription = cocktail.name
         )
         Text(
-            modifier = Modifier.align(alignment = Alignment.Center),
+            modifier = Modifier
+                .then(
+                    if (sharedTransitionScope != null) {
+                        with(sharedTransitionScope) {
+                            Modifier.sharedBounds(
+                                sharedContentState = rememberSharedContentState(
+                                    key = SharedTransitionKeys.itemText(cocktail.id)
+                                ),
+                                animatedVisibilityScope = this
+                            )
+                        }
+                    } else {
+                        Modifier
+                    }
+                )
+                .align(alignment = Alignment.Center),
             text = cocktail.name,
             style = MaterialTheme.typography.h4
                 .copy(

@@ -14,6 +14,7 @@ import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 
 import kz.grandera.vlifetesttaskapp.api.cocktails.CocktailsApi
 import kz.grandera.vlifetesttaskapp.core.extensions.states
+import kz.grandera.vlifetesttaskapp.features.dto.CocktailDto
 import kz.grandera.vlifetesttaskapp.features.details.store.CocktailDetailsStore
 import kz.grandera.vlifetesttaskapp.features.details.store.CocktailDetailsStore.State
 import kz.grandera.vlifetesttaskapp.features.details.store.CocktailDetailsStore.Intent
@@ -21,7 +22,7 @@ import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsCo
 import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent.DrinkCategory
 
 internal class CocktailDetailsComponentImpl(
-    id: Long,
+    cocktail: CocktailDto,
     componentContext: ComponentContext,
     private val onNavigateBack: () -> Unit,
 ) : CocktailDetailsComponent,
@@ -35,7 +36,7 @@ internal class CocktailDetailsComponentImpl(
 
     private val store = instanceKeeper.getStore {
         CocktailDetailsStore(
-            cocktailId = id,
+            cocktail = cocktail,
             storeFactory = storeFactory,
             mainContext = mainContext,
             ioContext = ioContext,
@@ -56,6 +57,7 @@ internal class CocktailDetailsComponentImpl(
 }
 
 private fun State.toModel(): Model = Model(
+    cocktailId = this.cocktailId,
     isError = this.isError,
     category = DrinkCategory.entries
         .firstOrNull { category -> category.name in this.category },

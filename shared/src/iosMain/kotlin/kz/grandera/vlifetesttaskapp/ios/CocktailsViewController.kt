@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 
@@ -42,7 +43,8 @@ public fun CocktailsViewController(
         VlifeTestTaskAppTheme(appTheme = appThemeState.value) {
             @OptIn(
                 ExperimentalMaterialApi::class,
-                ExperimentalDecomposeApi::class
+                ExperimentalDecomposeApi::class,
+                ExperimentalSharedTransitionApi::class
             )
             PredictiveBackGestureOverlay(
                 modifier = Modifier.fillMaxSize(),

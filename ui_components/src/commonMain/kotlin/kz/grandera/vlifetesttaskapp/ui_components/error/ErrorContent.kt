@@ -28,8 +28,8 @@ import kz.grandera.vlifetesttaskapp.ui_components.resources.icons.Error
 
 @Composable
 public fun ErrorContent(
-    modifier: Modifier = Modifier,
     onRetry: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),

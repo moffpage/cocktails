@@ -18,6 +18,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -38,24 +39,29 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBarsPadding
 
+import org.jetbrains.compose.resources.stringResource
+
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+
 import kz.grandera.vlifetesttaskapp.common.Res
 import kz.grandera.vlifetesttaskapp.common.alcoholic
 import kz.grandera.vlifetesttaskapp.common.cocktails
 import kz.grandera.vlifetesttaskapp.common.non_alcoholic
 
+import kz.grandera.vlifetesttaskapp.ui.animation.CombinedSharedTransitionScope
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent
 import kz.grandera.vlifetesttaskapp.ui_components.error.ErrorContent
 import kz.grandera.vlifetesttaskapp.ui_components.loading.LoadingContent
 import kz.grandera.vlifetesttaskapp.ui_components.segment.SegmentedControl
 import kz.grandera.vlifetesttaskapp.ui_components.textfield.SearchBar
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 @ExperimentalMaterialApi
+@ExperimentalSharedTransitionApi
 internal fun CocktailsListContent(
+    component: CocktailsListComponent,
     modifier: Modifier = Modifier,
-    component: CocktailsListComponent
+    sharedTransitionScope: CombinedSharedTransitionScope? = null
 ) {
     val model by component.model.subscribeAsState()
 
@@ -167,7 +173,7 @@ internal fun CocktailsListContent(
                                     } else {
                                         component.displayAlcoholicCocktails()
                                     }
-                                },
+                                }
                             )
                         }
                     }
@@ -183,7 +189,8 @@ internal fun CocktailsListContent(
                                 component.showCocktail(
                                     cocktail = selectedCocktail
                                 )
-                            }
+                            },
+                            sharedTransitionScope = sharedTransitionScope
                         )
                     }
                 }
