@@ -71,6 +71,7 @@ kotlin {
             export(dependency = libs.essenty.lifecycle)
             export(dependency = libs.essenty.backhandler)
             export(dependency = libs.decompose.core)
+            export(dependency = project(":core"))
             export(dependency = project(":common"))
         }
     }
@@ -78,10 +79,11 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                api(dependencyNotation = project(path = ":core"))
                 api(dependencyNotation = project(path = ":common"))
+
                 api(dependencyNotation = libs.decompose.core)
 
-                implementation(dependencyNotation = project(path = ":core"))
                 implementation(dependencyNotation = project(path = ":ui_components"))
             }
         }
