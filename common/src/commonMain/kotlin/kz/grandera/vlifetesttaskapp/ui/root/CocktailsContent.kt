@@ -8,7 +8,6 @@ import com.arkivanov.decompose.extensions.compose.stack.Children
 
 import kz.grandera.vlifetesttaskapp.ui.animation.backAnimation
 import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent
-import kz.grandera.vlifetesttaskapp.component.Component
 
 @Composable
 @ExperimentalDecomposeApi
@@ -24,8 +23,6 @@ public fun CocktailsContent(
             onBack = { component.onBackInvoked() }
         )
     ) { child ->
-        when (val childInstance = child.instance) {
-            is Component -> childInstance.Content()
-        }
+        child.instance.Content()
     }
 }
