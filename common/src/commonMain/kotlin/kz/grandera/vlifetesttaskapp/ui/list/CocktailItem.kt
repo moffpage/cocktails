@@ -34,18 +34,11 @@ internal fun CocktailItem(
         SubcomposeAsyncImage(
             modifier = Modifier
                 .then(
-                    if (sharedTransitionScope != null) {
-                        with(sharedTransitionScope) {
-                            Modifier.sharedBounds(
-                                sharedContentState = rememberSharedContentState(
-                                    key = SharedTransitionKeys.itemImage(cocktail.id)
-                                ),
-                                animatedVisibilityScope = this
-                            )
-                        }
-                    } else {
-                        Modifier
-                    }
+                    sharedTransitionScope?.run {
+                        Modifier.sharedBounds(
+                            key = SharedTransitionKeys.itemImage(cocktail.id)
+                        )
+                    } ?: Modifier
                 )
                 .clip(shape = MaterialTheme.shapes.large)
                 .matchParentSize(),
@@ -73,18 +66,11 @@ internal fun CocktailItem(
         Text(
             modifier = Modifier
                 .then(
-                    if (sharedTransitionScope != null) {
-                        with(sharedTransitionScope) {
-                            Modifier.sharedBounds(
-                                sharedContentState = rememberSharedContentState(
-                                    key = SharedTransitionKeys.itemText(cocktail.id)
-                                ),
-                                animatedVisibilityScope = this
-                            )
-                        }
-                    } else {
-                        Modifier
-                    }
+                    sharedTransitionScope?.run {
+                        Modifier.sharedBounds(
+                            key = SharedTransitionKeys.itemText(cocktail.id)
+                        )
+                    } ?: Modifier
                 )
                 .align(alignment = Alignment.Center),
             text = cocktail.name,

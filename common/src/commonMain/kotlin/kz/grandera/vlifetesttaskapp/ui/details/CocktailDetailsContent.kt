@@ -90,19 +90,12 @@ internal fun CocktailDetailsContent(
                         AsyncImage(
                             modifier = Modifier
                                 .then(
-                                    if (sharedTransitionScope != null) {
-                                        with(sharedTransitionScope) {
-                                            Modifier.sharedBounds(
-                                                sharedContentState = rememberSharedContentState(
-                                                    key = SharedTransitionKeys.itemImage(model.cocktailId)
-                                                ),
-                                                animatedVisibilityScope = this,
-                                                renderInOverlayDuringTransition = false
-                                            )
-                                        }
-                                    } else {
-                                        Modifier
-                                    }
+                                    sharedTransitionScope?.run {
+                                        Modifier.sharedBounds(
+                                            key = SharedTransitionKeys.itemImage(model.cocktailId),
+                                            renderInOverlayDuringTransition = false
+                                        )
+                                    } ?: Modifier
                                 )
                                 .fillMaxWidth()
                                 .aspectRatio(ratio = 1f)
@@ -121,19 +114,12 @@ internal fun CocktailDetailsContent(
                         Text(
                             modifier = Modifier
                                 .then(
-                                    if (sharedTransitionScope != null) {
-                                        with(sharedTransitionScope) {
-                                            Modifier.sharedBounds(
-                                                sharedContentState = rememberSharedContentState(
-                                                    key = SharedTransitionKeys.itemText(model.cocktailId)
-                                                ),
-                                                animatedVisibilityScope = this,
-                                                renderInOverlayDuringTransition = false
-                                            )
-                                        }
-                                    } else {
-                                        Modifier
-                                    }
+                                    sharedTransitionScope?.run {
+                                        Modifier.sharedBounds(
+                                            key = SharedTransitionKeys.itemText(model.cocktailId),
+                                            renderInOverlayDuringTransition = false
+                                        )
+                                    } ?: Modifier
                                 )
                                 .align(alignment = Alignment.BottomCenter)
                                 .padding(bottom = 16.dp)
