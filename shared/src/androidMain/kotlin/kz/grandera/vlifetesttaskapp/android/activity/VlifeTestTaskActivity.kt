@@ -27,8 +27,8 @@ import com.arkivanov.decompose.ExperimentalDecomposeApi
 
 import kz.grandera.vlifetesttaskapp.ui.root.CocktailsContent
 import kz.grandera.vlifetesttaskapp.core.componentcontext.wrapComponentContext
+import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent
 import kz.grandera.vlifetesttaskapp.theming.SystemAppearance
-import kz.grandera.vlifetesttaskapp.features.root.component.cocktailsComponentFactory
 import kz.grandera.vlifetesttaskapp.ui_components.theming.AppTheme
 import kz.grandera.vlifetesttaskapp.ui_components.theming.LocalAppTheme
 import kz.grandera.vlifetesttaskapp.ui_components.theming.VlifeTestTaskAppTheme
@@ -36,12 +36,14 @@ import kz.grandera.vlifetesttaskapp.ui_components.theming.VlifeTestTaskAppTheme
 class VlifeTestTaskActivity : ComponentActivity(), AndroidScopeComponent {
     override val scope: Scope by activityScope()
 
+    private val componentFactory by scope.inject<CocktailsComponent.Factory>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         scope.declare(this)
 
-        val component = cocktailsComponentFactory(
+        val component = componentFactory.create(
             componentContext = wrapComponentContext(
                 context = defaultComponentContext(),
                 parentScopeId = scope.id
