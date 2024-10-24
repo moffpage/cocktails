@@ -69,8 +69,8 @@ import kz.grandera.vlifetesttaskapp.ui_components.resources.cocktailPlaceholderR
 
 @Composable
 internal fun CocktailDetailsContent(
-    modifier: Modifier = Modifier,
-    component: CocktailDetailsComponent
+    component: CocktailDetailsComponent,
+    modifier: Modifier = Modifier
 ) {
     val model by component.model.subscribeAsState()
 

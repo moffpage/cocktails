@@ -38,24 +38,25 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBarsPadding
 
+import org.jetbrains.compose.resources.stringResource
+
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+
 import kz.grandera.vlifetesttaskapp.common.Res
 import kz.grandera.vlifetesttaskapp.common.alcoholic
 import kz.grandera.vlifetesttaskapp.common.cocktails
 import kz.grandera.vlifetesttaskapp.common.non_alcoholic
-
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent
 import kz.grandera.vlifetesttaskapp.ui_components.error.ErrorContent
 import kz.grandera.vlifetesttaskapp.ui_components.loading.LoadingContent
 import kz.grandera.vlifetesttaskapp.ui_components.segment.SegmentedControl
 import kz.grandera.vlifetesttaskapp.ui_components.textfield.SearchBar
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 @ExperimentalMaterialApi
 internal fun CocktailsListContent(
-    modifier: Modifier = Modifier,
-    component: CocktailsListComponent
+    component: CocktailsListComponent,
+    modifier: Modifier = Modifier
 ) {
     val model by component.model.subscribeAsState()
 
@@ -167,7 +168,7 @@ internal fun CocktailsListContent(
                                     } else {
                                         component.displayAlcoholicCocktails()
                                     }
-                                },
+                                }
                             )
                         }
                     }

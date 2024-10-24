@@ -19,19 +19,17 @@ internal val componentsModule = module {
     }
 
     single {
-        CocktailsListComponent.Factory { componentContext, onShowCocktail ->
+        CocktailsListComponent.Factory { componentContext ->
             CocktailsListComponentImpl(
-                onShowCocktail = onShowCocktail,
                 componentContext = componentContext
             )
         }
     }
 
     single {
-        CocktailDetailsComponent.Factory { onBack, cocktailId, componentContext ->
+        CocktailDetailsComponent.Factory { cocktailId, componentContext ->
             CocktailDetailsComponentImpl(
                 id = cocktailId,
-                onNavigateBack = onBack,
                 componentContext = componentContext
             )
         }

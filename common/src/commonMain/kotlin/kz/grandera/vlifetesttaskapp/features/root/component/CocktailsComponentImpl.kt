@@ -1,5 +1,8 @@
 package kz.grandera.vlifetesttaskapp.features.root.component
 
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.launchIn
+
 import kotlinx.serialization.Serializable
 
 import org.koin.core.component.getScopeId
@@ -13,6 +16,9 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 
 import kz.grandera.vlifetesttaskapp.core.scope.koinScope
+import kz.grandera.vlifetesttaskapp.core.lifecycle.coroutineScope
+import kz.grandera.vlifetesttaskapp.core.extensions.childrenEvents
+import kz.grandera.vlifetesttaskapp.core.extensions.childrenBackEvents
 import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
 import kz.grandera.vlifetesttaskapp.core.componentcontext.wrapComponentContext
 import kz.grandera.vlifetesttaskapp.component.Component
@@ -31,6 +37,7 @@ internal class CocktailsComponentImpl(componentContext: AppComponentContext) :
     private val cocktailsListComponentFactory by koinScope.inject<CocktailsListComponent.Factory>()
     private val cocktailDetailsComponentFactory by koinScope.inject<CocktailDetailsComponent.Factory>()
 
+    private val scope = coroutineScope()
     private val navigation = StackNavigation<Configuration>()
     private val childStack = childStack(
         source = navigation,
@@ -44,6 +51,26 @@ internal class CocktailsComponentImpl(componentContext: AppComponentContext) :
         handleBackButton = true,
         initialConfiguration = Configuration.List
     )
+
+    init {
+        childStack
+            .childrenBackEvents()
+            .onEach(action = { onBackInvoked() })
+            .launchIn(scope = scope)
+    }
+
+    init {
+        childStack
+            .childrenEvents<CocktailsListComponent.Event.ShowCocktail>()
+            .onEach { event ->
+                navigation.pushNew(
+                    Configuration.Details(
+                        id = event.cocktailId
+                    )
+                )
+            }
+            .launchIn(scope = scope)
+    }
 
     override val model: Value<ChildStack<*, Component>> = childStack
 
@@ -61,18 +88,10 @@ internal class CocktailsComponentImpl(componentContext: AppComponentContext) :
         )
         return when (configuration) {
             is Configuration.List -> cocktailsListComponentFactory.create(
-                componentContext = componentContext,
-                onShowCocktail = { cocktailId ->
-                    navigation.pushNew(
-                        Configuration.Details(
-                            id = cocktailId
-                        )
-                    )
-                }
+                componentContext = componentContext
             )
 
             is Configuration.Details -> cocktailDetailsComponentFactory.create(
-                onBack = { navigation.pop() },
                 cocktailId = configuration.id,
                 componentContext = componentContext
             )

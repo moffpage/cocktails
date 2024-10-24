@@ -14,6 +14,9 @@ import com.arkivanov.decompose.value.operator.map
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 
 import kz.grandera.vlifetesttaskapp.ui.details.CocktailDetailsContent
+import kz.grandera.vlifetesttaskapp.core.event.back.BackEvent
+import kz.grandera.vlifetesttaskapp.core.event.back.BackEventsProducerDelegate
+import kz.grandera.vlifetesttaskapp.core.event.back.backEventsProducerDelegate
 import kz.grandera.vlifetesttaskapp.core.scope.koinScope
 import kz.grandera.vlifetesttaskapp.core.extensions.states
 import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
@@ -25,10 +28,10 @@ import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsCo
 
 internal class CocktailDetailsComponentImpl(
     id: Long,
-    componentContext: AppComponentContext,
-    private val onNavigateBack: () -> Unit,
+    componentContext: AppComponentContext
 ) : CocktailDetailsComponent,
-    AppComponentContext by componentContext
+    AppComponentContext by componentContext,
+    BackEventsProducerDelegate by backEventsProducerDelegate()
 {
     private val koinScope = koinScope(
         cocktailDetailsModule,
@@ -36,24 +39,26 @@ internal class CocktailDetailsComponentImpl(
         qualifier = qualifier<CocktailDetailsComponent>()
     )
 
-    private val store = instanceKeeper.getStore {
-        koinScope.inject<CocktailDetailsStore>(
-            parameters = {
-                parametersOf(id)
-            }
-        ).value
-    }
+    private val storeFactory by koinScope.inject<CocktailDetailsStore>(
+        parameters = {
+            parametersOf(id)
+        }
+    )
+    private val store = instanceKeeper.getStore { storeFactory }
 
     @Composable
     override fun Content(modifier: Modifier) {
-        CocktailDetailsContent(modifier = modifier, component = this)
+        CocktailDetailsContent(
+            component = this,
+            modifier = modifier
+        )
     }
 
     override val model: Value<Model> = store.states
         .map { cocktail -> cocktail.toModel() }
 
     override fun navigateBack() {
-        onNavigateBack()
+        dispatch(BackEvent)
     }
 
     override fun refetchDetails() {

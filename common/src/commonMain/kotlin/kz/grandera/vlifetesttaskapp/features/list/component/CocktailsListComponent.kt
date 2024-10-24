@@ -3,14 +3,12 @@ package kz.grandera.vlifetesttaskapp.features.list.component
 import com.arkivanov.decompose.value.Value
 
 import kz.grandera.vlifetesttaskapp.component.Component
+import kz.grandera.vlifetesttaskapp.core.event.EventsProducer
 import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
 
-public interface CocktailsListComponent : Component {
+public interface CocktailsListComponent : Component, EventsProducer<CocktailsListComponent.Event> {
     public fun interface Factory {
-        public fun create(
-            componentContext: AppComponentContext,
-            onShowCocktail: (Long) -> Unit
-        ) : CocktailsListComponent
+        public fun create(componentContext: AppComponentContext): CocktailsListComponent
     }
 
     public data class Model(
@@ -27,6 +25,12 @@ public interface CocktailsListComponent : Component {
         public val name: String,
         public val imageUrl: String,
     )
+
+    public sealed interface Event {
+        public data class ShowCocktail(
+            public val cocktailId: Long
+        ) : Event
+    }
 
     public val model: Value<Model>
 

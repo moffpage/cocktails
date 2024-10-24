@@ -14,21 +14,23 @@ import com.arkivanov.decompose.value.operator.map
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 
 import kz.grandera.vlifetesttaskapp.ui.list.CocktailsListContent
-import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
-import kz.grandera.vlifetesttaskapp.core.extensions.states
+import kz.grandera.vlifetesttaskapp.core.event.DefaultEventsProducerDelegate
 import kz.grandera.vlifetesttaskapp.core.scope.koinScope
+import kz.grandera.vlifetesttaskapp.core.extensions.states
+import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
 import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore
 import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore.State
 import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore.Intent
 import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore.Cocktail
+import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent.Event
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent.Model
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent.CocktailModel
 
 internal class CocktailsListComponentImpl(
-    componentContext: AppComponentContext,
-    private val onShowCocktail: (cocktailId: Long) -> Unit
+    componentContext: AppComponentContext
 ) : CocktailsListComponent,
-    AppComponentContext by componentContext
+    AppComponentContext by componentContext,
+    DefaultEventsProducerDelegate<Event>()
 {
     private val koinScope = koinScope(
         cocktailsListModule,
@@ -36,14 +38,16 @@ internal class CocktailsListComponentImpl(
         qualifier = qualifier<CocktailsListComponent>()
     )
 
-    private val store = instanceKeeper.getStore {
-        koinScope.inject<CocktailsListStore>().value
-    }
+    private val storeFactory by koinScope.inject<CocktailsListStore>()
+    private val store = instanceKeeper.getStore { storeFactory }
 
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
     override fun Content(modifier: Modifier) {
-        CocktailsListContent(modifier = modifier, component = this)
+        CocktailsListContent(
+            component = this,
+            modifier = modifier
+        )
     }
 
     override val model: Value<Model> = store.states.map { state -> state.toModel() }
@@ -53,7 +57,7 @@ internal class CocktailsListComponentImpl(
     }
 
     override fun showCocktail(cocktail: CocktailModel) {
-        onShowCocktail(cocktail.id)
+        dispatch(Event.ShowCocktail(cocktailId = cocktail.id))
     }
 
     override fun clearSearch() {

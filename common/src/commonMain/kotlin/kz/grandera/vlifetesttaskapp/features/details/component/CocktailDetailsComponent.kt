@@ -3,12 +3,12 @@ package kz.grandera.vlifetesttaskapp.features.details.component
 import com.arkivanov.decompose.value.Value
 
 import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
+import kz.grandera.vlifetesttaskapp.core.event.back.BackEventsProducerDelegate
 import kz.grandera.vlifetesttaskapp.component.Component
 
-public interface CocktailDetailsComponent : Component {
+public interface CocktailDetailsComponent : Component, BackEventsProducerDelegate {
     public fun interface Factory {
         public fun create(
-            onBack: () -> Unit,
             cocktailId: Long,
             componentContext: AppComponentContext
         ): CocktailDetailsComponent
