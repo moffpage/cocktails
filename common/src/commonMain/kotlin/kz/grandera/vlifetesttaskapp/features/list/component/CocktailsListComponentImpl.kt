@@ -50,7 +50,8 @@ internal class CocktailsListComponentImpl(
         )
     }
 
-    override val model: Value<Model> = store.states.map { state -> state.toModel() }
+    override val model: Value<Model> = store.states
+        .map { state -> state.toModel() }
 
     override fun reload() {
         store.accept(intent = Intent.Shuffle)

@@ -123,7 +123,7 @@ private class ExecutorImpl(
     override fun executeIntent(intent: Intent) {
         when (intent) {
             is Intent.Refresh -> {
-                executeAction(
+                forward(
                     action = Action.LoadCocktail(
                         cocktailId = state().cocktailId
                     )

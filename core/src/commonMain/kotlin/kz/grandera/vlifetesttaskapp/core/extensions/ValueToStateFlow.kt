@@ -35,10 +35,11 @@ private class ValueStateFlow<out T : Any>(private val v: Value<T>) : StateFlow<T
 public fun <T : Any> Value<T>.asStateFlow(): StateFlow<T> = ValueStateFlow(this)
 
 @OptIn(ExperimentalCoroutinesApi::class)
-public fun <Event : Any> Value<ChildStack<*, *>>.childrenEvents(): Flow<Event> =
+public inline fun <reified Event : Any> Value<ChildStack<*, *>>.childrenEvents(): Flow<Event> =
     this.asStateFlow()
         .map { stack -> stack.active.instance }
         .filterIsInstance<EventsProducer<Event>>()
         .flatMapLatest { component -> component.event }
+        .filterIsInstance<Event>()
 
 public fun Value<ChildStack<*, *>>.childrenBackEvents(): Flow<BackEvent> = childrenEvents()

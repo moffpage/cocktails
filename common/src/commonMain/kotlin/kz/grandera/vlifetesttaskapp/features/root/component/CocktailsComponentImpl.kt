@@ -97,13 +97,13 @@ internal class CocktailsComponentImpl(componentContext: AppComponentContext) :
             )
         }
     }
+}
+
+@Serializable
+private sealed interface Configuration {
+    @Serializable
+    data object List : Configuration
 
     @Serializable
-    private sealed interface Configuration {
-        @Serializable
-        data object List : Configuration
-
-        @Serializable
-        data class Details(val id: Long) : Configuration
-    }
+    data class Details(val id: Long) : Configuration
 }
