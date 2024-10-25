@@ -22,13 +22,13 @@ import org.koin.androidx.scope.activityScope
 
 import com.squareup.seismic.ShakeDetector
 
-import com.arkivanov.decompose.defaultComponentContext
 import com.arkivanov.decompose.ExperimentalDecomposeApi
+import com.arkivanov.decompose.retainedComponent
 
 import kz.grandera.vlifetesttaskapp.ui.root.CocktailsContent
 import kz.grandera.vlifetesttaskapp.core.componentcontext.wrapComponentContext
+import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent
 import kz.grandera.vlifetesttaskapp.theming.SystemAppearance
-import kz.grandera.vlifetesttaskapp.features.root.component.cocktailsComponentFactory
 import kz.grandera.vlifetesttaskapp.ui_components.theming.AppTheme
 import kz.grandera.vlifetesttaskapp.ui_components.theming.LocalAppTheme
 import kz.grandera.vlifetesttaskapp.ui_components.theming.VlifeTestTaskAppTheme
@@ -36,17 +36,27 @@ import kz.grandera.vlifetesttaskapp.ui_components.theming.VlifeTestTaskAppTheme
 class VlifeTestTaskActivity : ComponentActivity(), AndroidScopeComponent {
     override val scope: Scope by activityScope()
 
+    private val componentFactory by scope.inject<CocktailsComponent.Factory>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         scope.declare(this)
 
-        val component = cocktailsComponentFactory(
-            componentContext = wrapComponentContext(
-                context = defaultComponentContext(),
+        val systemBarsStyle = SystemBarStyle.auto(
+            lightScrim = Color.TRANSPARENT,
+            darkScrim = Color.TRANSPARENT
+        )
+
+        val component = retainedComponent { context ->
+            val componentContext = wrapComponentContext(
+                context = context,
                 parentScopeId = scope.id
             )
-        )
+            componentFactory.create(
+                componentContext = componentContext
+            )
+        }
 
         enableEdgeToEdge(
             statusBarStyle = systemBarsStyle,
@@ -82,12 +92,5 @@ class VlifeTestTaskActivity : ComponentActivity(), AndroidScopeComponent {
                 }
             }
         }
-    }
-
-    private companion object {
-        val systemBarsStyle = SystemBarStyle.auto(
-            lightScrim = Color.TRANSPARENT,
-            darkScrim = Color.TRANSPARENT
-        )
     }
 }

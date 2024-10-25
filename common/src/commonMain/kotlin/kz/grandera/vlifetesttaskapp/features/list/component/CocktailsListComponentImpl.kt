@@ -1,43 +1,37 @@
 package kz.grandera.vlifetesttaskapp.features.list.component
 
+import kotlinx.coroutines.delay
+
 import androidx.compose.ui.Modifier
 import androidx.compose.runtime.Composable
 import androidx.compose.material.ExperimentalMaterialApi
 
-import org.koin.dsl.module
-import org.koin.core.component.getScopeId
-import org.koin.core.qualifier.named
-import org.koin.core.qualifier.qualifier
-
 import com.arkivanov.decompose.value.Value
-import com.arkivanov.decompose.value.operator.map
-import com.arkivanov.mvikotlin.core.instancekeeper.getStore
+import com.arkivanov.decompose.value.update
+import com.arkivanov.decompose.value.MutableValue
 
 import kz.grandera.vlifetesttaskapp.ui.list.CocktailsListContent
-import kz.grandera.vlifetesttaskapp.core.scope.koinScope
-import kz.grandera.vlifetesttaskapp.core.observable.states
+import kz.grandera.vlifetesttaskapp.api.cocktails.CocktailsApi
+import kz.grandera.vlifetesttaskapp.api.entity.CocktailEntity
+import kz.grandera.vlifetesttaskapp.core.coroutines.LaunchStrategy
+import kz.grandera.vlifetesttaskapp.core.coroutines.extensions.safeLaunch
+import kz.grandera.vlifetesttaskapp.core.coroutines.extensions.invokeOnFailure
 import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
-import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore
-import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore.State
-import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore.Intent
-import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore.Cocktail
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent.Model
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent.CocktailModel
 
 internal class CocktailsListComponentImpl(
     componentContext: AppComponentContext,
+    private val cocktailsApi: CocktailsApi,
     private val onShowCocktail: (cocktailId: Long) -> Unit
 ) : CocktailsListComponent,
     AppComponentContext by componentContext
 {
-    private val koinScope = koinScope(
-        cocktailsListModule,
-        scopeId = getScopeId(),
-        qualifier = qualifier<CocktailsListComponent>()
-    )
+    private val _model: MutableValue<FilteredModel> =
+        MutableValue(FilteredModel.initialState())
 
-    private val store = instanceKeeper.getStore {
-        koinScope.inject<CocktailsListStore>().value
+    init {
+        filterCocktails(isAlcoholic = false)
     }
 
     @OptIn(ExperimentalMaterialApi::class)
@@ -46,10 +40,25 @@ internal class CocktailsListComponentImpl(
         CocktailsListContent(modifier = modifier, component = this)
     }
 
-    override val model: Value<Model> = store.states.map { state -> state.toModel() }
+    override val model: Value<Model> = _model
 
     override fun reload() {
-        store.accept(intent = Intent.Shuffle)
+        safeLaunch(LaunchStrategy.keepPrevious("reload")) {
+            _model.update {
+                it.copy(
+                    isRefreshing = true
+                )
+            }
+
+            delay(1000L)
+
+            _model.update {
+                it.copy(
+                    cocktails = it.filteredCocktails.shuffled(),
+                    isRefreshing = false
+                )
+            }
+        }
     }
 
     override fun showCocktail(cocktail: CocktailModel) {
@@ -57,23 +66,25 @@ internal class CocktailsListComponentImpl(
     }
 
     override fun clearSearch() {
-        store.accept(
-            intent = Intent.Search(
-                query = ""
-            )
-        )
+        findCocktail("")
     }
 
     override fun findCocktail(searchQuery: String) {
-        store.accept(
-            intent = Intent.Search(
-                query = searchQuery
+        _model.update {
+            it.copy(
+                cocktails = it.filteredCocktails.filter { cocktail ->
+                    cocktail.name.startsWith(
+                        prefix = searchQuery,
+                        ignoreCase = true
+                    )
+                },
+                searchQuery = searchQuery
             )
-        )
+        }
     }
 
     override fun refetchCocktails() {
-        if (model.value.listsAlcoholicCocktails) {
+        if (_model.value.listsAlcoholicCocktails) {
             displayAlcoholicCocktails()
         } else {
             displayNonAlcoholicCocktails()
@@ -81,46 +92,97 @@ internal class CocktailsListComponentImpl(
     }
 
     override fun displayAlcoholicCocktails() {
-        store.accept(
-            intent = Intent.Filter(
-                isAlcoholic = true
-            )
-        )
+        filterCocktails(isAlcoholic = true)
     }
 
     override fun displayNonAlcoholicCocktails() {
-        store.accept(
-            intent = Intent.Filter(
-                isAlcoholic = false
-            )
-        )
+        filterCocktails(isAlcoholic = false)
     }
-}
 
-private val cocktailsListModule = module {
-    scope<CocktailsListComponent> {
-        scoped<CocktailsListStore> {
-            CocktailsListStore(
-                storeFactory = get(),
-                mainContext = get(qualifier = named("Main")),
-                ioContext = get(qualifier = named("IO")),
-                cocktailsApi = get()
-            )
+    private fun filterCocktails(isAlcoholic: Boolean) {
+        val savedIfAnyCocktails = _model.value.filteredCocktails
+        val predicate = savedIfAnyCocktails.any { cocktail ->
+            cocktail.isAlcoholic == isAlcoholic
+        }
+        if (predicate) {
+            _model.update {
+                it.copy(
+                    cocktails = savedIfAnyCocktails.filter { cocktail ->
+                        cocktail.isAlcoholic == isAlcoholic
+                    },
+                    listsAlcoholicCocktails = isAlcoholic
+                )
+            }
+        } else {
+            _model.update {
+                it.copy(
+                    isError = false,
+                    isLoading = true
+                )
+            }
+
+            safeLaunch(LaunchStrategy.killPrevious("filter")) {
+                val cocktails = cocktailsApi.getCocktails(isAlcoholic = isAlcoholic)
+                    .cocktails
+                    .map {
+                        it.toCocktail(
+                            isAlcoholic = isAlcoholic
+                        )
+                    }
+
+                _model.update {
+                    it.copy(
+                        isLoading = false,
+                        cocktails = cocktails,
+                        filteredCocktails = savedIfAnyCocktails + cocktails,
+                        listsAlcoholicCocktails = isAlcoholic
+                    )
+                }
+            }.invokeOnFailure {
+                _model.update {
+                    it.copy(
+                        isError = true,
+                        isLoading = false
+                    )
+                }
+            }
         }
     }
 }
 
-private fun State.toModel(): Model = Model(
-    isError = this.isError,
-    isLoading = this.isLoading,
-    isRefreshing = this.isRefreshing,
-    searchQuery = this.searchQuery,
-    cocktails = this.filteredCocktails.map { cocktail -> cocktail.toCocktailModel() },
-    listsAlcoholicCocktails = this.filteredCocktails.any { cocktail -> cocktail.isAlcoholic }
-)
+internal fun CocktailEntity.toCocktail(isAlcoholic: Boolean): CocktailModel =
+    CocktailModel(
+        id = this.id.toLong(),
+        name = this.name,
+        imageUrl = this.imageUrl,
+        isAlcoholic = isAlcoholic
+    )
 
-private fun Cocktail.toCocktailModel(): CocktailModel = CocktailModel(
-    id = this.id,
-    name = this.name,
-    imageUrl = "${this.imageUrl}/preview",
-)
+private data class FilteredModel(
+    override val isError: Boolean,
+    override val isLoading: Boolean,
+    override val isRefreshing: Boolean,
+    override val cocktails: List<CocktailModel>,
+    val filteredCocktails: List<CocktailModel>,
+    override val searchQuery: String,
+    override val listsAlcoholicCocktails: Boolean
+) : Model(
+    isError = isError,
+    isLoading = isLoading,
+    isRefreshing = isRefreshing,
+    cocktails = cocktails,
+    searchQuery = searchQuery,
+    listsAlcoholicCocktails = listsAlcoholicCocktails
+) {
+    companion object {
+        fun initialState(): FilteredModel = FilteredModel(
+            isError = false,
+            isLoading = false,
+            isRefreshing = false,
+            searchQuery = "",
+            cocktails = emptyList(),
+            filteredCocktails = emptyList(),
+            listsAlcoholicCocktails = false
+        )
+    }
+}

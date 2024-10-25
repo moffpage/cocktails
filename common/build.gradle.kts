@@ -54,6 +54,7 @@ kotlin {
             implementation(dependencyNotation = libs.koin.core)
             implementation(dependencyNotation = libs.ktor.core)
             implementation(dependencyNotation = libs.kotlinx.coroutines)
+            implementation(dependencyNotation = libs.essenty.lifecycleCoroutines)
             implementation(dependencyNotation = libs.bundles.mvikotlin.common)
             implementation(dependencyNotation = libs.mvikotlin.logging)
             implementation(dependencyNotation = libs.decompose.core)

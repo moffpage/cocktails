@@ -42,5 +42,5 @@ public interface CocktailDetailsComponent : Component {
 
     public fun navigateBack()
 
-    public fun refetchDetails()
+    public fun fetchDetails()
 }

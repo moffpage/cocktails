@@ -1,8 +1,9 @@
-package kz.grandera.vlifetesttaskapp.core.coroutines
+package kz.grandera.vlifetesttaskapp.core.coroutines.extensions
 
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineName
 
+import kz.grandera.vlifetesttaskapp.core.coroutines.ExcludeExceptions
 import kz.grandera.vlifetesttaskapp.core.coroutines.taskhandler.TaskHandlerContext
 
 public val CoroutineContext.name: String?

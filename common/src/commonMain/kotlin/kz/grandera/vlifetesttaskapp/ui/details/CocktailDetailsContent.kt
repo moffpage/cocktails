@@ -80,7 +80,7 @@ internal fun CocktailDetailsContent(
                 modifier = Modifier
                     .align(alignment = Alignment.Center)
                     .padding(horizontal = 64.dp),
-                onRetry = { component.refetchDetails() }
+                onRetry = { component.fetchDetails() }
             )
         } else {
             Surface(color = MaterialTheme.colors.background) {

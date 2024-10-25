@@ -13,19 +13,20 @@ public interface CocktailsListComponent : Component {
         ) : CocktailsListComponent
     }
 
-    public data class Model(
-        public val isError: Boolean,
-        public val isLoading: Boolean,
-        public val isRefreshing: Boolean,
-        public val cocktails: List<CocktailModel>,
-        public val searchQuery: String,
-        public val listsAlcoholicCocktails: Boolean,
+    public open class Model(
+        public open val isError: Boolean,
+        public open val isLoading: Boolean,
+        public open val isRefreshing: Boolean,
+        public open val cocktails: List<CocktailModel>,
+        public open val searchQuery: String,
+        public open val listsAlcoholicCocktails: Boolean,
     )
 
     public data class CocktailModel(
         public val id: Long,
         public val name: String,
         public val imageUrl: String,
+        public val isAlcoholic: Boolean
     )
 
     public val model: Value<Model>

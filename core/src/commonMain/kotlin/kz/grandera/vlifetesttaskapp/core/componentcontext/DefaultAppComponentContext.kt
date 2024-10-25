@@ -20,7 +20,7 @@ import com.arkivanov.decompose.ComponentContextFactory
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.decompose.GenericComponentContext
 
-import kz.grandera.vlifetesttaskapp.core.coroutines.excludeExceptions
+import kz.grandera.vlifetesttaskapp.core.coroutines.extensions.excludeExceptions
 import kz.grandera.vlifetesttaskapp.core.coroutines.ExcludeExceptions
 import kz.grandera.vlifetesttaskapp.core.coroutines.taskhandler.TaskHandler
 import kz.grandera.vlifetesttaskapp.core.coroutines.taskhandler.TaskHandlerContext
