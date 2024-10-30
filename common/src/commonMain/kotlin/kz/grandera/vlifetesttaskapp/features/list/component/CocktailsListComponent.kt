@@ -17,13 +17,13 @@ public interface CocktailsListComponent : Component, EventsProducer<CocktailsLis
         public val isRefreshing: Boolean,
         public val cocktails: List<CocktailModel>,
         public val searchQuery: String,
-        public val listsAlcoholicCocktails: Boolean,
+        public val listsAlcoholicCocktails: Boolean
     )
 
     public data class CocktailModel(
         public val id: Long,
         public val name: String,
-        public val imageUrl: String,
+        public val imageUrl: String
     )
 
     public sealed interface Event {

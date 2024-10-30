@@ -40,19 +40,17 @@ class VlifeTestTaskActivity : ComponentActivity(), AndroidScopeComponent {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         scope.declare(this)
+        setContent()
+        enableEdgeToEdge()
+    }
 
+    private fun setContent() {
         val component = componentFactory.create(
             componentContext = wrapComponentContext(
                 context = defaultComponentContext(),
                 parentScopeId = scope.id
             )
-        )
-
-        enableEdgeToEdge(
-            statusBarStyle = systemBarsStyle,
-            navigationBarStyle = systemBarsStyle
         )
 
         setContent {
@@ -86,10 +84,15 @@ class VlifeTestTaskActivity : ComponentActivity(), AndroidScopeComponent {
         }
     }
 
-    private companion object {
+    private fun enableEdgeToEdge() {
         val systemBarsStyle = SystemBarStyle.auto(
             lightScrim = Color.TRANSPARENT,
             darkScrim = Color.TRANSPARENT
+        )
+
+        enableEdgeToEdge(
+            statusBarStyle = systemBarsStyle,
+            navigationBarStyle = systemBarsStyle
         )
     }
 }

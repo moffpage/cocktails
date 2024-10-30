@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.launchIn
 
 import kotlinx.serialization.Serializable
 
+import org.koin.dsl.module
 import org.koin.core.component.getScopeId
 import org.koin.core.qualifier.qualifier
 
@@ -23,13 +24,17 @@ import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
 import kz.grandera.vlifetesttaskapp.core.componentcontext.wrapComponentContext
 import kz.grandera.vlifetesttaskapp.component.Component
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent
+import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponentImpl
 import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent
+import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponentImpl
 
 internal class CocktailsComponentImpl(componentContext: AppComponentContext) :
     CocktailsComponent,
     AppComponentContext by componentContext
 {
+    private val scope = coroutineScope()
     private val koinScope = koinScope(
+        childrenModule,
         scopeId = getScopeId(),
         qualifier = qualifier<CocktailsComponent>(),
     )
@@ -37,17 +42,11 @@ internal class CocktailsComponentImpl(componentContext: AppComponentContext) :
     private val cocktailsListComponentFactory by koinScope.inject<CocktailsListComponent.Factory>()
     private val cocktailDetailsComponentFactory by koinScope.inject<CocktailDetailsComponent.Factory>()
 
-    private val scope = coroutineScope()
     private val navigation = StackNavigation<Configuration>()
     private val childStack = childStack(
         source = navigation,
         serializer = Configuration.serializer(),
-        childFactory = { configuration, componentContext ->
-            child(
-                context = componentContext,
-                configuration = configuration
-            )
-        },
+        childFactory = ::child,
         handleBackButton = true,
         initialConfiguration = Configuration.List
     )
@@ -79,8 +78,8 @@ internal class CocktailsComponentImpl(componentContext: AppComponentContext) :
     }
 
     private fun child(
-        context: AppComponentContext,
         configuration: Configuration,
+        context: AppComponentContext
     ): Component {
         val componentContext = wrapComponentContext(
             context = context,
@@ -95,6 +94,27 @@ internal class CocktailsComponentImpl(componentContext: AppComponentContext) :
                 cocktailId = configuration.id,
                 componentContext = componentContext
             )
+        }
+    }
+}
+
+private val childrenModule = module {
+    scope<CocktailsComponent> {
+        scoped {
+            CocktailsListComponent.Factory { componentContext ->
+                CocktailsListComponentImpl(
+                    componentContext = componentContext
+                )
+            }
+        }
+
+        scoped {
+            CocktailDetailsComponent.Factory { cocktailId, componentContext ->
+                CocktailDetailsComponentImpl(
+                    cocktailId = cocktailId,
+                    componentContext = componentContext
+                )
+            }
         }
     }
 }

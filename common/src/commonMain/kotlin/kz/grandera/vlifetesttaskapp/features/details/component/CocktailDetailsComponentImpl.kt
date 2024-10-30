@@ -27,7 +27,7 @@ import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsCo
 import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent.DrinkCategory
 
 internal class CocktailDetailsComponentImpl(
-    id: Long,
+    cocktailId: Long,
     componentContext: AppComponentContext
 ) : CocktailDetailsComponent,
     AppComponentContext by componentContext,
@@ -41,7 +41,7 @@ internal class CocktailDetailsComponentImpl(
 
     private val storeFactory by koinScope.inject<CocktailDetailsStore>(
         parameters = {
-            parametersOf(id)
+            parametersOf(cocktailId)
         }
     )
     private val store = instanceKeeper.getStore { storeFactory }
