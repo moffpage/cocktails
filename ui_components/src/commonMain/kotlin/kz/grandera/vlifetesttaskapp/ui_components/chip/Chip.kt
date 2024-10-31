@@ -7,10 +7,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.runtime.Composable
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
-import androidx.compose.material.Surface
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.Surface
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -19,14 +19,14 @@ import androidx.compose.foundation.layout.Arrangement
 
 @Composable
 public fun Chip(
-    modifier: Modifier = Modifier,
     text: String,
     iconPainter: Painter?,
-    surfaceColor: Color = MaterialTheme.colors.surface,
+    modifier: Modifier = Modifier,
+    surfaceColor: Color = MaterialTheme.colorScheme.surface,
     contentColor: Color = if (iconPainter != null) {
-        MaterialTheme.colors.primary
+        MaterialTheme.colorScheme.primary
     } else {
-        MaterialTheme.colors.secondary
+        MaterialTheme.colorScheme.secondary
     }
 ) {
     Surface(
@@ -51,7 +51,7 @@ public fun Chip(
 
             Text(
                 text = text,
-                style = MaterialTheme.typography.h4
+                style = MaterialTheme.typography.headlineSmall
                     .copy(textAlign = TextAlign.Center)
             )
         }

@@ -25,14 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             context: componentContext,
             parentScopeId: nil
         )
-        let component = FactoryKt.cocktailsComponentFactory(
+        let component = FactoryKt.cocktailsListComponentFactory(
             componentContext: appComponentContext
         )
         let shakeDetector = ShakeDetectorKt.ShakeDetectorFactory(lifecycle: lifecycle)
         let cocktailsViewController = CocktailsViewControllerKt.CocktailsViewController(
             component: component,
-            shakeDetector: shakeDetector,
-            backDispatcher: backDispatcher
+            shakeDetector: shakeDetector
         )
         
         window.rootViewController = cocktailsViewController

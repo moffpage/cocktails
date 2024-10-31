@@ -1,12 +1,12 @@
 package kz.grandera.vlifetesttaskapp.features.list.component
 
 import com.arkivanov.decompose.value.Value
+import com.arkivanov.decompose.router.slot.ChildSlot
 
-import kz.grandera.vlifetesttaskapp.component.Component
-import kz.grandera.vlifetesttaskapp.core.event.EventsProducer
 import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
+import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent
 
-public interface CocktailsListComponent : Component, EventsProducer<CocktailsListComponent.Event> {
+public interface CocktailsListComponent {
     public fun interface Factory {
         public fun create(componentContext: AppComponentContext): CocktailsListComponent
     }
@@ -26,13 +26,9 @@ public interface CocktailsListComponent : Component, EventsProducer<CocktailsLis
         public val imageUrl: String
     )
 
-    public sealed interface Event {
-        public data class ShowCocktail(
-            public val cocktailId: Long
-        ) : Event
-    }
-
     public val model: Value<Model>
+
+    public val modalBottomSheetChild: Value<ChildSlot<*, CocktailDetailsComponent>>
 
     public fun reload()
 
@@ -41,6 +37,8 @@ public interface CocktailsListComponent : Component, EventsProducer<CocktailsLis
     public fun showCocktail(cocktail: CocktailModel)
 
     public fun findCocktail(searchQuery: String)
+
+    public fun dismissDetails()
 
     public fun refetchCocktails()
 

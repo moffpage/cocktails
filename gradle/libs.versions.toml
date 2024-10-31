@@ -6,8 +6,8 @@ ktor = "2.3.12"
 
 compose = "1.7.0"
 
-essenty = "2.2.0"
-decompose = "3.2.0"
+essenty = "2.2.1"
+decompose = "3.2.1"
 mvikotlin = "4.2.0"
 
 kotlin = "2.0.21"
@@ -53,7 +53,7 @@ compose-ui = { group = "org.jetbrains.compose.ui", name = "ui", version.ref = "c
 compose-tooling = { group = "org.jetbrains.compose.components", name = "components-ui-tooling-preview", version.ref = "compose" }
 compose-resources = { group = "org.jetbrains.compose.components", name = "components-resources", version.ref = "compose" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose" }
-compose-material2 = { module = "org.jetbrains.compose.material:material", version.ref = "compose" }
+compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose" }
 
 essenty-lifecycle = { group = "com.arkivanov.essenty", name = "lifecycle", version.ref = "essenty" }
@@ -75,7 +75,7 @@ compose = [
     "compose-runtime",
     "compose-resources",
     "compose-foundation",
-    "compose-material2",
+    "compose-material3",
 ]
 
 mvikotlin-common = [

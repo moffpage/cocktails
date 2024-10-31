@@ -11,13 +11,13 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
-import androidx.compose.material.Text
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ProvideTextStyle
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ProvideTextStyle
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.pullToRefresh
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -47,24 +47,31 @@ import kz.grandera.vlifetesttaskapp.common.alcoholic
 import kz.grandera.vlifetesttaskapp.common.cocktails
 import kz.grandera.vlifetesttaskapp.common.non_alcoholic
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent
+import kz.grandera.vlifetesttaskapp.ui.details.CocktailDetailsContent
+import kz.grandera.vlifetesttaskapp.ui.modalbottomsheet.ChildSlotModalBottomSheet
 import kz.grandera.vlifetesttaskapp.ui_components.error.ErrorContent
 import kz.grandera.vlifetesttaskapp.ui_components.loading.LoadingContent
 import kz.grandera.vlifetesttaskapp.ui_components.segment.SegmentedControl
 import kz.grandera.vlifetesttaskapp.ui_components.textfield.SearchBar
 
 @Composable
-@ExperimentalMaterialApi
-internal fun CocktailsListContent(
+@ExperimentalMaterial3Api
+public fun CocktailsListContent(
     component: CocktailsListComponent,
     modifier: Modifier = Modifier
 ) {
     val model by component.model.subscribeAsState()
-
     val focusManager = LocalFocusManager.current
+
+    ChildSlotModalBottomSheet(
+        childSlot = component.modalBottomSheetChild,
+        onDismiss = { component.dismissDetails() },
+        sheetContent = { CocktailDetailsContent(it) }
+    )
 
     Box(
         modifier = modifier
-            .background(color = MaterialTheme.colors.background)
+            .background(color = MaterialTheme.colorScheme.background)
             .clickable(
                 onClick = { focusManager.clearFocus() },
                 indication = null,
@@ -81,16 +88,15 @@ internal fun CocktailsListContent(
             )
         } else {
             Box {
-                val pullRefreshState = rememberPullRefreshState(
-                    refreshing = model.isRefreshing,
-                    onRefresh = { component.reload() }
-                )
+                val pullRefreshState = rememberPullToRefreshState()
 
                 LazyVerticalGrid(
                     modifier = Modifier
-                        .pullRefresh(
+                        .pullToRefresh(
                             state = pullRefreshState,
-                            enabled = !model.isLoading
+                            enabled = !model.isLoading,
+                            onRefresh = { component.reload() },
+                            isRefreshing = model.isRefreshing
                         ),
                     columns = GridCells.Fixed(count = 2),
                     contentPadding = PaddingValues(
@@ -113,8 +119,8 @@ internal fun CocktailsListContent(
                                 .padding(bottom = 20.dp)
                                 .statusBarsPadding(),
                             text = stringResource(resource = Res.string.cocktails),
-                            style = MaterialTheme.typography.h1
-                                .copy(color = MaterialTheme.colors.onBackground)
+                            style = MaterialTheme.typography.headlineLarge
+                                .copy(color = MaterialTheme.colorScheme.onBackground)
                         )
                     }
 
@@ -146,12 +152,12 @@ internal fun CocktailsListContent(
                         span = { GridItemSpan(currentLineSpan = maxLineSpan) }
                     ) {
                         ProvideTextStyle(
-                            value = MaterialTheme.typography.h4
+                            value = MaterialTheme.typography.headlineSmall
                                 .copy(textAlign = TextAlign.Center)
                         ) {
                             SegmentedControl(
                                 modifier = Modifier.padding(vertical = 8.dp),
-                                selected = { index ->
+                                indexSelected = { index ->
                                     if (index == 0) {
                                         !model.listsAlcoholicCocktails
                                     } else {
@@ -189,12 +195,12 @@ internal fun CocktailsListContent(
                     }
                 }
 
-                PullRefreshIndicator(
+                PullToRefreshDefaults.Indicator(
                     modifier = Modifier
                         .align(alignment = Alignment.TopCenter)
                         .statusBarsPadding(),
                     state = pullRefreshState,
-                    refreshing = model.isRefreshing,
+                    isRefreshing = model.isRefreshing
                 )
             }
         }

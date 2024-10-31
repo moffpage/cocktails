@@ -4,12 +4,14 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.MutableStateFlow
 
 import com.arkivanov.decompose.value.Value
+import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.router.stack.ChildStack
 
 import kz.grandera.vlifetesttaskapp.core.event.EventsProducer
@@ -42,4 +44,13 @@ public inline fun <reified Event : Any> Value<ChildStack<*, *>>.childrenEvents()
         .flatMapLatest { component -> component.event }
         .filterIsInstance<Event>()
 
+@OptIn(ExperimentalCoroutinesApi::class)
+public inline fun <reified Event : Any> Value<ChildSlot<*, *>>.childSlotEvents(): Flow<Event> =
+    this.asStateFlow()
+        .mapNotNull { slot -> slot.child?.instance }
+        .filterIsInstance<EventsProducer<Event>>()
+        .flatMapLatest { component -> component.event }
+        .filterIsInstance<Event>()
+
 public fun Value<ChildStack<*, *>>.childrenBackEvents(): Flow<BackEvent> = childrenEvents()
+public fun Value<ChildSlot<*, *>>.childSlotBackEvents(): Flow<BackEvent> = childSlotEvents()

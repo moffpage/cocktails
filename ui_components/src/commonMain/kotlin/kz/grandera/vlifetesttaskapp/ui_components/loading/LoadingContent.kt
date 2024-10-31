@@ -3,7 +3,7 @@ package kz.grandera.vlifetesttaskapp.ui_components.loading
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.runtime.Composable
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -25,7 +25,7 @@ public fun LoadingContent(
     modifier: Modifier = Modifier,
     alpha: Float = 0.5f,
     enableInput: Boolean = false,
-    backgroundColor: Color = MaterialTheme.colors.background
+    backgroundColor: Color = MaterialTheme.colorScheme.background
 ) {
     Box(
         modifier = modifier

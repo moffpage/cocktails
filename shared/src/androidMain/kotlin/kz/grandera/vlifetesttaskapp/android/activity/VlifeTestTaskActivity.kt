@@ -15,6 +15,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.ExperimentalMaterial3Api
 
 import org.koin.core.scope.Scope
 import org.koin.android.scope.AndroidScopeComponent
@@ -23,12 +24,11 @@ import org.koin.androidx.scope.activityScope
 import com.squareup.seismic.ShakeDetector
 
 import com.arkivanov.decompose.defaultComponentContext
-import com.arkivanov.decompose.ExperimentalDecomposeApi
 
-import kz.grandera.vlifetesttaskapp.ui.root.CocktailsContent
 import kz.grandera.vlifetesttaskapp.core.componentcontext.wrapComponentContext
-import kz.grandera.vlifetesttaskapp.features.root.component.CocktailsComponent
 import kz.grandera.vlifetesttaskapp.theming.SystemAppearance
+import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent
+import kz.grandera.vlifetesttaskapp.ui.list.CocktailsListContent
 import kz.grandera.vlifetesttaskapp.ui_components.theming.AppTheme
 import kz.grandera.vlifetesttaskapp.ui_components.theming.LocalAppTheme
 import kz.grandera.vlifetesttaskapp.ui_components.theming.VlifeTestTaskAppTheme
@@ -36,7 +36,7 @@ import kz.grandera.vlifetesttaskapp.ui_components.theming.VlifeTestTaskAppTheme
 class VlifeTestTaskActivity : ComponentActivity(), AndroidScopeComponent {
     override val scope: Scope by activityScope()
 
-    private val componentFactory by scope.inject<CocktailsComponent.Factory>()
+    private val componentFactory by scope.inject<CocktailsListComponent.Factory>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,8 +76,8 @@ class VlifeTestTaskActivity : ComponentActivity(), AndroidScopeComponent {
                     shakeDetector.start(sensorManager, SensorManager.SENSOR_DELAY_GAME)
                 }
                 VlifeTestTaskAppTheme(appTheme = appTheme) {
-                    @OptIn(ExperimentalDecomposeApi::class)
-                    CocktailsContent(component = component)
+                    @OptIn(ExperimentalMaterial3Api::class)
+                    CocktailsListContent(component = component)
                     SystemAppearance(darkSystemBars = appTheme != AppTheme.Dark)
                 }
             }

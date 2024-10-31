@@ -5,9 +5,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.Composable
-import androidx.compose.material.Text
-import androidx.compose.material.Surface
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.Surface
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.Row
@@ -17,20 +17,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 
 @Composable
 public fun SegmentedControl(
-    modifier: Modifier = Modifier,
-    selected: ((index: Int) -> Boolean),
     titles: List<String>,
+    indexSelected: ((index: Int) -> Boolean),
     onSegmentClick: (index: Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val tab: @Composable RowScope.(
         text: String,
         selected: Boolean,
         onClick: () -> Unit,
-    ) -> Unit = {text, isSelected, onClick ->
+    ) -> Unit = { text, isSelected, onClick ->
         val tabBackgroundColor = if (isSelected) {
-            MaterialTheme.colors.primary
+            MaterialTheme.colorScheme.primary
         } else {
-            MaterialTheme.colors.surface
+            MaterialTheme.colorScheme.surface
         }
         Surface(
             modifier = Modifier
@@ -58,7 +58,7 @@ public fun SegmentedControl(
                 .clip(shape = CircleShape),
         ) {
             for ((index, title) in titles.withIndex()) {
-                tab(title, selected(index)) { onSegmentClick(index) }
+                tab(title, indexSelected(index)) { onSegmentClick(index) }
             }
         }
     }

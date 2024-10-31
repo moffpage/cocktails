@@ -5,39 +5,32 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.runtime.Composable
-import androidx.compose.material.Typography
+import androidx.compose.material3.Typography
 
 @Composable
 public fun Typography(): Typography = Typography(
-    h1 = TextStyle(
+    headlineLarge = TextStyle(
         fontSize = 30.0.sp,
         fontWeight = FontWeight.Normal,
         fontFamily = aliceFontFamily(),
         lineHeight = 34.0.sp,
         letterSpacing = (-0.24).sp
     ),
-    h2 = TextStyle(
+    headlineMedium = TextStyle(
         fontSize = 24.0.sp,
         fontWeight = FontWeight.Normal,
         fontFamily = aliceFontFamily(),
         lineHeight = 20.0.sp,
         letterSpacing = (-0.24).sp
     ),
-    h3 = TextStyle(
-        fontSize = 20.0.sp,
-        fontWeight = FontWeight.Normal,
-        fontFamily = aliceFontFamily(),
-        lineHeight = 24.0.sp,
-        letterSpacing = (-0.24).sp
-    ),
-    h4 = TextStyle(
+    headlineSmall = TextStyle(
         fontSize = 16.0.sp,
         fontWeight = FontWeight.Normal,
         fontFamily = aliceFontFamily(),
         lineHeight = 18.0.sp,
         letterSpacing = TextUnit.Unspecified
     ),
-    body1 = TextStyle(
+    bodySmall = TextStyle(
         fontSize = 13.0.sp,
         fontWeight = FontWeight.Normal,
         fontFamily = aliceFontFamily(),

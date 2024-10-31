@@ -9,12 +9,12 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
-import androidx.compose.material.Text
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.LocalTextStyle
-import androidx.compose.material.contentColorFor
-import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.contentColorFor
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.foundation.background
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
@@ -25,11 +25,11 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 
 @Composable
 public fun TextField(
-    modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    shape: Shape = MaterialTheme.shapes.medium,
     placeholder: String?,
+    modifier: Modifier = Modifier,
+    shape: Shape = MaterialTheme.shapes.medium,
     textStyle: TextStyle = LocalTextStyle.current,
     maxLines: Int = Int.MAX_VALUE,
     enabled: Boolean = true,
@@ -38,18 +38,20 @@ public fun TextField(
     singleLine: Boolean = true,
     leadingContent: @Composable (() -> Unit)? = null,
     trailingContent: @Composable (() -> Unit)? = null,
-    textColor: Color = MaterialTheme.colors.onBackground,
-    backgroundColor: Color = MaterialTheme.colors.surface,
+    textColor: Color = MaterialTheme.colorScheme.onBackground,
+    backgroundColor: Color = MaterialTheme.colorScheme.surface,
     placeholderColor: Color = contentColorFor(backgroundColor = backgroundColor),
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
-    val colors = TextFieldDefaults.textFieldColors(
-        textColor = textColor,
-        backgroundColor = backgroundColor,
-        placeholderColor = placeholderColor,
-
+    val colors = TextFieldDefaults.colors(
+        focusedTextColor = textColor,
+        unfocusedTextColor = textColor,
+        focusedContainerColor = backgroundColor,
+        unfocusedContainerColor = backgroundColor,
+        focusedPlaceholderColor = placeholderColor,
+        unfocusedLabelColor = placeholderColor,
         errorIndicatorColor = Color.Transparent,
         disabledIndicatorColor = Color.Transparent,
         focusedIndicatorColor = Color.Transparent,
@@ -60,17 +62,17 @@ public fun TextField(
         enabled = enabled,
         modifier = modifier
             .background(
-                color = colors.backgroundColor(enabled = enabled).value,
+                color = colors.focusedContainerColor,
                 shape = shape
             )
             .fillMaxWidth(),
         value = value,
         onValueChange = onValueChange,
         textStyle = textStyle.merge(other = TextStyle(color = textColor)),
-        cursorBrush = SolidColor(value = colors.cursorColor(isError = isError).value),
+        cursorBrush = SolidColor(value = colors.cursorColor),
         decorationBox = @Composable { innerTextField ->
-            @OptIn(ExperimentalMaterialApi::class)
-            TextFieldDefaults.TextFieldDecorationBox(
+            @OptIn(ExperimentalMaterial3Api::class)
+            TextFieldDefaults.DecorationBox(
                 value = value,
                 placeholder = {
                     if (placeholder != null) {

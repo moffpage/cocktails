@@ -5,10 +5,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.Composable
-import androidx.compose.material.Text
-import androidx.compose.material.Button
-import androidx.compose.material.Surface
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Surface
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.Column
@@ -28,8 +28,8 @@ import kz.grandera.vlifetesttaskapp.ui_components.resources.icons.Error
 
 @Composable
 public fun ErrorContent(
-    modifier: Modifier = Modifier,
     onRetry: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
@@ -54,7 +54,7 @@ public fun ErrorContent(
             Spacer(modifier = Modifier.height(height = 16.dp))
             Text(
                 text = errorText,
-                style = MaterialTheme.typography.h3
+                style = MaterialTheme.typography.headlineMedium
                     .copy(textAlign = TextAlign.Center)
             )
             Spacer(modifier = Modifier.height(height = 16.dp))
@@ -68,7 +68,7 @@ public fun ErrorContent(
             ) {
                 Text(
                     text = stringResource(resource = Res.string.retry),
-                    style = MaterialTheme.typography.body1
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
         }

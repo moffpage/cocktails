@@ -1,10 +1,10 @@
 package kz.grandera.vlifetesttaskapp.ui_components.theming
 
 import androidx.compose.ui.graphics.Color
-import androidx.compose.material.Colors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.lightColorScheme
 
-public val lightColors: Colors = lightColors(
+public val lightColorScheme: ColorScheme = lightColorScheme(
     primary = Color(color = 0xFFECBE43),
     onPrimary = Color(color = 0xFFFFFFFF),
 
@@ -19,7 +19,7 @@ public val lightColors: Colors = lightColors(
     error = Color(color = 0xFFB3261E)
 )
 
-public val darkColors: Colors = lightColors
+public val darkColorScheme: ColorScheme = lightColorScheme
     .copy(
         surface = Color(color = 0xFF212121),
 

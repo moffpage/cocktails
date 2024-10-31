@@ -1,8 +1,8 @@
 package kz.grandera.vlifetesttaskapp.features.list.component
 
-import androidx.compose.ui.Modifier
-import androidx.compose.runtime.Composable
-import androidx.compose.material.ExperimentalMaterialApi
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.serialization.Serializable
 
 import org.koin.dsl.module
 import org.koin.core.component.getScopeId
@@ -11,27 +11,34 @@ import org.koin.core.qualifier.qualifier
 
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.operator.map
+import com.arkivanov.decompose.router.slot.dismiss
+import com.arkivanov.decompose.router.slot.activate
+import com.arkivanov.decompose.router.slot.childSlot
+import com.arkivanov.decompose.router.slot.ChildSlot
+import com.arkivanov.decompose.router.slot.SlotNavigation
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 
-import kz.grandera.vlifetesttaskapp.ui.list.CocktailsListContent
-import kz.grandera.vlifetesttaskapp.core.event.DefaultEventsProducerDelegate
 import kz.grandera.vlifetesttaskapp.core.scope.koinScope
+import kz.grandera.vlifetesttaskapp.core.lifecycle.coroutineScope
 import kz.grandera.vlifetesttaskapp.core.extensions.states
+import kz.grandera.vlifetesttaskapp.core.extensions.childSlotBackEvents
 import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
+import kz.grandera.vlifetesttaskapp.core.componentcontext.wrapComponentContext
 import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore
 import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore.State
 import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore.Intent
 import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore.Cocktail
-import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent.Event
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent.Model
 import kz.grandera.vlifetesttaskapp.features.list.component.CocktailsListComponent.CocktailModel
+import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponent
+import kz.grandera.vlifetesttaskapp.features.details.component.CocktailDetailsComponentImpl
 
 internal class CocktailsListComponentImpl(
     componentContext: AppComponentContext
 ) : CocktailsListComponent,
-    AppComponentContext by componentContext,
-    DefaultEventsProducerDelegate<Event>()
+    AppComponentContext by componentContext
 {
+    private val scope = coroutineScope()
     private val koinScope = koinScope(
         cocktailsListModule,
         scopeId = getScopeId(),
@@ -39,26 +46,51 @@ internal class CocktailsListComponentImpl(
     )
 
     private val storeFactory by koinScope.inject<CocktailsListStore>()
+    private val childComponentFactory by koinScope.inject<CocktailDetailsComponent.Factory>()
+
     private val store = instanceKeeper.getStore { storeFactory }
 
-    @OptIn(ExperimentalMaterialApi::class)
-    @Composable
-    override fun Content(modifier: Modifier) {
-        CocktailsListContent(
-            component = this,
-            modifier = modifier
-        )
-    }
+    private val sheetNavigation = SlotNavigation<CocktailDetails>()
+    private val modalBottomSheetSlot = childSlot(
+        source = sheetNavigation,
+        serializer = CocktailDetails.serializer(),
+        childFactory = { configuration, context ->
+            childComponentFactory.create(
+                cocktailId = configuration.cocktailId,
+                componentContext = wrapComponentContext(
+                    context = context,
+                    parentScopeId = koinScope.id
+                )
+            )
+        }
+    )
 
     override val model: Value<Model> = store.states
         .map { state -> state.toModel() }
+
+    override val modalBottomSheetChild: Value<ChildSlot<*, CocktailDetailsComponent>> =
+        modalBottomSheetSlot
+
+    init {
+        modalBottomSheetSlot.childSlotBackEvents()
+            .onEach { dismissDetails() }
+            .launchIn(scope = scope)
+    }
 
     override fun reload() {
         store.accept(intent = Intent.Shuffle)
     }
 
+    override fun dismissDetails() {
+        sheetNavigation.dismiss()
+    }
+
     override fun showCocktail(cocktail: CocktailModel) {
-        dispatch(Event.ShowCocktail(cocktailId = cocktail.id))
+        sheetNavigation.activate(
+            CocktailDetails(
+                cocktailId = cocktail.id
+            )
+        )
     }
 
     override fun clearSearch() {
@@ -102,6 +134,9 @@ internal class CocktailsListComponentImpl(
     }
 }
 
+@Serializable
+private data class CocktailDetails(val cocktailId: Long)
+
 private val cocktailsListModule = module {
     scope<CocktailsListComponent> {
         scoped<CocktailsListStore> {
@@ -111,6 +146,15 @@ private val cocktailsListModule = module {
                 ioContext = get(qualifier = named("IO")),
                 cocktailsApi = get()
             )
+        }
+
+        scoped<CocktailDetailsComponent.Factory> {
+            CocktailDetailsComponent.Factory { cocktailId, componentContext ->
+                CocktailDetailsComponentImpl(
+                    cocktailId = cocktailId,
+                    componentContext = componentContext
+                )
+            }
         }
     }
 }

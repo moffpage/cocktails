@@ -1,7 +1,7 @@
 package kz.grandera.vlifetesttaskapp.ui_components.theming
 
 import androidx.compose.ui.unit.dp
-import androidx.compose.material.Shapes
+import androidx.compose.material3.Shapes
 import androidx.compose.foundation.shape.RoundedCornerShape
 
 public val Shapes: Shapes = Shapes(

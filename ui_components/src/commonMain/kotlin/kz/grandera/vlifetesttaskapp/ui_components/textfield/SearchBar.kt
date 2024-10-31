@@ -4,9 +4,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.LocalContentColor
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
@@ -21,10 +21,10 @@ import kz.grandera.vlifetesttaskapp.ui_components.search
 
 @Composable
 public fun SearchBar(
-    modifier: Modifier = Modifier,
     text: String,
-    placeholder: String = stringResource(resource = Res.string.search),
     onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    placeholder: String = stringResource(resource = Res.string.search),
     showTrailingContent: Boolean = text.isNotEmpty(),
     onTrailingContentClicked: (() -> Unit)? = null,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -35,7 +35,7 @@ public fun SearchBar(
             modifier = modifier,
             value = text,
             onValueChange = onValueChange,
-            textStyle = MaterialTheme.typography.h4,
+            textStyle = MaterialTheme.typography.headlineSmall,
             leadingContent = {
                 Icon(
                     imageVector = Icons.Default.Search,

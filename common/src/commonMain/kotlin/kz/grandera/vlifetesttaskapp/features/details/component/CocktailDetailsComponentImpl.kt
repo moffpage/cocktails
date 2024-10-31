@@ -46,14 +46,6 @@ internal class CocktailDetailsComponentImpl(
     )
     private val store = instanceKeeper.getStore { storeFactory }
 
-    @Composable
-    override fun Content(modifier: Modifier) {
-        CocktailDetailsContent(
-            component = this,
-            modifier = modifier
-        )
-    }
-
     override val model: Value<Model> = store.states
         .map { cocktail -> cocktail.toModel() }
 
