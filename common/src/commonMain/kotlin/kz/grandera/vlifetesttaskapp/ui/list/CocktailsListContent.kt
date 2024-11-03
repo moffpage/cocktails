@@ -60,12 +60,11 @@ public fun CocktailsListContent(
     component: CocktailsListComponent,
     modifier: Modifier = Modifier
 ) {
-    val model by component.model.subscribeAsState()
     val focusManager = LocalFocusManager.current
 
     ChildSlotModalBottomSheet(
-        childSlot = component.modalBottomSheetChild,
-        onDismiss = { component.dismissDetails() },
+        childSlot = component.detailsModalBottomSheetChild,
+        onDismiss = { },
         sheetContent = { CocktailDetailsContent(it) }
     )
 
@@ -79,6 +78,8 @@ public fun CocktailsListContent(
             )
             .fillMaxSize()
     ) {
+        val model by component.model.subscribeAsState()
+
         if (model.isError) {
             ErrorContent(
                 modifier = Modifier

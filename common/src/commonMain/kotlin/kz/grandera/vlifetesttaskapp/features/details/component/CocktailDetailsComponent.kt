@@ -3,9 +3,10 @@ package kz.grandera.vlifetesttaskapp.features.details.component
 import com.arkivanov.decompose.value.Value
 
 import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
-import kz.grandera.vlifetesttaskapp.core.event.back.BackEventsProducerDelegate
+import kz.grandera.vlifetesttaskapp.core.event.EventsProducer
+import kz.grandera.vlifetesttaskapp.core.event.dismiss.DismissEvent
 
-public interface CocktailDetailsComponent : BackEventsProducerDelegate {
+public interface CocktailDetailsComponent : EventsProducer<CocktailDetailsComponent.Event> {
     public fun interface Factory {
         public fun create(
             cocktailId: Long,
@@ -35,6 +36,10 @@ public interface CocktailDetailsComponent : BackEventsProducerDelegate {
         Liqueur,
         Cocktail,
         Ordinary,
+    }
+
+    public sealed interface Event {
+        public data object Dismiss : Event, DismissEvent
     }
 
     public val model: Value<Model>

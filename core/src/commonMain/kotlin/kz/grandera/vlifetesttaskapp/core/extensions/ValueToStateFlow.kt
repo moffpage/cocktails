@@ -16,6 +16,7 @@ import com.arkivanov.decompose.router.stack.ChildStack
 
 import kz.grandera.vlifetesttaskapp.core.event.EventsProducer
 import kz.grandera.vlifetesttaskapp.core.event.back.BackEvent
+import kz.grandera.vlifetesttaskapp.core.event.dismiss.DismissEvent
 
 private class ValueStateFlow<out T : Any>(private val v: Value<T>) : StateFlow<T> {
     override val value: T get() = v.value
@@ -53,4 +54,4 @@ public inline fun <reified Event : Any> Value<ChildSlot<*, *>>.childSlotEvents()
         .filterIsInstance<Event>()
 
 public fun Value<ChildStack<*, *>>.childrenBackEvents(): Flow<BackEvent> = childrenEvents()
-public fun Value<ChildSlot<*, *>>.childSlotBackEvents(): Flow<BackEvent> = childSlotEvents()
+public fun Value<ChildSlot<*, *>>.childSlotDismissEvents(): Flow<DismissEvent> = childSlotEvents()

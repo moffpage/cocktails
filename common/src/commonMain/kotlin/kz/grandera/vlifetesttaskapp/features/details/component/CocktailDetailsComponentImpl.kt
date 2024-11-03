@@ -1,8 +1,5 @@
 package kz.grandera.vlifetesttaskapp.features.details.component
 
-import androidx.compose.ui.Modifier
-import androidx.compose.runtime.Composable
-
 import org.koin.dsl.module
 import org.koin.core.component.getScopeId
 import org.koin.core.parameter.parametersOf
@@ -13,10 +10,8 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.operator.map
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 
-import kz.grandera.vlifetesttaskapp.ui.details.CocktailDetailsContent
-import kz.grandera.vlifetesttaskapp.core.event.back.BackEvent
-import kz.grandera.vlifetesttaskapp.core.event.back.BackEventsProducerDelegate
-import kz.grandera.vlifetesttaskapp.core.event.back.backEventsProducerDelegate
+import kz.grandera.vlifetesttaskapp.core.event.EventsProducerDelegate
+import kz.grandera.vlifetesttaskapp.core.event.DefaultEventsProducerDelegate
 import kz.grandera.vlifetesttaskapp.core.scope.koinScope
 import kz.grandera.vlifetesttaskapp.core.extensions.states
 import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
@@ -31,7 +26,7 @@ internal class CocktailDetailsComponentImpl(
     componentContext: AppComponentContext
 ) : CocktailDetailsComponent,
     AppComponentContext by componentContext,
-    BackEventsProducerDelegate by backEventsProducerDelegate()
+    EventsProducerDelegate<CocktailDetailsComponent.Event> by DefaultEventsProducerDelegate()
 {
     private val koinScope = koinScope(
         cocktailDetailsModule,
@@ -50,7 +45,7 @@ internal class CocktailDetailsComponentImpl(
         .map { cocktail -> cocktail.toModel() }
 
     override fun navigateBack() {
-        dispatch(BackEvent)
+        dispatch(CocktailDetailsComponent.Event.Dismiss)
     }
 
     override fun refetchDetails() {

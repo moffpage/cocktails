@@ -21,7 +21,7 @@ import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import kz.grandera.vlifetesttaskapp.core.scope.koinScope
 import kz.grandera.vlifetesttaskapp.core.lifecycle.coroutineScope
 import kz.grandera.vlifetesttaskapp.core.extensions.states
-import kz.grandera.vlifetesttaskapp.core.extensions.childSlotBackEvents
+import kz.grandera.vlifetesttaskapp.core.extensions.childSlotDismissEvents
 import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
 import kz.grandera.vlifetesttaskapp.core.componentcontext.wrapComponentContext
 import kz.grandera.vlifetesttaskapp.features.list.store.CocktailsListStore
@@ -51,7 +51,7 @@ internal class CocktailsListComponentImpl(
     private val store = instanceKeeper.getStore { storeFactory }
 
     private val sheetNavigation = SlotNavigation<CocktailDetails>()
-    private val modalBottomSheetSlot = childSlot(
+    private val detailsChildSlot = childSlot(
         source = sheetNavigation,
         serializer = CocktailDetails.serializer(),
         childFactory = { configuration, context ->
@@ -68,11 +68,11 @@ internal class CocktailsListComponentImpl(
     override val model: Value<Model> = store.states
         .map { state -> state.toModel() }
 
-    override val modalBottomSheetChild: Value<ChildSlot<*, CocktailDetailsComponent>> =
-        modalBottomSheetSlot
+    override val detailsModalBottomSheetChild: Value<ChildSlot<*, CocktailDetailsComponent>> =
+        detailsChildSlot
 
     init {
-        modalBottomSheetSlot.childSlotBackEvents()
+        detailsChildSlot.childSlotDismissEvents()
             .onEach { dismissDetails() }
             .launchIn(scope = scope)
     }

@@ -28,7 +28,7 @@ public interface CocktailsListComponent {
 
     public val model: Value<Model>
 
-    public val modalBottomSheetChild: Value<ChildSlot<*, CocktailDetailsComponent>>
+    public val detailsModalBottomSheetChild: Value<ChildSlot<*, CocktailDetailsComponent>>
 
     public fun reload()
 
