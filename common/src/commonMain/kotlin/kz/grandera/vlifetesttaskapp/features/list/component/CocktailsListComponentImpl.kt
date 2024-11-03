@@ -14,6 +14,7 @@ import com.arkivanov.decompose.value.operator.map
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 
 import kz.grandera.vlifetesttaskapp.ui.list.CocktailsListContent
+import kz.grandera.vlifetesttaskapp.core.event.EventsProducerDelegate
 import kz.grandera.vlifetesttaskapp.core.event.DefaultEventsProducerDelegate
 import kz.grandera.vlifetesttaskapp.core.scope.koinScope
 import kz.grandera.vlifetesttaskapp.core.extensions.states
@@ -30,7 +31,7 @@ internal class CocktailsListComponentImpl(
     componentContext: AppComponentContext
 ) : CocktailsListComponent,
     AppComponentContext by componentContext,
-    DefaultEventsProducerDelegate<Event>()
+    EventsProducerDelegate<Event> by DefaultEventsProducerDelegate()
 {
     private val koinScope = koinScope(
         cocktailsListModule,

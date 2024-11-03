@@ -2,11 +2,12 @@ package kz.grandera.vlifetesttaskapp.features.details.component
 
 import com.arkivanov.decompose.value.Value
 
+import kz.grandera.vlifetesttaskapp.core.event.EventsProducer
+import kz.grandera.vlifetesttaskapp.core.event.back.BackEvent
 import kz.grandera.vlifetesttaskapp.core.componentcontext.AppComponentContext
-import kz.grandera.vlifetesttaskapp.core.event.back.BackEventsProducerDelegate
 import kz.grandera.vlifetesttaskapp.component.Component
 
-public interface CocktailDetailsComponent : Component, BackEventsProducerDelegate {
+public interface CocktailDetailsComponent : Component, EventsProducer<CocktailDetailsComponent.Event> {
     public fun interface Factory {
         public fun create(
             cocktailId: Long,
@@ -36,6 +37,10 @@ public interface CocktailDetailsComponent : Component, BackEventsProducerDelegat
         Liqueur,
         Cocktail,
         Ordinary,
+    }
+
+    public sealed interface Event {
+        public data object NavigateBack : Event, BackEvent
     }
 
     public val model: Value<Model>

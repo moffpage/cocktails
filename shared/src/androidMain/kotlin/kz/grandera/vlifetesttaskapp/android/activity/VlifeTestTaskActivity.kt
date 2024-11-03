@@ -41,8 +41,8 @@ class VlifeTestTaskActivity : ComponentActivity(), AndroidScopeComponent {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         scope.declare(this)
-        setContent()
         enableEdgeToEdge()
+        setContent()
     }
 
     private fun setContent() {

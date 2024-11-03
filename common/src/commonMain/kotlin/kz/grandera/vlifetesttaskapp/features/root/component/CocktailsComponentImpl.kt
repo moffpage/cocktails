@@ -2,7 +2,6 @@ package kz.grandera.vlifetesttaskapp.features.root.component
 
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.launchIn
-
 import kotlinx.serialization.Serializable
 
 import org.koin.dsl.module
