@@ -1,15 +1,16 @@
 package kz.grandera.vlifetesttaskapp.features.list.component
 
 import com.arkivanov.decompose.value.Value
+import kotlinx.collections.immutable.ImmutableList
 
 public interface CocktailsListComponent {
     public data class Model(
         public val isError: Boolean,
         public val isLoading: Boolean,
         public val isRefreshing: Boolean,
-        public val cocktails: List<CocktailModel>,
+        public val cocktails: ImmutableList<CocktailModel>,
         public val searchQuery: String,
-        public val listsAlcoholicCocktails: Boolean,
+        public val listsAlcoholicCocktails: Boolean
     )
 
     public data class CocktailModel(

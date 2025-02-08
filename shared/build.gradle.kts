@@ -80,6 +80,8 @@ kotlin {
             dependencies {
                 api(dependencyNotation = project(path = ":common"))
                 api(dependencyNotation = libs.decompose.core)
+                api(dependencyNotation = libs.essenty.lifecycle)
+                api(dependencyNotation = libs.essenty.backhandler)
 
                 implementation(dependencyNotation = project(path = ":core"))
                 implementation(dependencyNotation = project(path = ":ui_components"))

@@ -1,20 +1,19 @@
 [versions]
 
-coil = "3.0.0-alpha10"
-koin = "4.0.0"
-ktor = "2.3.12"
+coil = "3.1.0"
+koin = "4.0.2"
+ktor = "3.0.3"
 
-compose = "1.6.11"
+compose = "1.8.0-alpha02"
 
-essenty = "2.1.0"
-decompose = "3.1.0"
-mvikotlin = "4.2.0"
+essenty = "2.4.0"
+decompose = "3.2.2"
+mvikotlin = "4.3.0"
 
-kotlin = "2.0.20"
-kotlinx-serialization = "1.7.3"
+kotlin = "2.1.0"
 
 android-gradle = "8.5.2"
-androidx-activity = "1.9.2"
+androidx-activity = "1.10.0"
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "android-gradle" }
@@ -32,7 +31,8 @@ android-activity-compose = { module = "androidx.activity:activity-compose", vers
 
 napier = "io.github.aakira:napier:2.7.1"
 seismic = "com.squareup:seismic:1.0.3"
-kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0"
+kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1"
+kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8"
 compottie = "io.github.alexzhirkevich:compottie:2.0.0-rc01"
 
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
