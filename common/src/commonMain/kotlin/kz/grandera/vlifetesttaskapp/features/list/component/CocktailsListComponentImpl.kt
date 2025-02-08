@@ -11,6 +11,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.operator.map
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
+import kotlinx.collections.immutable.toImmutableList
 
 import kz.grandera.vlifetesttaskapp.api.cocktails.CocktailsApi
 import kz.grandera.vlifetesttaskapp.core.extensions.states
@@ -42,8 +43,7 @@ internal class CocktailsListComponentImpl(
         )
     }
 
-    override val model: Value<Model> = store.states
-        .map { state -> state.toModel() }
+    override val model: Value<Model> = store.states.map { state -> state.toModel() }
 
     override fun reload() {
         store.accept(intent = Intent.Shuffle)
@@ -99,7 +99,9 @@ private fun State.toModel(): Model = Model(
     isLoading = this.isLoading,
     isRefreshing = this.isRefreshing,
     searchQuery = this.searchQuery,
-    cocktails = this.filteredCocktails.map { cocktail -> cocktail.toCocktailModel() },
+    cocktails = this.filteredCocktails.map { cocktail ->
+        cocktail.toCocktailModel()
+    }.toImmutableList(),
     listsAlcoholicCocktails = this.filteredCocktails.any { cocktail -> cocktail.isAlcoholic }
 )
 

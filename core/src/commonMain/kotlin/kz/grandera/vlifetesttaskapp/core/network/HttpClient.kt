@@ -3,7 +3,6 @@ package kz.grandera.vlifetesttaskapp.core.network
 import kotlin.time.toDuration
 import kotlin.time.DurationUnit
 
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
 import io.github.aakira.napier.Napier
@@ -16,7 +15,6 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 
-@OptIn(ExperimentalSerializationApi::class)
 private val json = Json {
     isLenient = true
     explicitNulls = false
@@ -54,7 +52,7 @@ internal fun httpClient(enableLogging: Boolean): HttpClient = HttpClient(
         url(urlString = BASE_URL)
     }
 
-    install(plugin = ContentNegotiation.Plugin) {
+    install(plugin = ContentNegotiation) {
         json(json = json)
     }
 }
